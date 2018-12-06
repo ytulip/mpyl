@@ -14,6 +14,10 @@
 
         methods: {
             clickHandle () {
+                let url = ''
+                let param = {flag:1}
+                //网络请求
+                this.$http.get(url,param).then((res)=>{}).catch(err=>{console.log(3)});
                 this.msg = 'Clicked!!!!!!'
             }
         }

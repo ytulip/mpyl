@@ -11,7 +11,9 @@
                 msg: 'Hello'
             }
         },
-
+        created:{
+            //获取用户的openid
+        },
         methods: {
             clickHandle () {
                 let url = ''

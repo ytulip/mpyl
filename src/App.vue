@@ -1,6 +1,35 @@
 <script>
 export default {
   created () {
+    //获得code
+      wx.login({
+          success: function(res) {
+              if (res.code) {
+                  //发起网络请求
+                  console.log(res.code);
+//                  this.$http.get('http://ly.zhuyan.me/activity/user-info',{code:res.code}).then((res)=>{console.log(res)}).catch(err=>{console.log(3)});
+                  wx.request({
+                      url: 'http://yl.zhuyan.me/' + 'activity/user-info',
+                      data: {
+                          code: res.code
+                      },
+                      success:function(requestRes)
+                      {
+                          console.log(requestRes);
+//                          console.log('activity/user-info');
+//                          if ( requestRes.data.data.user ) {
+//                              that.setUserData(requestRes.data.data.user);
+//                          }
+                      }
+                  })
+              } else {
+                  console.log('登录失败！' + res.errMsg)
+              }
+          }
+      });
+
+
+
     // 调用API从本地缓存中获取数据
     const logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())

@@ -9,17 +9,18 @@ export default {
                   console.log(res.code);
 //                  this.$http.get('http://ly.zhuyan.me/activity/user-info',{code:res.code}).then((res)=>{console.log(res)}).catch(err=>{console.log(3)});
                   wx.request({
-                      url: 'http://yl.zhuyan.me/' + 'activity/user-info',
+                      url: 'http://yl.zhuyan.me/' + 'activity/common-info2',
                       data: {
                           code: res.code
                       },
                       success:function(requestRes)
                       {
                           console.log(requestRes);
-//                          console.log('activity/user-info');
-//                          if ( requestRes.data.data.user ) {
-//                              that.setUserData(requestRes.data.data.user);
-//                          }
+                          //存储openid
+                          if ( requestRes.data.status ) {
+                              wx.setStorageSync(requestRes.data.data.openid, $openid);
+                          }
+
                       }
                   })
               } else {

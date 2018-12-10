@@ -9,7 +9,7 @@
 	},
 	"miniprogramRoot": "dist/wx/",
 	"compileType": "miniprogram",
-	"appid": "touristappid",
+	"appid": "wxfd3d9ea1dafc2399",
 	"projectname": "mpyl",
 	"condition": {
 		"search": {

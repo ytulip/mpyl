@@ -15,14 +15,14 @@
     "list": [{
       "pagePath": "pages/index/main",
       "text": "首页",
-      "iconPath":"../../static/images/tarbar/home.png",
-      "selectedIconPath":"../../static/images/tarbar/home_active.png"
+      "iconPath":"/static/images/tarbar/home.png",
+      "selectedIconPath":"/static/images/tarbar/home_active.png"
       },
       {
         "pagePath":"pages/mine/main",
         "text":"我的",
-        "iconPath":"../../static/images/tarbar/mine.png",
-        "selectedIconPath":"../../static/images/tarbar/mine_active.png"
+        "iconPath":"/static/images/tarbar/mine.png",
+        "selectedIconPath":"/static/images/tarbar/mine_active.png"
       }]
   }
 }

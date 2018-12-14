@@ -1,4 +1,6 @@
 <script>
+//import globalStore from 'stores/global-store.js'
+//import globalStore from 'stores/global-store'
 export default {
   created () {
     //获得code
@@ -18,7 +20,9 @@ export default {
                           console.log(requestRes);
                           //存储openid
                           if ( requestRes.data.status ) {
-                              wx.setStorageSync(requestRes.data.data.openid, $openid);
+                              wx.setStorageSync('openid',requestRes.data.data.openid);
+//                              globalStore.commit('setOpenid',$openid)
+//                              console.log(globalStore.state.openid)
                           }
 
                       }

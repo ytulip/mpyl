@@ -5,11 +5,16 @@
 </template>
 
 <script>
+    import globalStore from '../../stores/global-store'
     export default {
         data () {
             return {
                 msg: 'Hello'
             }
+        },
+        created:function()
+        {
+            console.log('index' + wx.getStorageSync('openid'));
         },
         methods: {
             clickHandle () {

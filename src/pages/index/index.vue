@@ -84,7 +84,11 @@
                 );
             },
             goCommunity() {
-
+                wx.navigateTo(
+                    {
+                        url:'/pages/clean/main?type=community'
+                    }
+                );
             }
         }
     }

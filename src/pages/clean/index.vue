@@ -10,6 +10,7 @@
 
 <script>
     import globalStore from '../../stores/global-store'
+    import param from '../../utils/param'
     export default {
         data () {
             return {
@@ -30,7 +31,20 @@
                     }
                 );
             }
-        }
+        },
+        mounted() {
+            if( !param.getParamValue('type') )
+            {
+                this.list = [{'url':'http://graphis.zhuyan.me/1.jpg','title':'日常保洁','desc':'一句话描述','type':1},{'url':'http://graphis.zhuyan.me/2.jpg','title':'深度保洁','desc':'一句话描述','type':2},{'url':'http://graphis.zhuyan.me/2.jpg','title':'开荒保洁','desc':'一句话描述','type':3}];
+            } else {
+                this.list = [{'url':'http://graphis.zhuyan.me/1.jpg','title':'套餐名称1','desc':'一句话描述','type':4},{'url':'http://graphis.zhuyan.me/2.jpg','title':'套餐名称2','desc':'一句话描述','type':5},{'url':'http://graphis.zhuyan.me/2.jpg','title':'套餐名称3','desc':'一句话描述','type':6}];
+            }
+//            this.src = globalStore.state.host + 'user/good-detail-xcx?product_id=' + param.getParamValue('id');
+//            this.getData();
+//            let pages = getCurrentPages()    //获取加载的页面
+//            let currentPage = pages[pages.length-1]
+//            console.log(currentPage.options);
+        },
     }
 </script>
 

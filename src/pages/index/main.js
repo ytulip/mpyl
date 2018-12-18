@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import App from './index'
 import Fly from 'flyio/dist/npm/wx'
+import '../../style/common.css'
 
 
 var fly = new Fly

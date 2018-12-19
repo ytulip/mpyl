@@ -21,10 +21,8 @@
         methods: {
 
         },
-
         mounted() {
-            console.log(param.getParamValue('id'));
-            this.src = globalStore.state.host + 'user/report-bill?product_id=' + param.getParamValue('id') + '&openid=' +wx.getStorageSync('openid');
+            this.src = globalStore.state.host + 'user/report-bill?product_id=' + param.getParamValue('product_id') + '&openid=' +wx.getStorageSync('openid');
         },
     }
 </script>

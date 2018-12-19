@@ -1,7 +1,5 @@
 <template>
-  <div class="container" @click="clickHandle">
-    <div class="message">{{msg}}</div>
-  </div>
+  <web-view src="{{src}}"></web-view>
 </template>
 
 <script>
@@ -10,7 +8,8 @@
         data () {
             return {
                 msg: 'Hello',
-                banners:{}
+                banners:{},
+                src:''
             }
         },
         created:function()
@@ -34,6 +33,9 @@
                     this.banners = res.data.banners;
                 }).catch(err=>{console.log(3)})
             }
+        },
+        mounted() {
+            this.src = globalStore.state.host + 'user/my-services?&openid=' +wx.getStorageSync('openid');
         }
     }
 </script>

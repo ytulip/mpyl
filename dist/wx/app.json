@@ -5,7 +5,8 @@
     "pages/book/main",
     "pages/clean/main",
     "pages/cleandetail/main",
-    "pages/fillbill/main"
+    "pages/fillbill/main",
+    "pages/address/main"
   ],
   "window": {
     "backgroundTextStyle": "light",

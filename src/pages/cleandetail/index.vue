@@ -26,7 +26,7 @@
 
         mounted() {
             console.log(param.getParamValue('id'));
-            this.src = globalStore.state.host + 'user/good-detail-xcx?product_id=' + param.getParamValue('id');
+            this.src = globalStore.state.host + 'user/good-detail-xcx?product_id=' + param.getParamValue('id') + '&openid=' + wx.getStorageSync('openid');
 //            this.getData();
 //            let pages = getCurrentPages()    //获取加载的页面
 //            let currentPage = pages[pages.length-1]

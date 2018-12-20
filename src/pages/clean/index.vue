@@ -1,9 +1,9 @@
 <template>
   <div class="content-wrapper-24-16">
-      <div v-for="(item, index) in list" style="overflow: hidden;position: relative" v-on:click="goCleanDetail(item.type)">
-        <image :src="item.url" class="slide-image" style="width: 100%" mode="widthFix"/>
-        <div style="position: absolute;top:0;left: 0;right: 0;z-index: 99;" class="fs-24-fc-ffffff-b">{{item.title}}</div>
-        <div style="position: absolute;bottom: 0;left: 0;right: 0;z-index: 99;" class="fs-16-fc-ffffff">{{item.desc}}</div>
+      <div v-for="(item, index) in list" style="overflow: hidden;position: relative" v-on:click="goCleanDetail(item.id)">
+        <image :src="item.cover_image" class="slide-image" style="width: 100%" mode="widthFix"/>
+        <div style="position: absolute;top:0;left: 0;right: 0;z-index: 99;" class="fs-24-fc-ffffff-b">{{item.product_name}}</div>
+        <div style="position: absolute;bottom: 0;left: 0;right: 0;z-index: 99;" class="fs-16-fc-ffffff">{{item.sub_desc}}</div>
       </div>
   </div>
 </template>
@@ -15,7 +15,8 @@
         data () {
             return {
                 msg: 'Hello',
-                list:[{'url':'http://graphis.zhuyan.me/1.jpg','title':'日常保洁','desc':'一句话描述','type':1},{'url':'http://graphis.zhuyan.me/2.jpg','title':'深度保洁','desc':'一句话描述','type':2},{'url':'http://graphis.zhuyan.me/2.jpg','title':'开荒保洁','desc':'一句话描述','type':3}]
+                list:[],
+                type:0
             }
         },
         created:function()
@@ -35,15 +36,41 @@
         mounted() {
             if( !param.getParamValue('type') )
             {
-                this.list = [{'url':'http://graphis.zhuyan.me/1.jpg','title':'日常保洁','desc':'一句话描述','type':1},{'url':'http://graphis.zhuyan.me/2.jpg','title':'深度保洁','desc':'一句话描述','type':2},{'url':'http://graphis.zhuyan.me/2.jpg','title':'开荒保洁','desc':'一句话描述','type':3}];
+                this.type = 1;
             } else {
-                this.list = [{'url':'http://graphis.zhuyan.me/1.jpg','title':'套餐名称1','desc':'一句话描述','type':4},{'url':'http://graphis.zhuyan.me/2.jpg','title':'套餐名称2','desc':'一句话描述','type':5},{'url':'http://graphis.zhuyan.me/2.jpg','title':'套餐名称3','desc':'一句话描述','type':6}];
+                this.type = 2;
             }
+
+
+            let url = globalStore.state.host + 'passport/product-list'
+            let request = {type:this.type}
+            //网络请求
+            let a = this;
+            this.$http.get(url,request).then((res)=>{
+                console.log(res.data.data);
+                a.list = JSON.parse(res.data.data);
+                console.log(a.list);
+            }).catch(err=>{console.log(3)});
 //            this.src = globalStore.state.host + 'user/good-detail-xcx?product_id=' + param.getParamValue('id');
 //            this.getData();
 //            let pages = getCurrentPages()    //获取加载的页面
 //            let currentPage = pages[pages.length-1]
 //            console.log(currentPage.options);
+//            let type = '';
+//            if( param.getParamValue('type') )
+//            {
+//                type = 2;
+//            } else {
+//                type = 1;
+//            }
+//            let url = globalStore.state.host + 'passport/product-list'
+//            let param = {type:type}
+//            //网络请求
+//            let a = this;
+//            this.$http.get(url,param).then((res)=>{
+//                a.list = res.data.data;
+//            }).catch(err=>{console.log(3)});
+
         },
     }
 </script>

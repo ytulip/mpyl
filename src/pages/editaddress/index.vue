@@ -32,14 +32,10 @@
                     console.log(res);
                     this.banners = res.data.banners;
                 }).catch(err=>{console.log(3)})
-            },
-            bindmessage(e){
-                console.log(e.target.data)
-                globalStore.commit("setAddressShare",e.target.data[0]);
             }
         },
         mounted() {
-            this.src = globalStore.state.host + 'user/addresses?&openid=' +wx.getStorageSync('openid');
+            this.src = globalStore.state.host + 'user/add-mod-address?&openid=' +wx.getStorageSync('openid');
         }
     }
 </script>

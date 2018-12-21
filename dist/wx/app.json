@@ -6,7 +6,8 @@
     "pages/clean/main",
     "pages/cleandetail/main",
     "pages/fillbill/main",
-    "pages/address/main"
+    "pages/address/main",
+    "pages/editaddress/main"
   ],
   "window": {
     "backgroundTextStyle": "light",

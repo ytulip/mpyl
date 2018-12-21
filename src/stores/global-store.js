@@ -7,7 +7,8 @@ export default new Vuex.Store({
     state: {
         count: 0,
         openid:'',
-        host:'http://yl.zhuyan.me/'
+        host:'http://yl.zhuyan.me/',
+        addressShare:''
     },
     mutations: {
         increment: (state) => {
@@ -18,6 +19,11 @@ export default new Vuex.Store({
         },
         setOpenid: (state,openid) => {
             state.openid = openid
+        },
+        setAddressShare: (state,data) =>{
+            console.log('mark:');
+            console.log(data);
+            state.addressShare = data
         }
     }
 });

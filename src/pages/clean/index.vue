@@ -51,26 +51,6 @@
                 a.list = JSON.parse(res.data.data);
                 console.log(a.list);
             }).catch(err=>{console.log(3)});
-//            this.src = globalStore.state.host + 'user/good-detail-xcx?product_id=' + param.getParamValue('id');
-//            this.getData();
-//            let pages = getCurrentPages()    //获取加载的页面
-//            let currentPage = pages[pages.length-1]
-//            console.log(currentPage.options);
-//            let type = '';
-//            if( param.getParamValue('type') )
-//            {
-//                type = 2;
-//            } else {
-//                type = 1;
-//            }
-//            let url = globalStore.state.host + 'passport/product-list'
-//            let param = {type:type}
-//            //网络请求
-//            let a = this;
-//            this.$http.get(url,param).then((res)=>{
-//                a.list = res.data.data;
-//            }).catch(err=>{console.log(3)});
-
         },
     }
 </script>

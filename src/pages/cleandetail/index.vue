@@ -31,6 +31,7 @@
 //            let pages = getCurrentPages()    //获取加载的页面
 //            let currentPage = pages[pages.length-1]
 //            console.log(currentPage.options);
+
         },
     }
 </script>

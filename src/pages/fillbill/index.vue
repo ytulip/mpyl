@@ -40,7 +40,13 @@
             <div class="cus-row">
                 <div class="cus-row-col-3 fs-16-fc-030303">服务面积</div>
                 <div class="cus-row-col-8 fs-16-fc-030303">
-                    <input v-model="size"/>
+
+
+                    <picker @change="bindPickerChange" :value="signTypeIndex" :range="signTypeArray" style="line-height: 44px;">
+                        <view class="picker fs-16-fc-484848">
+                            {{signTypeArray[signTypeIndex]}}
+                        </view>
+                    </picker>
                 </div>
                 <div class="cus-row-col-1 fs-16-fc-030303"><i class="next-icon"></i></div>
             </div>
@@ -54,20 +60,20 @@
             </div>
         </div>
 
-    </div>
 
-
-
-    <div class="fix-bottom" style="background-color: #ffffff;padding: 14px;border-top:1px solid #EBE9E9 ;">
-        <div class="cus-row cus-row-v-m">
-            <div class="cus-row-col-6" id="total_price">
-                <span class="fs-24-fc-212229">￥</span><span class="fs-24-fc-212229" id="price_label"></span>
-            </div>
-            <div class="cus-row-col-6">
-                <a class="btn-block1 m-t-20" href="javascript:void(0)" id="next_step" style="margin-top: 0;">立即付款</a>
+        <div class="fix-bottom3" style="background-color: #ffffff;padding: 14px;border-top:1px solid #EBE9E9 ;">
+            <div class="cus-row cus-row-v-m">
+                <div class="cus-row-col-6" id="total_price">
+                    <span class="fs-24-fc-212229">￥</span><span class="fs-24-fc-212229" id="price_label"></span>
+                </div>
+                <div class="cus-row-col-6">
+                    <a class="btn-block1 m-t-20"  id="next_step" style="margin-top: 0;">立即付款</a>
+                </div>
             </div>
         </div>
+
     </div>
+
 </template>
 
 <script>
@@ -82,8 +88,11 @@
                 name:'',
                 phone:'',
                 pct:'',
-                address:''
-
+                address:'',
+                neighborhoodId:0,
+                attrArr:[],
+                signTypeIndex:0,
+                signTypeArray:['请先选择地址']
             }
         },
         created:function()
@@ -113,10 +122,21 @@
                     {
                         url: "/pages/address/main?openid=" + wx.getStorageSync('openid')
                     });
+            },
+            bindPickerChange:function(e)
+            {
+                console.log('picker发送选择改变，携带值为',  e.mp.detail.value)
             }
         },
         mounted() {
-//            this.src = globalStore.state.host + 'user/report-bill?product_id=' + param.getParamValue('product_id') + '&openid=' +wx.getStorageSync('openid');
+            let id = param.getParamValue('product_id');
+            let url = globalStore.state.host + 'passport/product-info';
+            let a = this;
+            this.$http.get(url,{id:id,openid:wx.getStorageSync('openid')}).then((res)=>{
+//                console.log(res.data);
+                a.attrArr = res.data.data.arr;
+
+            }).catch(err=>{console.log(3)})
         },
     }
 </script>

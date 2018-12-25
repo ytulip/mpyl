@@ -2,7 +2,7 @@
   <div style="padding: 24px;">
     <swiper class="swiper" autoplay="true" interval="5000" duration="1000">
       <block v-for="(item, index) in banners" :index="index" :key="key">
-        <swiper-item>
+        <swiper-item v-on:click="goBannerDetail(item.id)">
           <image :src="item.url" class="slide-image" mode="aspectFill"/>
         </swiper-item>
       </block>
@@ -87,6 +87,14 @@
                 wx.navigateTo(
                     {
                         url:'/pages/clean/main?type=community'
+                    }
+                );
+            },
+            goBannerDetail(id) {
+                console.log('go banner detail' + id);
+                wx.navigateTo(
+                    {
+                        url:'/pages/webview/main?id=' + id
                     }
                 );
             }

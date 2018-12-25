@@ -8,7 +8,8 @@ export default new Vuex.Store({
         count: 0,
         openid:'',
         host:'http://yl.zhuyan.me/',
-        addressShare:''
+        addressShare:'',
+        webViewUrl:''
     },
     mutations: {
         increment: (state) => {

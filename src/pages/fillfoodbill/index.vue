@@ -53,14 +53,7 @@
 
 
             <div class="cus-row">
-                <div class="cus-row-col-3 fs-16-fc-030303">服务时间</div>
-                <div class="cus-row-col-8 fs-16-fc-030303">
-                    <picker @change="serviceTimeChange" :value="timeServiceIndex" :range="timeService" style="line-height: 44px;">
-                        <view class="picker fs-16-fc-484848">
-                            {{timeService[timeServiceIndex]}}
-                        </view>
-                    </picker>
-                </div>
+                <div class="cus-row-col-3 fs-16-fc-030303">配送时间</div>
                 <div class="cus-row-col-1 fs-16-fc-030303"><i class="next-icon"></i></div>
             </div>
         </div>

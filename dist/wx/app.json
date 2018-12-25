@@ -8,7 +8,8 @@
     "pages/fillbill/main",
     "pages/address/main",
     "pages/editaddress/main",
-    "pages/fillfoodbill/main"
+    "pages/fillfoodbill/main",
+    "pages/webview/main"
   ],
   "window": {
     "backgroundTextStyle": "light",

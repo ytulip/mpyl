@@ -36,25 +36,29 @@
 
         <div class="white-bg-card" id="service_time">
 
+            <div>
+                <div class="cus-row">
+                    <div class="cus-row-col-3 fs-16-fc-030303">配送时间</div>
+                    <div class="cus-row-col-9 fs-16-fc-030303 t-al-r">修改</div>
+                </div>
 
-            <div class="cus-row">
-                <div class="cus-row-col-3 fs-16-fc-030303">服务面积</div>
-                <div class="cus-row-col-8 fs-16-fc-030303">
-
-
-                    <picker @change="bindPickerChange" :value="signTypeIndex" :range="signTypeArray" style="line-height: 44px;">
+                <div>
+                    <picker @change="lunchTimeChange" :value="lunchIndex" :range="lunchService" style="line-height: 44px;">
                         <view class="picker fs-16-fc-484848">
-                            {{signTypeArray[signTypeIndex]}}
+                            {{lunchService[lunchIndex]}}
                         </view>
                     </picker>
                 </div>
-                <div class="cus-row-col-1 fs-16-fc-030303"><i class="next-icon"></i></div>
-            </div>
+
+                <div>
+                    <picker @change="dinnerTimeChange" :value="dinnerIndex" :range="dinnerService" style="line-height: 44px;">
+                        <view class="picker fs-16-fc-484848">
+                            {{dinnerService[dinnerIndex]}}
+                        </view>
+                    </picker>
+                </div>
 
 
-            <div class="cus-row">
-                <div class="cus-row-col-3 fs-16-fc-030303">配送时间</div>
-                <div class="cus-row-col-1 fs-16-fc-030303"><i class="next-icon"></i></div>
             </div>
         </div>
 
@@ -96,7 +100,12 @@
                 idArray:[],
                 timeService:[],
                 timeServiceIndex:0,
-                remark:''
+                remark:'',
+                lunchService:[],
+                lunchIndex:0,
+                dinnerService:[],
+                dinnerIndex:0
+
             }
         },
         created:function()
@@ -156,6 +165,14 @@
                         url: "/pages/address/main?openid=" + wx.getStorageSync('openid')
                     });
             },
+            lunchTimeChange:function(e)
+            {
+                this.lunchIndex = e.mp.detail.value;
+            },
+            dinnerTimeChange:function(e)
+            {
+                this.dinnerIndex = e.mp.detail.value;
+            },
             bindPickerChange:function(e)
             {
                 console.log('picker发送选择改变，携带值为',  e.mp.detail.value)
@@ -169,7 +186,7 @@
             nextStep: function()
             {
                 let id = param.getParamValue('product_id');
-                let requestData = {pct_code:this.pct,pct_code_name:this.pct_code_name,phone:this.phone,name:this.name,address:this.address,clean_service_time:this.timeService[this.timeServiceIndex],product_id:id,remark:this.remark,openid:wx.getStorageSync('openid'),size:this.signTypeArray[this.signTypeIndex],attr_id:this.idArray[this.signTypeIndex]};
+                let requestData = {pct_code:this.pct,pct_code_name:this.pct_code_name,phone:this.phone,name:this.name,address:this.address,clean_service_time:this.timeService[this.timeServiceIndex],product_id:id,remark:this.remark,openid:wx.getStorageSync('openid'),size:this.signTypeArray[this.signTypeIndex],attr_id:this.idArray[this.signTypeIndex],lunch_service:this.lunchService[this.lunchIndex],dinner_service:this.dinnerService[this.dinnerIndex],week:2,people:2};
                 let url = globalStore.state.host + 'user/report-bill';
                 this.$http.post(url,requestData).then((res)=>{
                     console.log(res.data.data.arr);
@@ -187,6 +204,8 @@
                 console.log(res.data.data.arr);
                 a.attrArr = res.data.data.arr;
                 a.timeService = res.data.data.timeArr;
+                a.lunchService = res.data.data.lunchArr;
+                a.dinnerService = res.data.data.dinnerArr;
 
             }).catch(err=>{console.log('网络异常')})
         },

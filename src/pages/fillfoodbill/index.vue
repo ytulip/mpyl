@@ -63,6 +63,22 @@
         </div>
 
 
+        <div class="white-bg-card">
+            <div>
+                <div class="cus-row">
+                    <div class="cus-row-col-3 fs-16-fc-030303">起送时间</div>
+                    <div class="cus-row-col-9 fs-16-fc-030303 t-al-r">修改</div>
+                </div>
+                <div>
+                    <picker @change="deliverStartChange" :value="deliverStartIndex" :range="deliverStartList" style="line-height: 44px;">
+                        <view class="picker fs-16-fc-484848">
+                            {{deliverStartList[deliverStartIndex]}}
+                        </view>
+                    </picker>
+                </div>
+            </div>
+        </div>
+
         <div class="fix-bottom3" style="background-color: #ffffff;padding: 14px;border-top:1px solid #EBE9E9 ;">
             <div class="cus-row cus-row-v-m">
                 <div class="cus-row-col-6" id="total_price">
@@ -104,8 +120,11 @@
                 lunchService:[],
                 lunchIndex:0,
                 dinnerService:[],
-                dinnerIndex:0
-
+                dinnerIndex:0,
+                deliverStartList:[],
+                deliverStartIndex:0,
+                periodPrice:[],
+                periodIndex:0
             }
         },
         created:function()
@@ -183,6 +202,10 @@
                 console.log('picker发送选择改变，携带值为',  e.mp.detail.value)
                 this.timeServiceIndex = e.mp.detail.value;
             },
+            deliverStartChange:function(e)
+            {
+                this.deliverStartIndex = e.mp.detail.value;
+            },
             nextStep: function()
             {
                 let id = param.getParamValue('product_id');
@@ -206,13 +229,18 @@
                 a.timeService = res.data.data.timeArr;
                 a.lunchService = res.data.data.lunchArr;
                 a.dinnerService = res.data.data.dinnerArr;
-
+                a.deliverStartList = res.data.data.start_deliver_day;
+                a.periodPrice = res.data.data.periodPrice;
             }).catch(err=>{console.log('网络异常')})
         },
         computed:{
             price:function()
             {
                 return this.priceArray[this.signTypeIndex]
+            },
+            periodService:function()
+            {
+
             }
         }
     }

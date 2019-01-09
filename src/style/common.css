@@ -280,6 +280,9 @@
 
 .btn3{background-image: linear-gradient(-137deg, #B9E77D 0%, #78CD09 50%);  box-shadow: 0 8px 16px 0 rgba(139,217,75,0.46);border-radius: 44px;line-height: 44px;font-size: 16px;color:#ffffff;font-weight: 800;text-align: center;}
 
+
+.btn4{position: absolute;left:0;bottom:0;right: 0;background-color: #0acb6c;padding: 40px 0;color:#ffffff;font-size: 26px;text-align: center;}
+
 .fix-bottom3{
     position: fixed;
     left: 0;

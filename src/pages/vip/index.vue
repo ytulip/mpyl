@@ -1,30 +1,5 @@
 <template>
-  <div style="padding: 24px;">
-    <swiper class="swiper" autoplay="true" interval="5000" duration="1000">
-      <block v-for="(item, index) in banners" :index="index" :key="key">
-        <swiper-item v-on:click="goBannerDetail(item.id)">
-          <image :src="item.url" class="slide-image" mode="aspectFill"/>
-        </swiper-item>
-      </block>
-    </swiper>
-
-    <div style="border-radius: 12px;" v-on:click="goVip">
-      <image src="http://graphis.zhuyan.me/banner2.jpg"  style="width: 100%;border-radius:6px;overflow:hidden;margin-top:24px;"/>
-      <div>
-          <p>一句话介绍介绍家庭会员哟</p>
-          <p>会员服务</p>
-      </div>
-    </div>
-
-    <div class="m-t-24 cus-row">
-      <div class="cus-row-col-6" v-on:click="goClean">
-        <image src="http://graphis.zhuyan.me/1.jpg"  mode="aspectFill" style="width: 100%;"/>
-      </div>
-      <div class="cus-row-col-6" v-on:click="goCommunity">
-        <image src="http://graphis.zhuyan.me/2.jpg"  mode="aspectFill" style="width: 100%;"/>
-      </div>
-    </div>
-  </div>
+  <div class="btn4">立即开通</div>
 </template>
 
 <script>
@@ -102,13 +77,6 @@
                 wx.navigateTo(
                     {
                         url:'/pages/webview/main?id=' + id
-                    }
-                );
-            },
-            goVip(){
-                wx.navigateTo(
-                    {
-                        url:'/pages/vip/main'
                     }
                 );
             }

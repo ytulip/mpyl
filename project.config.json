@@ -29,7 +29,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 1,
+			"current": 2,
 			"list": [
 				{
 					"id": 0,
@@ -42,6 +42,11 @@
 					"name": "助餐",
 					"pathName": "pages/vip/main",
 					"query": "product_id=4&openid=oTVrq4nITsaOlIGtvDPId0mGmHCM"
+				},
+				{
+					"id": -1,
+					"name": "vip",
+					"pathName": "pages/vip/main"
 				}
 			]
 		}

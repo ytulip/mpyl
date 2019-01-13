@@ -1,38 +1,40 @@
 <template>
     <div>
-  <div>
-      <img src="http://graphis.zhuyan.me/header1.jpg" class="header-img1"/>
-      <div class="in-bl v-a-m">
-          <span class="fs-14-fc-212229">李老头</span><br/>
-          <span class="fs-12-fc-95909e">您当前尚未开通家庭会员</span>
-      </div>`
-  </div>
-
-  <div class="fs-16-fc-212229 t-al-c">会员介绍</div>
-  <div class="fs-16-fc-212229 t-al-c">会员特权</div>
-
-        <div class="cus-row">
-            <div class="cus-row-col-3 t-al-c"><span class="fs-14-fc-212229 " v-bind:class="{ 'active-tab': (tabIndex == 1) }" v-on:click="setTab(1)">助餐服务</span></div>
-            <div class="cus-row-col-3 t-al-c"><span class="fs-14-fc-212229" v-bind:class="{ 'active-tab': (tabIndex == 2) }" v-on:click="setTab(2)">保洁服务</span></div>
-            <div class="cus-row-col-3 t-al-c"><span class="fs-14-fc-212229" v-bind:class="{ 'active-tab': (tabIndex == 3) }" v-on:click="setTab(3)">金融服务</span></div>
-            <div class="cus-row-col-3 t-al-c"><span class="fs-14-fc-212229" v-bind:class="{ 'active-tab': (tabIndex == 4) }" v-on:click="setTab(4)">体检服务</span></div>
-        </div>
-
-
-
         <div>
-
-
-            <div class="dp-n" v-bind:class="{ 'active-div': (tabIndex == 1) }">aaaa</div>
-            <div class="dp-n" v-bind:class="{ 'active-div': (tabIndex == 2) }">bbbb</div>
-            <div class="dp-n" v-bind:class="{ 'active-div': (tabIndex == 3) }">cccc</div>
-            <div class="dp-n" v-bind:class="{ 'active-div': (tabIndex == 4) }">dddd</div>
-
+            <img src="http://graphis.zhuyan.me/header1.jpg" class="header-img1"/>
+            <div class="in-bl v-a-m">
+                <span class="fs-14-fc-212229">李老头</span><br/>
+                <span class="fs-12-fc-95909e">您当前尚未开通家庭会员</span>
+            </div>`
         </div>
 
+        <div class="fs-16-fc-212229 t-al-c">选择会员方案</div>
 
+        <div v-bind:class="{'current-item': (tabIndex == 1)}" v-on:click="setTab(1)">
+            <div class="cus-row">
+                <div class="cus-row-col-6">
+                    <div class="fs-16-fc-212229">6个月</div>
+                    <div class="fs-12-fc-95909e">半年制会员折扣或者特惠描述</div>
+                </div>
+                <div class="cus-row-col-6">
+                    <span class="fs-12-fc-fa3f26">￥600</span>
+                </div>
+            </div>
+        </div>
 
-  <div class="btn4">立即开通</div>
+        <div v-bind:class="{'current-item': (tabIndex ==2)}" v-on:click="setTab(2)">
+            <div class="cus-row">
+                <div class="cus-row-col-6">
+                    <div class="fs-16-fc-212229">12个月</div>
+                    <div class="fs-12-fc-95909e">一年制会员折扣或者特惠描述</div>
+                </div>
+                <div class="cus-row-col-6">
+                    <span class="fs-12-fc-fa3f26">￥1000</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="btn4" v-on:click="pay">立即开通</div>
     </div>
 </template>
 
@@ -117,6 +119,27 @@
                         url:'/pages/webview/main?id=' + id
                     }
                 );
+            },
+            buyNow(){
+                wx.navigateTo(
+                    {
+                        url:'/pages/vipbuy/main'
+                    }
+                );
+            },
+            pay(){
+                let url = globalStore.state.host + 'user/buy-vip';
+                this.$http.get(url,{openid:wx.getStorageSync('openid'),type:this.tabIndex}).then((res)=>{
+                    // console.log(res.data.data.arr);
+                    // a.attrArr = res.data.data.arr;
+                    // a.timeService = res.data.data.timeArr;
+
+                    //支付成功关掉当前页面，返回家庭会员页面
+                    wx.navigateBack({
+                        delta:1
+                    });
+
+                }).catch(err=>{console.log('网络异常')})
             }
         },
         mounted(){
@@ -133,11 +156,16 @@
 </script>
 
 <style scoped>
-  .message {
-    color: red;
-    padding: 10px;
-    text-align: center;
-  }
+    .message {
+        color: red;
+        padding: 10px;
+        text-align: center;
+    }
 
-  .active-div{display: block !important;}
+    .active-div{display: block !important;}
+
+    .current-item
+    {
+        border: 1px solid #fa3f26;
+    }
 </style>

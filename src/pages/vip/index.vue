@@ -1,15 +1,19 @@
 <template>
     <div>
-  <div>
-      <img src="http://graphis.zhuyan.me/header1.jpg" class="header-img1"/>
-      <div class="in-bl v-a-m">
-          <span class="fs-14-fc-212229">李老头</span><br/>
-          <span class="fs-12-fc-95909e">您当前尚未开通家庭会员</span>
-      </div>`
-  </div>
+        <div>
+            <img src="http://graphis.zhuyan.me/header1.jpg" class="header-img1"/>
+            <div class="in-bl v-a-m">
+                <span class="fs-14-fc-212229">李老头</span><br/>
+                <span class="fs-12-fc-95909e">{{isVip?'家庭会员':'您当前尚未开通家庭会员'}}</span>
+            </div>
+        </div>
 
-  <div class="fs-16-fc-212229 t-al-c">会员介绍</div>
-  <div class="fs-16-fc-212229 t-al-c">会员特权</div>
+        <div v-if="isVip" class="fs-14-fc-A6A6A6">
+            会员到期日:{{expireDay}}
+        </div>
+
+        <div class="fs-16-fc-212229 t-al-c">会员介绍</div>
+        <div class="fs-16-fc-212229 t-al-c">会员特权</div>
 
         <div class="cus-row">
             <div class="cus-row-col-3 t-al-c"><span class="fs-14-fc-212229 " v-bind:class="{ 'active-tab': (tabIndex == 1) }" v-on:click="setTab(1)">助餐服务</span></div>
@@ -32,7 +36,7 @@
 
 
 
-  <div class="btn4">立即开通</div>
+        <div class="btn4" v-on:click="buyNow">立即开通</div>
     </div>
 </template>
 
@@ -43,7 +47,9 @@
             return {
                 msg: 'Hello',
                 banners:{},
-                tabIndex:1
+                tabIndex:1,
+                isVip:false,
+                expireDay:''
             }
         },
         created:function()
@@ -117,27 +123,42 @@
                         url:'/pages/webview/main?id=' + id
                     }
                 );
+            },
+            buyNow(){
+                wx.navigateTo(
+                    {
+                        url:'/pages/vipbuy/main'
+                    }
+                );
+            },
+            init(){
+                let url = globalStore.state.host + 'user/vip-page-info';
+                let a = this;
+                this.$http.get(url,{openid:wx.getStorageSync('openid')}).then((res)=>{
+                    console.log(res.data.data.arr);
+                    // a.attrArr = res.data.data.arr;
+                    // a.timeService = res.data.data.timeArr;
+                    a.isVip = res.data.data.isVip;
+                    a.expireDay = res.data.data.expireDay;
+
+                }).catch(err=>{console.log('网络异常')})
             }
         },
         mounted(){
-            let url = globalStore.state.host + 'user/vip-page-info';
-            let a = this;
-            this.$http.get(url,{openid:wx.getStorageSync('openid')}).then((res)=>{
-                console.log(res.data.data.arr);
-                // a.attrArr = res.data.data.arr;
-                // a.timeService = res.data.data.timeArr;
-
-            }).catch(err=>{console.log('网络异常')})
+            this.init();
+        },
+        onShow(){
+            this.init();
         }
     }
 </script>
 
 <style scoped>
-  .message {
-    color: red;
-    padding: 10px;
-    text-align: center;
-  }
+    .message {
+        color: red;
+        padding: 10px;
+        text-align: center;
+    }
 
-  .active-div{display: block !important;}
+    .active-div{display: block !important;}
 </style>

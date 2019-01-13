@@ -10,7 +10,8 @@
     "pages/editaddress/main",
     "pages/fillfoodbill/main",
     "pages/webview/main",
-    "pages/vip/main"
+    "pages/vip/main",
+    "pages/vipbuy/main"
   ],
   "window": {
     "backgroundTextStyle": "light",

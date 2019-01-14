@@ -40,8 +40,14 @@ function getParamValue(key) {
     }
 }
 
+function getOpenid()
+{
+    return wx.getStorageSync('openid');
+}
+
 module.exports = {
     getCurrentPageUrl: getCurrentPageUrl,
     getCurrentPageUrlWithArgs: getCurrentPageUrlWithArgs,
-    getParamValue: getParamValue
+    getParamValue: getParamValue,
+    getOpenid:getOpenid
 }

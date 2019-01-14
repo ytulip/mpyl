@@ -46,7 +46,7 @@
                     console.log(timer);
                     //判断是否拥有openid
                     if( wx.getStorageSync('openid'))
-                    {
+                    {f
                         a.openid = wx.getStorageSync('openid');
                         if( a.hasOwnProperty('userInit') )
                         {

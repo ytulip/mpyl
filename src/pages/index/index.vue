@@ -40,31 +40,31 @@
         {
             console.log('index' + wx.getStorageSync('openid'));
             //定时等待10s
-            (function(a,timer){
-                let countDownHandler = setInterval(function(){
-                    timer = timer - 1;
-                    console.log(timer);
-                    //判断是否拥有openid
-                    if( wx.getStorageSync('openid'))
-                    {f
-                        a.openid = wx.getStorageSync('openid');
-                        if( a.hasOwnProperty('userInit') )
-                        {
-                            console.log('has userInit');
-                            a.userInit();
-                        } else {
-                            console.log('donot has userInit');
-                        }
-                        clearInterval(countDownHandler);
-                        return;
-                    }
-                    a.userInit();
-                    if( timer < 1) {
-                        clearInterval(countDownHandler);
-                        return;
-                    }
-                },1000);
-            })(this,7);
+            // (function(a,timer){
+            //     let countDownHandler = setInterval(function(){
+            //         timer = timer - 1;
+            //         console.log(timer);
+            //         //判断是否拥有openid
+            //         if( wx.getStorageSync('openid'))
+            //         {f
+            //             a.openid = wx.getStorageSync('openid');
+            //             if( a.hasOwnProperty('userInit') )
+            //             {
+            //                 console.log('has userInit');
+            //                 a.userInit();
+            //             } else {
+            //                 console.log('donot has userInit');
+            //             }
+            //             clearInterval(countDownHandler);
+            //             return;
+            //         }
+            //         a.userInit();
+            //         if( timer < 1) {
+            //             clearInterval(countDownHandler);
+            //             return;
+            //         }
+            //     },1000);
+            // })(this,7);
         },
         methods: {
             clickHandle () {

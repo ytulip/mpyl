@@ -54,7 +54,7 @@
                     {
                         if( res.data.data.user.phone )
                         {
-                            wx.redirectTo({
+                            wx.switchTab({
                                 url:'/pages/index/main'
                             })
                         } else

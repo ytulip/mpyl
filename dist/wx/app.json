@@ -12,7 +12,8 @@
     "pages/fillfoodbill/main",
     "pages/webview/main",
     "pages/vip/main",
-    "pages/vipbuy/main"
+    "pages/vipbuy/main",
+    "pages/status/main"
   ],
   "window": {
     "backgroundTextStyle": "light",

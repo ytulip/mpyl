@@ -4,14 +4,14 @@
             <div class="cus-row cus-row-bborder" style="padding-left: 16px;">
                 <div class="cus-row-col-3 t-al-l"><span class="fs-16-fc-212229" style="line-height: 46px;">手机号</span></div>
                 <div class="cus-row-col-9">
-                    <input class="fs-16-fc-212229" type="text" style="line-height: 46px;margin-bottom: 0;border: none;height: 46px;" placeholder="请输入手机号" name="phone"/>
+                    <input class="fs-16-fc-212229" type="text" style="line-height: 46px;margin-bottom: 0;border: none;height: 46px;" placeholder="请输入手机号" name="phone" v-model="phone"/>
                 </div>
             </div>
 
             <div class="cus-row cus-row-bborder" style="padding-left: 16px;">
                 <div class="cus-row-col-3 t-al-l"><span class="fs-16-fc-212229" style="line-height: 46px;">验证码</span></div>
-                <div class="cus-row-col-6"><input name="register_sms_code" class="fs-16-fc-212229" type="text" style="line-height: 46px;margin-bottom: 0;border: none;height: 46px;" placeholder="请输入验证码" name="register_sms_code"/></div>
-                <div class="cus-row-col-3"><a class="get-code-btn" href="javascript:void(0)"><span class="lms-link-1" style="display: inline-block;line-height: 44px;">获取验证码</span></a></div>
+                <div class="cus-row-col-6"><input name="register_sms_code" class="fs-16-fc-212229" type="text" style="line-height: 46px;margin-bottom: 0;border: none;height: 46px;" placeholder="请输入验证码" v-model="smsCode"/></div>
+                <div class="cus-row-col-3"><a class="get-code-btn" v-on:click="sendSms"><span class="lms-link-1" style="display: inline-block;line-height: 44px;">{{smsText}}</span></a></div>
             </div>
         </div>
 
@@ -31,6 +31,10 @@
     export default {
         data () {
             return {
+                phone:'',
+                second:0,
+                smsText:'获取验证码',
+                smsCode:''
             }
         },
         components: {
@@ -66,13 +70,16 @@
             submit(){
                 var a = this;
                 this.$http.post(globalStore.state.host + 'passport/register',{
-                    openid:param.getOpenid()
+                    openid:param.getOpenid(),
+                    phone:this.phone,
+                    register_sms_code:this.smsCode
                 }).then((res)=>{
                     if(res.data.status)
                     {
+                        let url = encodeURI('/user/bindmore');
                         wx.redirectTo(
                             {
-                                url:''
+                                url:'/pages/status/main?url=' + url,
                             }
                         );
                     } else {
@@ -80,6 +87,59 @@
                         a.$mptoast(res.data.desc)
                     }
                 }).catch(err=>{console.log(4)})
+            },
+            sendSms(){
+                if(!(/^1[3|4|5|8|7][0-9]\d{8}$/.test(this.phone))) {
+                    this.$mptoast('请输入正确的手机号');
+                    return;
+                }
+
+                if ( this.second ) {
+                    return;
+                }
+
+
+                this.second = 60;
+                this.smsText = this.second + '秒';
+
+                (function(a){
+                    var countDownHandler = setInterval(function(){
+                        a.second = a.second - 1;
+                        if( a.second < 1) {
+                            clearInterval(countDownHandler);
+                            a.second = 0;
+                            a.smsText = '获取验证码';
+                            return;
+                        }
+                        a.smsText = a.second + '秒';
+                    },1000);
+                })(this);
+
+                //TODO:请求验证码
+                this.$http.post(globalStore.state.host + '/passport/register-sms',{
+                    phone:this.phone,
+                    storage_type:'cache'
+                }).then((res)=>{
+                    if(res.data.status)
+                    {
+                        a.$mptoast('发送成功')
+                    } else {
+                        console.log(res.data.desc);
+                        a.$mptoast(res.data.desc)
+                    }
+                }).catch(err=>{console.log(4)})
+
+
+
+//                $.post('/passport/register-sms',{phone:$('input[name="phone"]').val()},function(data){
+//                    if(data.status) {
+//                        mAlert('发送成功');
+//                    } else {
+//                        mAlert(data.desc);
+//                    }
+//                },'json').error(function(){
+//                    alert('网络异常！');
+//                });
             }
         },
         mounted() {

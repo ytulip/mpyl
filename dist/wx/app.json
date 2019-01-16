@@ -13,7 +13,8 @@
     "pages/webview/main",
     "pages/vip/main",
     "pages/vipbuy/main",
-    "pages/status/main"
+    "pages/status/main",
+    "pages/sms/main"
   ],
   "window": {
     "backgroundTextStyle": "light",

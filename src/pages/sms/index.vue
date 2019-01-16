@@ -1,13 +1,43 @@
 <template>
 
     <div class="p-lr-48">
-        <div class="m-t-45 fs-24-fc-000000">欢迎您，输入手机号码</div>
-        <div class="m-t-60" style="border-bottom: 1px solid #BFBFBF;padding-bottom: 8px;">
-            <input v-model="phone" class="cus-input fs-18-fc-2E3133 t-al-l"/>
+        <div class="m-t-45 fs-24-fc-000000">验证码已发送至</div>
+        <div class="m-t-24">
+            <div class="cus-row">
+                <div class="cus-row-col-8 v-a-m fs-12-fc-4a4a4a f-f-m l-h-24">{{phone}}</div>
+                <div class="cus-row-col-4 t-al-r v-a-m fs-16-fc-c50081 f-f-m" v-on:click="sendSms">{{smsText}}</div>
+            </div>
+        </div>
+
+        <div class="cus-row m-t-40" style="margin-left: -6px;margin-right: -6px;">
+            <div class="cus-row-col-3 divi-4-p">
+                <div class="single-input-wrap">
+                    <input  class="cus-input fs-18-fc-2E3133 t-al-c" v-model="n1" type="number" maxlength="4"/>
+                </div>
+            </div>
+            <div class="cus-row-col-3 divi-4-p">
+                <div class="single-input-wrap">
+                    <input  class="cus-input fs-18-fc-2E3133 t-al-c" v-model="n2" type="number" maxlength="1"/>
+                </div>
+            </div>
+            <div class="cus-row-col-3 divi-4-p">
+                <div class="single-input-wrap">
+                    <input  class="cus-input fs-18-fc-2E3133 t-al-c" v-model="n3" type="number" maxlength="1"/>
+                </div>
+            </div>
+            <div class="cus-row-col-3 divi-4-p">
+                <div class="single-input-wrap">
+                    <input  class="cus-input fs-18-fc-2E3133 t-al-c" v-model="n4" type="number" maxlength="1"/>
+                </div>
+            </div>
         </div>
 
 
-        <div class="m-t-40"><a class="yl_btn1" v-on:click="goSms" v-bind:class="{ 'btn-gray': (btnGray) }">获取验证码</a></div>
+        <div class="m-t-40"><a class="yl_btn1" v-on:click="goSms" v-bind:class="{ 'btn-gray': (btnGray) }">确定</a></div>
+
+        <div class="m-t-24">
+            <div class=""><span class="fs-12-fc-4a4a4a f-f-r l-h-17">点击确定，即表示已阅读并同意</span><span class="fs-12-fc-c50081 f-f-r l-h-17">《用户服务条款》</span></div>
+        </div>
     </div>
 
     <!--<div>-->
@@ -42,7 +72,13 @@
     export default {
         data () {
             return {
-                phone:''
+                phone:'',
+                smsText:'',
+                second:0,
+                n1:'',
+                n2:'',
+                n3:'',
+                n4:''
             }
         },
         components: {
@@ -50,6 +86,16 @@
         },
         created:function()
         {
+        },
+        watch:{
+          n1:function(val){
+              if(val)
+              {
+                  console.log(val);
+                  // console.log('失去焦點');
+                  // if(val.)
+              }
+          }
         },
         methods: {
             goSms:function()
@@ -145,57 +191,16 @@
                         a.$mptoast(res.data.desc)
                     }
                 }).catch(err=>{console.log(4)})
-
-
-
-//                $.post('/passport/register-sms',{phone:$('input[name="phone"]').val()},function(data){
-//                    if(data.status) {
-//                        mAlert('发送成功');
-//                    } else {
-//                        mAlert(data.desc);
-//                    }
-//                },'json').error(function(){
-//                    alert('网络异常！');
-//                });
             }
         },
         mounted() {
-            var a = this;
-            if(wx.getStorageSync('openid'))
-            {
-                this.pageInit();
-            } else {
-                wx.login({
-                    success: function (res) {
-                        if (res.code) {
-                            //发起网络请求
-                            console.log(res.code);
-                            wx.request({
-                                url: 'http://yl.zhuyan.me/' + 'activity/common-info2',
-                                data: {
-                                    code: res.code
-                                },
-                                success: function (requestRes) {
-                                    console.log(requestRes);
-                                    //存储openid
-                                    if (requestRes.data.status) {
-                                        wx.setStorageSync('openid', requestRes.data.data.openid);
-                                        a.pageInit();
-                                    }
-
-                                }
-                            })
-                        } else {
-                            console.log('登录失败！' + res.errMsg)
-                        }
-                    }
-                });
-            }
+            this.phone = param.getParamValue('phone');
+            this.sendSms();
         },
         computed:{
             btnGray:function()
             {
-                if((/^1[3|4|5|8|7][0-9]\d{8}$/.test(this.phone))) {
+                if(this.n1.length && this.n2.length && this.n3.length && this.n4.length) {
                     return false;
                 } else
                 {
@@ -211,5 +216,12 @@
     color: red;
     padding: 10px;
     text-align: center;
+  }
+
+  .divi-4-p{padding: 0 6px;box-sizing:border-box;}
+
+  .single-input-wrap
+  {
+      border-bottom: 1px solid #BFBFBF;padding-bottom: 8px;
   }
 </style>

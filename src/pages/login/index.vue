@@ -1,43 +1,30 @@
 <template>
 
-    <div class="p-lr-48">
-        <div class="m-t-45 fs-24-fc-000000">验证码已发送至</div>
-        <div class="m-t-24">
-            <div class="cus-row">
-                <div class="cus-row-col-8 v-a-m fs-12-fc-4a4a4a f-f-m l-h-24">{{phone}}</div>
-                <div class="cus-row-col-4 t-al-r v-a-m fs-16-fc-c50081 f-f-m" v-on:click="sendSms">{{smsText}}</div>
-            </div>
+    <div style="margin-top: 81px;">
+        <div class="t-al-c">
+            <img src="/static/images/Login_logo_nor@3x.png" style="width: 125px;" mode="widthFix"/>
         </div>
 
-        <div class="cus-row m-t-40" style="margin-left: -6px;margin-right: -6px;">
-            <div class="cus-row-col-3 divi-4-p">
-                <div class="single-input-wrap">
-                    <input  class="cus-input fs-18-fc-2E3133 t-al-c" v-model="n1" type="number" maxlength="4"/>
-                </div>
+        <div style="margin-top: 74px;" class="p-lr-48">
+            <!--<div class="">-->
+                <!--<a class="yl_btn1 btn-green" v-on:click="getPhone">微信一键登录</a>-->
+            <!--</div>-->
+
+            <div class="">
+            <button class="yl_btn1 btn-green" open-type="getPhoneNumber" bindgetphonenumber="getUserInfo1">微信一键登录</button>
             </div>
-            <div class="cus-row-col-3 divi-4-p">
-                <div class="single-input-wrap">
-                    <input  class="cus-input fs-18-fc-2E3133 t-al-c" v-model="n2" type="number" maxlength="1"/>
-                </div>
-            </div>
-            <div class="cus-row-col-3 divi-4-p">
-                <div class="single-input-wrap">
-                    <input  class="cus-input fs-18-fc-2E3133 t-al-c" v-model="n3" type="number" maxlength="1"/>
-                </div>
-            </div>
-            <div class="cus-row-col-3 divi-4-p">
-                <div class="single-input-wrap">
-                    <input  class="cus-input fs-18-fc-2E3133 t-al-c" v-model="n4" type="number" maxlength="1"/>
-                </div>
+
+            <div class="m-t-24">
+                <a class="yl_btn1 btn-red" v-on:click="cusNavigate('bind')">手机验证登录</a>
             </div>
         </div>
 
 
-        <div class="m-t-40"><a class="yl_btn1" v-on:click="submit" v-bind:class="{ 'btn-gray': (btnGray) }">确定</a></div>
+        <!--<div class="m-t-40"><a class="yl_btn1" v-on:click="submit" v-bind:class="{ 'btn-gray': (btnGray) }">确定</a></div>-->
 
-        <div class="m-t-24">
-            <div class=""><span class="fs-12-fc-4a4a4a f-f-r l-h-17">点击确定，即表示已阅读并同意</span><span class="fs-12-fc-c50081 f-f-r l-h-17">《用户服务条款》</span></div>
-        </div>
+        <!--<div class="m-t-24">-->
+            <!--<div class=""><span class="fs-12-fc-4a4a4a f-f-r l-h-17">点击确定，即表示已阅读并同意</span><span class="fs-12-fc-c50081 f-f-r l-h-17">《用户服务条款》</span></div>-->
+        <!--</div>-->
 
         <mptoast />
 
@@ -137,6 +124,29 @@
               }
         },
         methods: {
+
+            getUserInfo1(){
+                console.log('click事件首先触发')
+                // 判断小程序的API，回调，参数，组件等是否在当前版本可用。  为false 提醒用户升级微信版本
+                // console.log(wx.canIUse('button.open-type.getUserInfo'))
+                if(wx.canIUse('button.open-type.getUserInfo')){
+                    // 用户版本可用
+                }else{
+                    console.log('请升级微信版本')
+                }
+            },
+            bindGetUserInfo(e) {
+                // console.log(e.mp.detail.rawData)
+                if (e.mp.detail.rawData){
+                    //用户按了允许授权按钮
+                    console.log('用户按了允许授权按钮')
+                } else {
+                    //用户按了拒绝按钮
+                    console.log('用户按了拒绝按钮')
+                }
+            },
+
+
             pageInit(){
                 //判断用户是否绑定了手机号
                 this.$http.get(globalStore.state.host + 'user/vip-page-info',{
@@ -225,11 +235,53 @@
                         a.$mptoast(res.data.desc)
                     }
                 }).catch(err=>{console.log(4)})
-            }
+            },
+            cusNavigate(url){
+                wx.navigateTo(
+                    {
+                        url: "/pages/"+url+"/main"
+                    });
+            },
+            getPhone:function()
+            {
+                wx.login({
+                    success: function (res) {
+                        if (res.code) {
+                            //发起网络请求
+                            console.log(res.code);
+                            wx.request({
+                                url: 'http://yl.zhuyan.me/' + 'activity/common-info2',
+                                data: {
+                                    code: res.code
+                                },
+                                success: function (requestRes) {
+                                    console.log(requestRes);
+                                    //存储openid
+//                                    if (requestRes.data.status) {
+//                                        wx.setStorageSync('openid', requestRes.data.data.openid);
+//                                        a.pageInit();
+//                                    }
+
+                                }
+                            })
+                        } else {
+                            console.log('登录失败！' + res.errMsg)
+                        }
+                    }
+                });
+            },
         },
         mounted() {
-            this.phone = param.getParamValue('phone');
-            this.sendSms();
+//            this.phone = param.getParamValue('phone');
+//            this.sendSms();
+
+            //如果用户登录了，那么直接跳转到home页
+            if( wx.getStorageSync("openid") )
+            {
+                wx.switchTab({
+                    url:'/pages/index/main'
+                })
+            }
         },
         computed:{
             btnGray:function()

@@ -36,7 +36,7 @@
         <div class="m-t-40"><a class="yl_btn1" v-on:click="submit" v-bind:class="{ 'btn-gray': (btnGray) }">确定</a></div>
 
         <div class="m-t-24">
-            <div class=""><span class="fs-12-fc-4a4a4a f-f-r l-h-17">点击确定，即表示已阅读并同意</span><span class="fs-12-fc-c50081 f-f-r l-h-17">《用户服务条款》</span></div>
+            <div class=""><span class="fs-12-fc-4a4a4a f-f-r l-h-17">点击确定，即表示已阅读并同意</span><span class="fs-12-fc-c50081 f-f-r l-h-17" v-on:click="goProtocol">《用户服务条款》</span></div>
         </div>
 
         <mptoast />
@@ -71,6 +71,7 @@
     import globalStore from '../../stores/global-store'
     import param from '../../utils/param'
     import mptoast from 'mptoast'
+    import { Base64 } from 'js-base64'
 
     export default {
         data () {
@@ -225,6 +226,14 @@
                         a.$mptoast(res.data.desc)
                     }
                 }).catch(err=>{console.log(4)})
+            },
+            goProtocol(){
+                let url = Base64.encode('/passport/show-essay?id=4');
+                wx.navigateTo(
+                    {
+                        url:'/pages/commonweb/main?url=' + url,
+                    }
+                );
             }
         },
         mounted() {

@@ -57,7 +57,7 @@
                 if(!this.btnGray) {
                     wx.navigateTo(
                         {
-                            url: '/pages/sms/main?phone' + this.phone
+                            url: '/pages/sms/main?phone=' + this.phone
                         }
                     );
                 }

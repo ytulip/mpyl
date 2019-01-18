@@ -1,6 +1,40 @@
 <template>
-    <!--<web-view src="{{src}}"></web-view>-->
-    <div class="padding-container">
+    <div class="p16 bg-f9f9fb">
+
+        <div class="white-panel">
+            <div class="cus-row">
+                <div class="cus-row-col-6 v-a-m">
+                    <span class="fs-18-fc-000000-m in-bl" style="line-height: 25px;">配送地址</span>
+                </div>
+                <div class="cus-row-col-6 v-a-m t-al-r">
+                    <span class="fs-16-fc-c50081-m" v-on:click="goAddressList()">修改</span>
+                </div>
+            </div>
+
+            <div class="m-t-16">
+                <div class="fs-16-fc-000000-m in-bl" style="line-height: 22px;">{{name}}  {{phone}}</div>
+
+                <div class="fs-14-fc-7e7e7e-r" style="margin-top: 8px;">
+                    {{pct_code_name}} {{address}}
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="white-panel m-t-16">
+            <div class="cus-row">
+                <div class="cus-row-col-6 v-a-m">
+                    <span class="fs-18-fc-000000-m in-bl" style="line-height: 25px;">订购服务</span>
+                </div>
+            </div>
+
+            <div class="m-t-24">
+                <img src="" style="width: 80px;height: 80px;"/>
+            </div>
+        </div>
+
+
         <div><i class="back-icon"></i><span class="fs-26-fc-black">填写订单</span></div>
 
         <div class="white-bg-card">

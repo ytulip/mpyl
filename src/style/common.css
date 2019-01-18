@@ -197,8 +197,14 @@
 .fs-16-fc-030303{font-size: 16px;color:#030303;line-height: 18px;}
 .fs-14-fc-030303{font-size: 14px;color:#030303;line-height: 16px;}
 
+.fs-14-fc-7e7e7e-r{font-family: PingFangSC-Regular;
+    font-size: 14px;
+    color: #7E7E7E;
+    letter-spacing: -0.27px;}
+
 
 .fs-18-fc-000000-m{font-size: 18px;color:#000000;line-height: 14px;font-family: PingFangSC-Medium;letter-spacing: -0.35px;}
+.fs-16-fc-000000-m{font-size: 16px;color:#000000;line-height: 16px;font-family: PingFangSC-Medium;letter-spacing: -0.31px;}
 .fs-12-fc-7E7E7E-r{font-size: 12px;color:#7E7E7E;line-height: 12px;font-family: PingFangSC-Regular;;letter-spacing: -0.23px;}
 
 .fs-16-fc-c50081
@@ -207,6 +213,14 @@
     color: #C50081;
     letter-spacing: 0.25px;
     line-height: 16px;
+}
+
+.fs-16-fc-c50081-m
+{
+    font-family: PingFangSC-Medium;
+    font-size: 16px;
+    color: #C50081;
+    letter-spacing: -0.31px;
 }
 
 .fs-12-fc-4a4a4a{font-size: 12px;
@@ -384,3 +398,11 @@ letter-spacing: 0.19px;line-height: 12px;}
 .btn-gray{background-image: none; background: #CECCCC;color:#ffffff;box-shadow:none;}
 .btn-green{background-image: none; background: #03C160;color:#ffffff;box-shadow:none;}
 .btn-red{background-image: none; background: #ffffff;color:#C50081;box-shadow:none;border: 1px solid #C50081;}
+
+.white-panel
+{
+    padding: 16px 24px;
+    background: #FFFFFF;
+    box-shadow: 0 2px 6px 0 #E7E9F0;
+    border-radius: 5px;
+}

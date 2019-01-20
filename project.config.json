@@ -29,7 +29,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 6,
+			"current": 7,
 			"list": [
 				{
 					"id": 0,
@@ -72,6 +72,13 @@
 					"name": "助餐列表",
 					"pathName": "pages/clean/main",
 					"query": "type=community"
+				},
+				{
+					"id": 7,
+					"name": "订餐页面",
+					"pathName": "pages/fillfoodbill/main",
+					"query": "product_id=4&openid=oTVrq4nITsaOlIGtvDPId0mGmHCM",
+					"scene": null
 				}
 			]
 		}

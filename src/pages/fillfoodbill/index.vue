@@ -29,11 +29,98 @@
                 </div>
             </div>
 
+            <div class="cus-row m-t-24">
+                <div class="in-bl v-a-t food-icon-img">
+                    <image :src="visitCoverImage" class="slide-image" style="width: 100%;height: 100%;"/>
+                </div>
+                <div class="v-a-t in-bl m-l-24">
+                    <div class="fs-16-fc-000000-m">{{product.product_name}}</div>
+                    <div class="m-t-10"><span class="fs-14-fc-c50081-m">￥{{product.price}}</span><span class="fs-14-fc-7e7e7e-r"> ×{{quantity}}份 ×{{days}}天</span></div>
+                </div>
+            </div>
+
+            <div class="barr-line"></div>
+            <div class="cus-row">
+                <div class="cus-row-col-6 v-a-m">
+                    <div class="fs-16-fc-000000-m">订餐份数</div>
+                    <div class="fs-14-fc-7e7e7e-r m-t-6">1份餐仅供一人</div>
+                </div>
+                <div class="cus-row-col-6 v-a-m t-al-r">
+                    <div class="in-bl v-a-m quantity-plus-icon" v-on:click="deQuantity"><image src="/static/images/tarbar/icon_out_nor@3x.png" class="quantity-plus-icon"/></div>
+                    <div class="in-bl v-a-m" style="margin: 0 30px;"><span class="quantity-plus">    {{quantity}}    </span></div>
+                    <div class="in-bl v-a-m quantity-plus-icon" v-on:click="addQuantity"><image src="/static/images/tarbar/icon_add_nor@3x.png" class="quantity-plus-icon"/></div>
+                </div>
+            </div>
+
+            <div class="barr-line"></div>
+            <div class="cus-row">
+                <div class="cus-row-col-6 v-a-m">
+                    <span class="fs-16-fc-000000-m in-bl" style="line-height: 25px;">预定时间</span>
+                </div>
+                <div class="cus-row-col-6 v-a-m t-al-r">
+                    <span class="fs-16-fc-c50081-m" v-on:click="goAddressList()">修改</span>
+                </div>
+            </div>
+
+            <div class="in-bl fs-16-fc-000000-m m-t-16">共计:{{days}}天</div>
+            <div class="fs-14-fc-7e7e7e-r m-t-6">明天</div>
+
+            <div class="fs-14-fc-7e7e7e-r m-t-16">午餐配送时间：11:30 - 12:30</div>
+            <div class="fs-14-fc-7e7e7e-r m-t-6">晚餐配送时间：18:30 - 19:30</div>
+
             <div class="m-t-24">
                 <img src="" style="width: 80px;height: 80px;"/>
             </div>
         </div>
 
+
+        <div class="white-panel m-t-16">
+
+            <div class="fs-16-fc-000000-m">优惠</div><br/>
+
+            <div class="cus-row">
+                <div class="cus-row-col-6 v-a-m">
+                    <div class="fs-16-fc-000000-m">花甲红包</div>
+                    <div class="fs-14-fc-7e7e7e-r m-t-10">暂无备注</div>
+                </div>
+                <div class="cus-row-col-5 v-a-m">
+
+                </div>
+                <div class="cus-row-col-1 v-a-m t-al-r">
+                    <img src="/static/images/icon_next_nor@3x.png" style="width: 13px;" mode="widthFix"/>
+                </div>
+            </div>
+
+
+
+            <div class="barr-line"></div>
+
+            <div class="cus-row">
+                <div class="cus-row-col-6 v-a-m">
+                    <span class="fs-16-fc-000000-m">订购优惠</span><br/>
+                    <span class="fs-14-fc-7e7e7e-r">5日以上优惠20元</span>
+                </div>
+                <div class="cus-row-col-6 v-a-m fs-14-fc-7e7e7e-r t-al-r">
+                    暂无优惠
+                </div>
+            </div>
+
+        </div>
+
+        <div class="white-panel m-t-16">
+            <div class="cus-row">
+                <div class="cus-row-col-6 v-a-m">
+                    <div class="fs-18-fc-000000-m">忌口备注</div>
+                    <div class="fs-14-fc-7e7e7e-r m-t-10">暂无备注</div>
+                </div>
+                <div class="cus-row-col-5 v-a-m">
+
+                </div>
+                <div class="cus-row-col-1 v-a-m t-al-r">
+                    <img src="/static/images/icon_next_nor@3x.png" style="width: 13px;" mode="widthFix"/>
+                </div>
+            </div>
+        </div>
 
         <div><i class="back-icon"></i><span class="fs-26-fc-black">填写订单</span></div>
 
@@ -131,8 +218,8 @@
                 <div class="cus-row-col-6" id="total_price">
                     <span class="fs-24-fc-212229">￥{{price}}</span><span class="fs-24-fc-212229" id="price_label"></span>
                 </div>
-                <div class="cus-row-col-6">
-                    <a class="btn-block1 m-t-20"  v-on:click="nextStep()" style="margin-top: 0;">立即付款</a>
+                <div class="cus-row-col-4">
+                    <a class="yl_btn m-t-20"  v-on:click="nextStep()" style="margin-top: 0;">微信支付</a>
                 </div>
             </div>
         </div>
@@ -172,7 +259,10 @@
                 deliverStartList:[],
                 deliverStartIndex:0,
                 periodPrice:[],
-                periodIndex:0
+                periodIndex:0,
+                product:{},
+                quantity:0,
+                days:1
             }
         },
         created:function()
@@ -225,6 +315,15 @@
             globalStore.commit('setAddressShare','');
         },
         methods: {
+            deQuantity:function () {
+                if( this.quantity > 1)
+                {
+                    this.quantity = this.quantity - 1;
+                }
+            },
+            addQuantity:function(){
+                this.quantity = this.quantity + 1;
+            },
             goAddressList:function()
             {
                 wx.navigateTo(
@@ -283,6 +382,7 @@
                 a.dinnerService = res.data.data.dinnerArr;
                 a.deliverStartList = res.data.data.start_deliver_day;
                 a.periodPrice = res.data.data.periodPrice;
+                a.product = res.data.data.product;
             }).catch(err=>{console.log('网络异常')})
         },
         computed:{
@@ -294,6 +394,10 @@
             {
                 console.log(this.periodPrice);
                 return _.pluck(this.periodPrice,'period_name');
+            },
+            visitCoverImage:function()
+            {
+                return globalStore.state.host + this.product.cover_image;
             }
         }
     }

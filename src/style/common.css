@@ -15,6 +15,10 @@
     margin-top: 24px;
 }
 
+.m-l-24{
+    margin-left: 24px;
+}
+
 .m-l-16{margin-left: 16px;}
 .m-b-16{margin-bottom: 16px;}
 
@@ -200,10 +204,10 @@
 .fs-14-fc-7e7e7e-r{font-family: PingFangSC-Regular;
     font-size: 14px;
     color: #7E7E7E;
-    letter-spacing: -0.27px;}
+    letter-spacing: -0.27px;line-height: 14px;}
 
 
-.fs-18-fc-000000-m{font-size: 18px;color:#000000;line-height: 14px;font-family: PingFangSC-Medium;letter-spacing: -0.35px;}
+.fs-18-fc-000000-m{font-size: 18px;color:#000000;line-height: 18px;font-family: PingFangSC-Medium;letter-spacing: -0.35px;}
 .fs-16-fc-000000-m{font-size: 16px;color:#000000;line-height: 16px;font-family: PingFangSC-Medium;letter-spacing: -0.31px;}
 .fs-12-fc-7E7E7E-r{font-size: 12px;color:#7E7E7E;line-height: 12px;font-family: PingFangSC-Regular;;letter-spacing: -0.23px;}
 
@@ -249,6 +253,13 @@ letter-spacing: 0.19px;line-height: 12px;}
     font-size: 12px;
     color: #C50081;
     letter-spacing: 0.19px;
+}
+
+
+.fs-14-fc-c50081-m{font-family: PingFangSC-Medium;
+font-size: 14px;
+color: #C50081;
+letter-spacing: -0.31px;
 }
 
 
@@ -405,4 +416,32 @@ letter-spacing: 0.19px;line-height: 12px;}
     background: #FFFFFF;
     box-shadow: 0 2px 6px 0 #E7E9F0;
     border-radius: 5px;
+}
+
+.food-icon-img
+{
+    width: 80px;
+    height: 80px;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.barr-line{
+background: #FFFFFF;
+border: 1px solid #E1E1E1;
+margin-top: 24px;
+margin-bottom: 24px;
+}
+
+.quantity-plus
+{
+    font-family: PingFangSC-Medium;
+    font-size: 20px;
+    color: #212229;
+}
+
+.quantity-plus-icon
+{
+    width: 21px;
+    height: 21px;
 }

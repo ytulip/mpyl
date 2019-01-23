@@ -16,7 +16,8 @@
     "pages/vipbuy/main",
     "pages/status/main",
     "pages/sms/main",
-    "pages/commonweb/main"
+    "pages/commonweb/main",
+    "pages/remark/main"
   ],
   "window": {
     "backgroundTextStyle": "light",

@@ -93,12 +93,12 @@
                 }).then((res)=>{
                     if(res.data.status)
                     {
-                        let url = encodeURI('/user/bindmore');
-                        wx.redirectTo(
-                            {
-                                url:'/pages/status/main?url=' + url,
-                            }
-                        );
+
+                        console.log('login:' + e.data.data.userId);
+                        wx.setStorageSync("openid",e.data.data.userId);
+                        wx.switchTab({
+                            url:'/pages/index/main'
+                        })
                     } else {
                         console.log(res.data.desc);
                         a.$mptoast(res.data.desc)
@@ -160,37 +160,7 @@
             }
         },
         mounted() {
-            var a = this;
-            if(wx.getStorageSync('openid'))
-            {
-                this.pageInit();
-            } else {
-                wx.login({
-                    success: function (res) {
-                        if (res.code) {
-                            //发起网络请求
-                            console.log(res.code);
-                            wx.request({
-                                url: 'http://yl.zhuyan.me/' + 'activity/common-info2',
-                                data: {
-                                    code: res.code
-                                },
-                                success: function (requestRes) {
-                                    console.log(requestRes);
-                                    //存储openid
-                                    if (requestRes.data.status) {
-                                        wx.setStorageSync('openid', requestRes.data.data.openid);
-                                        a.pageInit();
-                                    }
 
-                                }
-                            })
-                        } else {
-                            console.log('登录失败！' + res.errMsg)
-                        }
-                    }
-                });
-            }
         },
         computed:{
             btnGray:function()

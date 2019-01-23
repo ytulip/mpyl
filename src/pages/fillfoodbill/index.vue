@@ -58,7 +58,7 @@
                     <span class="fs-16-fc-000000-m in-bl" style="line-height: 25px;">预定时间</span>
                 </div>
                 <div class="cus-row-col-6 v-a-m t-al-r">
-                    <span class="fs-16-fc-c50081-m" v-on:click="goAddressList()">修改</span>
+                    <span class="fs-16-fc-c50081-m" v-on:click="openCalderSwitch">修改</span>
                 </div>
             </div>
 
@@ -107,11 +107,11 @@
 
         </div>
 
-        <div class="white-panel m-t-16">
+        <div class="white-panel m-t-16" v-on:click="doRemark">
             <div class="cus-row">
                 <div class="cus-row-col-6 v-a-m">
                     <div class="fs-18-fc-000000-m">忌口备注</div>
-                    <div class="fs-14-fc-7e7e7e-r m-t-10">暂无备注</div>
+                    <div class="fs-14-fc-7e7e7e-r m-t-10">{{remarkAndPlaceholder}}</div>
                 </div>
                 <div class="cus-row-col-5 v-a-m">
 
@@ -134,7 +134,7 @@
 
             <div class="cus-row">
                 <div class="cus-row-col-3 fs-16-fc-030303">备注</div>
-                <div class="cus-row-col-9 fs-16-fc-030303"><input placeholder="请备注您的特殊需求" v-model="remark"/></div>
+                <div class="cus-row-col-9 fs-16-fc-030303"><input placeholder="请备注您的特殊需求" v-model="remark" readonly/></div>
             </div>
         </div>
 
@@ -224,6 +224,82 @@
             </div>
         </div>
 
+
+        <div style="position: fixed;top:0;bottom: 0;left: 0;right: 0;background-color: rgba(28,36,75,0.80);z-index:9999" id="calder" v-if="calderSwitch">
+            <div style="position: absolute;left:0;bottom: 0;right: 0;">
+
+
+                <div style="padding-left: 16px;margin-bottom: 16px;">
+                    <img src="/static/images/icon_unsuess_nor@3x.png" style="width: 24px;height: 24px;" v-on:click="closeCalderSwitch">
+                </div>
+
+
+                <div style="padding: 26px 16px 6px; background-color: #ffffff">
+
+                    <div style="">
+                        <span class="fs-18-fc-212229-m">预定时间</span><span style="margin-left: 16px;" class="fs-14-fc-7E7E7E-r">单次预定限五天内 节假日暂不供应</span>
+                    </div>
+
+                    <div class="t-al-c" style="font-size: 0;margin-top: 26px;">
+                        <div class="in-bl" style="background: #F9F9FB;border: 1px solid #E1E1E1;border-radius: 17px 0px 0px 17px;" v-bind:class="{ 'active-type': (tabIndex == 1) }" v-on:click="setTab(1)"><span class="fs-16-fc-080808-r" style="line-height: 36px;padding: 0 24px;">单次</span></div>
+                        <div class="in-bl" style="background: #F9F9FB;border-top: 1px solid #E1E1E1;border-bottom: 1px solid #E1E1E1;" v-bind:class="{ 'active-type': (tabIndex == 2) }" v-on:click="setTab(2)"><span class="fs-16-fc-080808-r" style="line-height: 36px;padding: 0 24px;">按周</span></div>
+                        <div class="in-bl" style="background: #F9F9FB;border: 1px solid #E1E1E1;border-radius: 0px 17px 17px 0px;" v-bind:class="{ 'active-type': (tabIndex == 3) }" v-on:click="setTab(3)"><span class="fs-16-fc-080808-r" style="line-height: 36px;padding: 0 24px;">按月</span></div>
+                    </div>
+
+                    <div class="t-al-c" style="margin-top: 40px;">
+                        <div class="cus-row">
+                            <div class="cus-row-col-3 v-a-m t-al-l">
+                                <span class="fs-16-fc-212229-m op3">{{prveMonth}}</span>
+                            </div>
+                            <div class="cus-row-col-6 v-a-m">
+                                <div class="cus-row">
+                                    <div class="cus-row-col-2 t-al-l">
+                                        <i class="prev-icon"></i>
+                                    </div>
+                                    <div class="cus-row-col-8">
+                                        <span class="fs-16-fc-212229-m">{{currentMonth}}</span>
+                                    </div>
+                                    <div class="cus-row-col-2 t-al-r">
+                                        <i class="next-icon"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cus-row-col-3 v-a-m t-al-r">
+                                <span class="fs-16-fc-212229-m op3">{{nextMonth}}</span>
+                            </div>
+                        </div>
+                        <div class="cus-row" style="margin-top: 22px;">
+                            <div class="cus-row-col-1-7"><span class="fs-16-fc-212229-m">日</span></div>
+                            <div class="cus-row-col-1-7"><span class="fs-16-fc-212229-m">一</span></div>
+                            <div class="cus-row-col-1-7"><span class="fs-16-fc-212229-m">二</span></div>
+                            <div class="cus-row-col-1-7"><span class="fs-16-fc-212229-m">三</span></div>
+                            <div class="cus-row-col-1-7"><span class="fs-16-fc-212229-m">四</span></div>
+                            <div class="cus-row-col-1-7"><span class="fs-16-fc-212229-m">五</span></div>
+                            <div class="cus-row-col-1-7"><span class="fs-16-fc-212229-m">六</span></div>
+                        </div>
+
+                        <div class="cus-row cus-row-v-m" v-for="(ind,item) in lines" style="margin-top: 22px;">
+                            <div class="cus-row-col-1-7"><span class="fs-16-fc-212229-m" v-bind:class="{'op3':data[item][0].forbiddenChosen,'chosen':data[item][0].chosen}" v-on:click="setBegin(data[item][0].day)">{{data[item][0].day}}</span></div>
+                            <div class="cus-row-col-1-7"><span class="fs-16-fc-212229-m"  v-bind:class="{'op3':data[item][1].forbiddenChosen,'chosen':data[item][1].chosen}" v-on:click="setBegin(data[item][1].day)">{{data[item][1].day}}</span></div>
+                            <div class="cus-row-col-1-7"><span class="fs-16-fc-212229-m"  v-bind:class="{'op3':data[item][2].forbiddenChosen,'chosen':data[item][2].chosen}" v-on:click="setBegin(data[item][2].day)">{{data[item][2].day}}</span></div>
+                            <div class="cus-row-col-1-7"><span class="fs-16-fc-212229-m"  v-bind:class="{'op3':data[item][3].forbiddenChosen,'chosen':data[item][3].chosen}" v-on:click="setBegin(data[item][3].day)">{{data[item][3].day}}</span></div>
+                            <div class="cus-row-col-1-7"><span class="fs-16-fc-212229-m"  v-bind:class="{'op3':data[item][4].forbiddenChosen,'chosen':data[item][4].chosen}" v-on:click="setBegin(data[item][4].day)">{{data[item][4].day}}</span></div>
+                            <div class="cus-row-col-1-7"><span class="fs-16-fc-212229-m"  v-bind:class="{'op3':data[item][5].forbiddenChosen,'chosen':data[item][5].chosen}" v-on:click="setBegin(data[item][5].day)">{{data[item][5].day}}</span></div>
+                            <div class="cus-row-col-1-7"><span class="fs-16-fc-212229-m" v-bind:class="{'op3':data[item][6].forbiddenChosen,'chosen':data[item][6].chosen}" v-on:click="setBegin(data[item][6].day)">{{data[item][6].day}}</span></div>
+
+                        </div>
+
+                    </div>
+
+                    <div style="margin-top: 26px;">
+                        <a class="yl_btn1 m-t-20" href="javascript:buy()" style="margin-top: 0;display: block;">确定2</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
     </div>
 
 </template>
@@ -262,7 +338,22 @@
                 periodIndex:0,
                 product:{},
                 quantity:0,
-                days:1
+                days:1,
+
+                year:2019,
+                month:1,
+                data:[
+                    [{day:''},{day:''},{day:''},{day:''},{day:''},{day:''},{day:''}],
+                    [{day:''},{day:''},{day:''},{day:''},{day:''},{day:''},{day:''}],
+                    [{day:''},{day:''},{day:''},{day:''},{day:''},{day:''},{day:''}],
+                    [{day:''},{day:''},{day:''},{day:''},{day:''},{day:''},{day:''}],
+                    [{day:''},{day:''},{day:''},{day:''},{day:''},{day:''},{day:''}]
+                ],
+                s:'12',
+                lines:[0,1,2,3,4],
+                tabIndex:1,
+                currentDay:'',
+                calderSwitch:false
             }
         },
         created:function()
@@ -300,21 +391,31 @@
             }
         },
         onShow:function(){
-            if( globalStore.state.addressShare )
+            if( globalStore.state.habbitRemarkShare )
             {
                 //设置默认地址
-                let jsonData = JSON.parse(globalStore.state.addressShare);
-                this.name = jsonData.name;
-                this.phone = jsonData.phone;
-                this.pct = jsonData.pct;
-                this.pct_code_name = jsonData.pct_code_name;
-                this.address = jsonData.address;
+//                let jsonData = JSON.parse(globalStore.state.addressShare);
+//                this.name = jsonData.name;
+//                this.phone = jsonData.phone;
+//                this.pct = jsonData.pct;
+//                this.pct_code_name = jsonData.pct_code_name;
+//                this.address = jsonData.address;
+                console.log(globalStore.state.habbitRemarkShare);
+                this.remark = globalStore.state.habbitRemarkShare;
 
                 //如果地址变了，那么面积也应当相应的变化哟
             }
-            globalStore.commit('setAddressShare','');
+            globalStore.commit('sethabbitRemarkShare','');
         },
         methods: {
+            closeCalderSwitch:function()
+            {
+               this.calderSwitch = false;
+            },
+            openCalderSwitch:function()
+            {
+                this.calderSwitch = true;
+            },
             deQuantity:function () {
                 if( this.quantity > 1)
                 {
@@ -357,6 +458,14 @@
             {
                 this.periodIndex = e.mp.detail.value;
             },
+            doRemark:function()
+            {
+                console.log('doRemark');
+                wx.navigateTo(
+                {
+                    url: "/pages/remark/main"
+                });
+            },
             nextStep: function()
             {
                 let id = param.getParamValue('product_id');
@@ -368,12 +477,94 @@
                     // a.timeService = res.data.data.timeArr;
 
                 }).catch(err=>{console.log('网络异常')})
+            },
+            setBegin:function(day)
+            {
+                console.log(day);
+                //判断是否可以点击
+                let startWeek = new Date(this.year,this.month - 1,1).getDay();
+                day = day - 1;
+                let mo  = parseInt((startWeek + day) / 7);
+                let mod = (day+startWeek)%7;
+
+                if ( this.data[mo][mod].forbiddenChosen )
+                {
+                    return;
+                }
+
+                if( this.data[mo][mod].chosen )
+                {
+                    return;
+                }
+
+
+
+                for(let i = 0 ;i < 35;i++)
+                {
+                    let mo2  = parseInt(i / 7);
+                    let mod2 = i % 7;
+
+                    if (this.data[mo2][mod2].chosen)
+                    {
+                        this.data[mo2][mod2].chosen = false;
+                    }
+                }
+
+
+
+                this.data[mo][mod].chosen = true;
+
+
+
+//                        let tmpData = this.data;
+//                        this.data = tmpData;
+//
+//                        console.log(this.data[mo][mod].chosen);
+                this.$forceUpdate();
+
+            },
+            setTab:function(index){
+                this.tabIndex = index;
             }
         },
         mounted() {
             let id = param.getParamValue('product_id');
             let url = globalStore.state.host + 'passport/product-info';
             let a = this;
+
+
+            let fullDay = new Date(this.year,this.month,0).getDate();
+            let startWeek = new Date(this.year,this.month - 1,1).getDay();
+            this.currentDay = new Date();
+
+            let tmpData =  [
+                [{day:''},{day:''},{day:''},{day:''},{day:''},{day:''},{day:''}],
+                [{day:''},{day:''},{day:''},{day:''},{day:''},{day:''},{day:''}],
+                [{day:''},{day:''},{day:''},{day:''},{day:''},{day:''},{day:''}],
+                [{day:''},{day:''},{day:''},{day:''},{day:''},{day:''},{day:''}],
+                [{day:''},{day:''},{day:''},{day:''},{day:''},{day:''},{day:''}]
+
+            ];
+            for(let i = 0;i<fullDay;i++)
+            {
+                let mo  = parseInt((i+startWeek) / 7);
+                let mod = (i+startWeek)%7;
+
+
+                //周六、周日不可点击
+                tmpData[mo][mod].day = i+1;
+
+                if(mod == 0 || mod == 6 || (new Date(this.year,this.month - 1,i + 1) < this.currentDay))
+                {
+                    tmpData[mo][mod].forbiddenChosen = true;
+                }
+            }
+
+            this.data = tmpData;
+            console.log('渲染日历');
+            console.log(JSON.stringify(this.data));
+            this.$forceUpdate();
+
             this.$http.get(url,{id:id,openid:wx.getStorageSync('openid')}).then((res)=>{
                 console.log(res.data.data.arr);
                 a.attrArr = res.data.data.arr;
@@ -383,7 +574,10 @@
                 a.deliverStartList = res.data.data.start_deliver_day;
                 a.periodPrice = res.data.data.periodPrice;
                 a.product = res.data.data.product;
-            }).catch(err=>{console.log('网络异常')})
+            }).catch(err=>{console.log('网络异常')});
+
+
+
         },
         computed:{
             price:function()
@@ -398,6 +592,29 @@
             visitCoverImage:function()
             {
                 return globalStore.state.host + this.product.cover_image;
+            },
+            remarkAndPlaceholder:function()
+            {
+                if(this.remark)
+                {
+                    return this.remark;
+                } else
+                {
+                    return '暂无备注';
+                }
+            },
+            prveMonth:function()
+            {
+//                        return (this.month - 1) + '月';
+                return (new Date(this.year,this.month - 2).getMonth() + 1) + '月';
+            },
+            currentMonth:function()
+            {
+                return this.year + '年' + this.month + '月';
+            },
+            nextMonth:function()
+            {
+                return (new Date(this.year,this.month).getMonth() + 1) + '月';
             }
         }
     }
@@ -408,5 +625,79 @@
     color: red;
     padding: 10px;
     text-align: center;
+  }
+
+
+
+  .fs-16-fc-212229-m{
+      font-family: PingFangSC-Medium;
+      font-size: 16px;
+      color: #212229;
+      line-height: 16px;
+  }
+
+
+  .fs-18-fc-212229-m{
+      font-family: PingFangSC-Medium;
+      font-size: 18px;
+      color: #212229;
+      line-height: 18px;
+  }
+
+  .op3{opacity: 0.3;}
+
+
+
+  .next-icon{
+      display: inline-block;
+      width: 8px;
+      height: 13px;
+      background: url('/images/icon_next_nor@3x.png');
+      background-size: 8px 13px;
+  }
+
+
+  .prev-icon
+  {
+      display: inline-block;
+      width: 8px;
+      height: 13px;
+      background: url('/images/icon_next_nor@3x.png');
+      background-size: 8px 13px;
+      transform: rotate(180deg);
+  }
+
+
+  .barr-line{
+      background: #FFFFFF;
+      border: 1px solid #E1E1E1;
+  }
+
+  .active-type{
+      border: 1px solid #C50081 !important;
+      background-color: #ffffff !important;
+  }
+
+  .chosen{
+      background: #C50081;
+      border-radius: 14px;
+      height: 28px;
+      width: 28px;
+      display: inline-block;
+      color: #ffffff !important;
+      line-height: 28px !important;
+      opacity: 1;
+  }
+
+  .cus-row-col-1-7 span{line-height: 22px;}
+
+
+  .fs-16-fc-080808-r {
+      font-family: PingFangSC-Regular;
+      font-size: 16px;
+      color: #080808;
+      letter-spacing: -0.39px;
+      text-align: center;
+      line-height: 16px;
   }
 </style>

@@ -173,13 +173,11 @@
                     if(res.data.status)
                     {
                         //设置用户登录
-                        wx.setStorageSync('openid', requestRes.data.data.userId);
-                        let url = encodeURI('/user/bindmore');
-                        wx.redirectTo(
-                            {
-                                url:'/pages/status/main?url=' + url,
-                            }
-                        );
+                        console.log('login:' + res.data.data.userId);
+                        wx.setStorageSync("openid",res.data.data.userId);
+                        wx.switchTab({
+                            url:'/pages/index/main'
+                        })
                     } else {
                         console.log(res.data.desc);
                         a.$mptoast(res.data.desc)

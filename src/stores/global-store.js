@@ -9,7 +9,8 @@ export default new Vuex.Store({
         openid:'',
         host:'http://yl.zhuyan.me/',
         addressShare:'',
-        webViewUrl:''
+        webViewUrl:'',
+        habbitRemarkShare:''
     },
     mutations: {
         increment: (state) => {
@@ -25,6 +26,11 @@ export default new Vuex.Store({
             console.log('mark:');
             console.log(data);
             state.addressShare = data
+        },
+        sethabbitRemarkShare: (state,data) =>{
+            console.log('mark:');
+            console.log(data);
+            state.habbitRemarkShare = data
         }
     }
 });

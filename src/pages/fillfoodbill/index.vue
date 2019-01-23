@@ -107,7 +107,7 @@
 
         </div>
 
-        <div class="white-panel m-t-16" v-on:click="doRemark">
+        <div class="white-panel m-t-16" v-on:click="doRemark" style="margin-bottom: 80px;">
             <div class="cus-row">
                 <div class="cus-row-col-6 v-a-m">
                     <div class="fs-18-fc-000000-m">忌口备注</div>
@@ -122,104 +122,14 @@
             </div>
         </div>
 
-        <div><i class="back-icon"></i><span class="fs-26-fc-black">填写订单</span></div>
-
-        <div class="white-bg-card">
-            <div class="cus-row">
-                <div class="cus-row-col-6">
-                    <div class="in-bl-v-m"><i class="agree-icon"></i></div>
-                    <div class="in-bl-v-m fs-16-fc-030303">订购服务</div>
-                </div>
-            </div>
-
-            <div class="cus-row">
-                <div class="cus-row-col-3 fs-16-fc-030303">备注</div>
-                <div class="cus-row-col-9 fs-16-fc-030303"><input placeholder="请备注您的特殊需求" v-model="remark" readonly/></div>
-            </div>
-        </div>
-
-
-        <div class="white-bg-card">
-            <div class="cus-row">
-                <div class="cus-row-col-6">
-                    <div class="in-bl-v-m"><i class="agree-icon"></i></div>
-                    <div class="in-bl-v-m fs-16-fc-030303">服务地址</div>
-                </div>
-                <div class="cus-row-col-6 fs-16-fc-030303" v-on:click="goAddressList()">
-                    修改
-                </div>
-            </div>
-            <div class="fs-16-fc-030303">{{name}}  {{phone}}</div>
-            <div class="fs-16-fc-030303">{{pct_code_name}} {{address}}</div>
-        </div>
-
-
-
-        <div class="white-bg-card" id="service_time">
-
-            <div>
-                <div class="cus-row">
-                    <div class="cus-row-col-3 fs-16-fc-030303">配送时间</div>
-                    <div class="cus-row-col-9 fs-16-fc-030303 t-al-r">修改</div>
-                </div>
-
-                <div>
-                    <picker @change="lunchTimeChange" :value="lunchIndex" :range="lunchService" style="line-height: 44px;">
-                        <view class="picker fs-16-fc-484848">
-                            {{lunchService[lunchIndex]}}
-                        </view>
-                    </picker>
-                </div>
-
-                <div>
-                    <picker @change="dinnerTimeChange" :value="dinnerIndex" :range="dinnerService" style="line-height: 44px;">
-                        <view class="picker fs-16-fc-484848">
-                            {{dinnerService[dinnerIndex]}}
-                        </view>
-                    </picker>
-                </div>
-
-
-            </div>
-        </div>
-
-
-        <div class="white-bg-card">
-            <div>
-                <div class="cus-row">
-                    <div class="cus-row-col-3 fs-16-fc-030303">起送时间</div>
-                    <div class="cus-row-col-9 fs-16-fc-030303 t-al-r">修改</div>
-                </div>
-                <div>
-                    <picker @change="deliverStartChange" :value="deliverStartIndex" :range="deliverStartList" style="line-height: 44px;">
-                        <view class="picker fs-16-fc-484848">
-                            {{deliverStartList[deliverStartIndex]}}
-                        </view>
-                    </picker>
-                </div>
-
-
-                <div class="cus-row">
-                    <div class="cus-row-col-3 fs-16-fc-030303">时长</div>
-                </div>
-                <div>
-                    <picker @change="periodServiceChange" :value="periodIndex" :range="periodService" style="line-height: 44px;">
-                        <view class="picker fs-16-fc-484848">
-                            {{periodService[periodIndex]}}
-                        </view>
-                    </picker>
-                </div>
-
-            </div>
-        </div>
-
         <div class="fix-bottom3" style="background-color: #ffffff;padding: 14px;border-top:1px solid #EBE9E9 ;">
             <div class="cus-row cus-row-v-m">
                 <div class="cus-row-col-6" id="total_price">
                     <span class="fs-24-fc-212229">￥{{price}}</span><span class="fs-24-fc-212229" id="price_label"></span>
                 </div>
+                <div class="cus-row-col-2"></div>
                 <div class="cus-row-col-4">
-                    <a class="yl_btn m-t-20"  v-on:click="nextStep()" style="margin-top: 0;">微信支付</a>
+                    <a class="yl_btn1 m-t-20"  v-on:click="nextStep()" style="margin-top: 0;">微信支付</a>
                 </div>
             </div>
         </div>
@@ -308,6 +218,7 @@
     import globalStore from '../../stores/global-store'
     import param from '../../utils/param'
     import _ from 'underscore'
+    import { Base64 } from 'js-base64'
 
     export default {
         data () {
@@ -472,9 +383,19 @@
                 let requestData = {pct_code:this.pct,pct_code_name:this.pct_code_name,phone:this.phone,name:this.name,address:this.address,clean_service_time:this.timeService[this.timeServiceIndex],product_id:id,remark:this.remark,openid:wx.getStorageSync('openid'),size:this.signTypeArray[this.signTypeIndex],attr_id:this.idArray[this.signTypeIndex],lunch_service:this.lunchService[this.lunchIndex],dinner_service:this.dinnerService[this.dinnerIndex],people:2,attr_id:this.periodPrice[this.periodIndex].attr_id,service_start_time:this.deliverStartList[this.deliverStartIndex]};
                 let url = globalStore.state.host + 'user/report-bill';
                 this.$http.post(url,requestData).then((res)=>{
-                    console.log(res.data.data.arr);
+                    // console.log(res.data.data.arr);
                     // a.attrArr = res.data.data.arr;
                     // a.timeService = res.data.data.timeArr;
+
+                    //下单成功跳转呀
+                    if(res.data.status) {
+                        let url = Base64.encode('/passport/pay-success');
+                        wx.navigateTo(
+                            {
+                                url:'/pages/commonweb/main?url=' + url,
+                            }
+                        );
+                    }
 
                 }).catch(err=>{console.log('网络异常')})
             },

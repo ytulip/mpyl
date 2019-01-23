@@ -7,7 +7,7 @@ export default new Vuex.Store({
     state: {
         count: 0,
         openid:'',
-        host:'http://yl.zhuyan.me/',
+        host:'https://huajialife.com/',
         addressShare:'',
         webViewUrl:'',
         habbitRemarkShare:''

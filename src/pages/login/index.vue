@@ -11,7 +11,7 @@
             <!--</div>-->
 
             <div class="">
-            <button class="yl_btn1 btn-green" open-type="getPhoneNumber" bindgetphonenumber="getUserInfo1">微信一键登录</button>
+            <button class="yl_btn1 btn-green" open-type="getPhoneNumber"  @getphonenumber="getUserInfo1">微信一键登录</button>
             </div>
 
             <div class="m-t-24">
@@ -125,14 +125,12 @@
         },
         methods: {
 
-            getUserInfo1(){
-                console.log('click事件首先触发')
-                // 判断小程序的API，回调，参数，组件等是否在当前版本可用。  为false 提醒用户升级微信版本
-                // console.log(wx.canIUse('button.open-type.getUserInfo'))
-                if(wx.canIUse('button.open-type.getUserInfo')){
-                    // 用户版本可用
-                }else{
-                    console.log('请升级微信版本')
+            getUserInfo1(e){
+                console.log(e.mp.detail.errMsg);
+                if (e.mp.detail.errMsg == 'getPhoneNumber:ok') {
+                    this.getPhone(e.mp.detail.iv,e.mp.detail.encryptedData);
+                } else {
+                    return '';
                 }
             },
             bindGetUserInfo(e) {
@@ -242,8 +240,9 @@
                         url: "/pages/"+url+"/main"
                     });
             },
-            getPhone:function()
+            getPhone:function(iv,encryptedData)
             {
+                let a = this;
                 wx.login({
                     success: function (res) {
                         if (res.code) {
@@ -256,11 +255,29 @@
                                 },
                                 success: function (requestRes) {
                                     console.log(requestRes);
-                                    //存储openid
-//                                    if (requestRes.data.status) {
-//                                        wx.setStorageSync('openid', requestRes.data.data.openid);
-//                                        a.pageInit();
-//                                    }
+                                    if (requestRes.data.status) {
+                                        let sessionKey = requestRes.data.data.session_key;
+                                        a.$http.post(globalStore.state.host + '/passport/decode-info',{
+                                            iv:iv,
+                                            encryptedData:encryptedData,
+                                            sessionKey:sessionKey
+                                        }).then((res)=>{
+                                            if(res.data.status)
+                                            {
+                                                let jsonData = JSON.parse(res.data.data);
+                                                let phone = jsonData.phoneNumber;
+                                                wx.navigateTo(
+                                                    {
+                                                        url: '/pages/sms/main?phone=' + phone
+                                                    }
+                                                );
+//                                                a.$mptoast('发送成功')
+                                            } else {
+                                                console.log(res.data.desc);
+                                                a.$mptoast(res.data.desc)
+                                            }
+                                        }).catch(err=>{console.log(4)})
+                                    }
 
                                 }
                             })

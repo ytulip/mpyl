@@ -1,4 +1,5 @@
 <template>
+
     <div class="p16 bg-f9f9fb">
 
         <div class="white-panel">
@@ -14,9 +15,7 @@
             <div class="m-t-16">
                 <div class="fs-16-fc-000000-m in-bl" style="line-height: 22px;">{{name}}  {{phone}}</div>
 
-                <div class="fs-14-fc-7e7e7e-r" style="margin-top: 8px;">
-                    {{pct_code_name}} {{address}}
-                </div>
+                <div class="fs-14-fc-7e7e7e-r" style="margin-top: 8px;">{{pct_code_name}} {{address}}</div>
             </div>
         </div>
 
@@ -47,7 +46,7 @@
                 </div>
                 <div class="cus-row-col-6 v-a-m t-al-r">
                     <div class="in-bl v-a-m quantity-plus-icon" v-on:click="deQuantity"><image src="/static/images/tarbar/icon_out_nor@3x.png" class="quantity-plus-icon"/></div>
-                    <div class="in-bl v-a-m" style="margin: 0 30px;"><span class="quantity-plus">    {{quantity}}    </span></div>
+                    <div class="in-bl v-a-m" style="margin: 0 30px;"><div class="quantity-plus">    {{quantity}}    </div></div>
                     <div class="in-bl v-a-m quantity-plus-icon" v-on:click="addQuantity"><image src="/static/images/tarbar/icon_add_nor@3x.png" class="quantity-plus-icon"/></div>
                 </div>
             </div>
@@ -62,15 +61,11 @@
                 </div>
             </div>
 
-            <div class="in-bl fs-16-fc-000000-m m-t-16">共计:{{days}}天</div>
-            <div class="fs-14-fc-7e7e7e-r m-t-6">明天</div>
+            <div class="in-bl fs-16-fc-000000-m m-t-16">共计:{{chosenTypeText}}天</div>
+            <div class="fs-14-fc-7e7e7e-r m-t-6">{{deliverDays}}</div>
 
             <div class="fs-14-fc-7e7e7e-r m-t-16">午餐配送时间：11:30 - 12:30</div>
             <div class="fs-14-fc-7e7e7e-r m-t-6">晚餐配送时间：18:30 - 19:30</div>
-
-            <div class="m-t-24">
-                <img src="" style="width: 80px;height: 80px;"/>
-            </div>
         </div>
 
 
@@ -78,10 +73,10 @@
 
             <div class="fs-16-fc-000000-m">优惠</div><br/>
 
-            <div class="cus-row">
+            <div class="cus-row" style="margin-top: 14px;">
                 <div class="cus-row-col-6 v-a-m">
                     <div class="fs-16-fc-000000-m">花甲红包</div>
-                    <div class="fs-14-fc-7e7e7e-r m-t-10">暂无备注</div>
+                    <div class="fs-14-fc-7e7e7e-r m-t-10">红包不能叠加使用</div>
                 </div>
                 <div class="cus-row-col-5 v-a-m">
 
@@ -97,12 +92,10 @@
 
             <div class="cus-row">
                 <div class="cus-row-col-6 v-a-m">
-                    <span class="fs-16-fc-000000-m">订购优惠</span><br/>
-                    <span class="fs-14-fc-7e7e7e-r">5日以上优惠20元</span>
+                    <div class="fs-16-fc-000000-m">订购优惠</div>
+                    <div class="fs-14-fc-7e7e7e-r m-t-10">5日以上优惠20元</div>
                 </div>
-                <div class="cus-row-col-6 v-a-m fs-14-fc-7e7e7e-r t-al-r">
-                    暂无优惠
-                </div>
+                <div class="cus-row-col-6 v-a-m fs-14-fc-7e7e7e-r t-al-r">暂无优惠</div>
             </div>
 
         </div>
@@ -124,11 +117,10 @@
 
         <div class="fix-bottom3" style="background-color: #ffffff;padding: 14px;border-top:1px solid #EBE9E9 ;">
             <div class="cus-row cus-row-v-m">
-                <div class="cus-row-col-6" id="total_price">
-                    <span class="fs-24-fc-212229">￥{{price}}</span><span class="fs-24-fc-212229" id="price_label"></span>
+                <div class="cus-row-col-8 t-al-r v-a-m" id="total_price">
+                    <span class="fs-18-fc-000000-m" style="margin-right: 26px;">￥ {{price}}元</span>
                 </div>
-                <div class="cus-row-col-2"></div>
-                <div class="cus-row-col-4">
+                <div class="cus-row-col-4 v-a-m">
                     <a class="yl_btn1 m-t-20"  v-on:click="nextStep()" style="margin-top: 0;">微信支付</a>
                 </div>
             </div>
@@ -163,13 +155,13 @@
                             </div>
                             <div class="cus-row-col-6 v-a-m">
                                 <div class="cus-row">
-                                    <div class="cus-row-col-2 t-al-l">
+                                    <div class="cus-row-col-2 t-al-l" v-on:click="monthGo(-1)">
                                         <i class="prev-icon"></i>
                                     </div>
                                     <div class="cus-row-col-8">
                                         <span class="fs-16-fc-212229-m">{{currentMonth}}</span>
                                     </div>
-                                    <div class="cus-row-col-2 t-al-r">
+                                    <div class="cus-row-col-2 t-al-r" v-on:click="monthGo(1)">
                                         <i class="next-icon"></i>
                                     </div>
                                 </div>
@@ -202,7 +194,7 @@
                     </div>
 
                     <div style="margin-top: 26px;">
-                        <a class="yl_btn1 m-t-20" href="javascript:buy()" style="margin-top: 0;display: block;">确定2</a>
+                        <a class="yl_btn1 m-t-20" v-on:click="setChosenDay" style="margin-top: 0;display: block;">确定</a>
                     </div>
                 </div>
             </div>
@@ -264,7 +256,10 @@
                 lines:[0,1,2,3,4],
                 tabIndex:1,
                 currentDay:'',
-                calderSwitch:false
+                startDay:'',
+                calderSwitch:false,
+                chosenDay:'',
+                chosenType:''
             }
         },
         created:function()
@@ -316,6 +311,18 @@
 
                 //如果地址变了，那么面积也应当相应的变化哟
             }
+
+            if ( globalStore.state.addressShare )
+            {
+                let jsonData = JSON.parse(globalStore.state.addressShare);
+                this.name = jsonData.name;
+                this.phone = jsonData.phone;
+                this.pct = jsonData.pct;
+                this.pct_code_name = jsonData.pct_code_name;
+                this.address = jsonData.address;
+            }
+
+            globalStore.commit('setAddressShare','');
             globalStore.commit('sethabbitRemarkShare','');
         },
         methods: {
@@ -343,6 +350,11 @@
                         url: "/pages/address/main?openid=" + wx.getStorageSync('openid')
                     });
             },
+            setChosenDay:function () {
+                this.chosenDay = this.startDay;
+                this.chosenType = this.tabIndex;
+                this.closeCalderSwitch();
+            },
             lunchTimeChange:function(e)
             {
                 this.lunchIndex = e.mp.detail.value;
@@ -350,6 +362,21 @@
             dinnerTimeChange:function(e)
             {
                 this.dinnerIndex = e.mp.detail.value;
+            },
+            monthGo:function(direction)
+            {
+                let currTmp = new Date(this.year,this.month - 1 + direction,1);
+//                this.year = currTmp.getFullYear();
+//                this.month = currTmp.getMonth + 1;
+                console.log(currTmp.getFullYear());
+                console.log(currTmp.getMonth + 1);
+
+                this.updateCalder();
+
+            },
+            updateCalder:function()
+            {
+
             },
             bindPickerChange:function(e)
             {
@@ -390,7 +417,7 @@
                     //下单成功跳转呀
                     if(res.data.status) {
                         let url = Base64.encode('/passport/pay-success');
-                        wx.navigateTo(
+                        wx.redirectTo(
                             {
                                 url:'/pages/commonweb/main?url=' + url,
                             }
@@ -503,7 +530,9 @@
         computed:{
             price:function()
             {
-                return this.priceArray[this.signTypeIndex]
+                let totalPrice = 0;
+                return totalPrice.toFixed(2);
+//                return this.priceArray[this.signTypeIndex]
             },
             periodService:function()
             {
@@ -536,6 +565,23 @@
             nextMonth:function()
             {
                 return (new Date(this.year,this.month).getMonth() + 1) + '月';
+            },
+            deliverDays:function()
+            {
+                return '';
+            },
+            chosenTypeText:function()
+            {
+                if ( this.chosenType == 1 )
+                {
+                    return 1;
+                } else if ( this.chosenType == 2)
+                {
+                    return 5;
+                } else if ( this.chosenType == 3)
+                {
+                    return 21;
+                }
             }
         }
     }
@@ -573,7 +619,7 @@
       display: inline-block;
       width: 8px;
       height: 13px;
-      background: url('/images/icon_next_nor@3x.png');
+      background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACcAAAA/CAYAAABjJtHDAAAAAXNSR0IArs4c6QAAAYdJREFUaAXN2t1tgzAQB/C6L4yRbpIMwAMjdLSOwAZJNknGQEKiXFUsCDbxx/3vzi9gY+GfzrqHw7iPSOu67msYhp+mab77vn9EpkGHP0Nv/4fdpmk6z8Ab9UPz0GPudYEV7LQ8c8495whepCO4wYVgmkCPO4JpAf9wKTANYDAhFkjoOifJSSpJsrZ1jZVIEo+jhXO2l+ajgRucNeAOZwkYxFkBRnEWgIc4beBbnCYwCacFTMZpALNw0sBsnCSwCCcFLMZJAKtwaGA1DglkwaGAbDgEkBXHDWTHcQIhOC4gDMcBhOJqgXBcDVAER8C2bS/jOF7pPqXNZeddBFdaD8NxpTD63AbF1cBo62G4WhgMxwGD4Lhg7DhOGCuOG8aGQ8BYcChYNQ4Jq8KhYcU4CVgRTgqWjZOEZeGkYck4DVgSTgv2FqcJO8Rpw6I4C7Agzgpsh7ME2+CswTzOIoxw2cfo6ANgQi3Nl4Yp0ZOEEdDjqHMElIbtcDGgBiyIewVqwaK4FVD1L7BfS2TUzqpVOAIAAAAASUVORK5CYII=');
       background-size: 8px 13px;
   }
 
@@ -583,7 +629,7 @@
       display: inline-block;
       width: 8px;
       height: 13px;
-      background: url('/images/icon_next_nor@3x.png');
+      background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACcAAAA/CAYAAABjJtHDAAAAAXNSR0IArs4c6QAAAYdJREFUaAXN2t1tgzAQB/C6L4yRbpIMwAMjdLSOwAZJNknGQEKiXFUsCDbxx/3vzi9gY+GfzrqHw7iPSOu67msYhp+mab77vn9EpkGHP0Nv/4fdpmk6z8Ab9UPz0GPudYEV7LQ8c8495whepCO4wYVgmkCPO4JpAf9wKTANYDAhFkjoOifJSSpJsrZ1jZVIEo+jhXO2l+ajgRucNeAOZwkYxFkBRnEWgIc4beBbnCYwCacFTMZpALNw0sBsnCSwCCcFLMZJAKtwaGA1DglkwaGAbDgEkBXHDWTHcQIhOC4gDMcBhOJqgXBcDVAER8C2bS/jOF7pPqXNZeddBFdaD8NxpTD63AbF1cBo62G4WhgMxwGD4Lhg7DhOGCuOG8aGQ8BYcChYNQ4Jq8KhYcU4CVgRTgqWjZOEZeGkYck4DVgSTgv2FqcJO8Rpw6I4C7Agzgpsh7ME2+CswTzOIoxw2cfo6ANgQi3Nl4Yp0ZOEEdDjqHMElIbtcDGgBiyIewVqwaK4FVD1L7BfS2TUzqpVOAIAAAAASUVORK5CYII=');
       background-size: 8px 13px;
       transform: rotate(180deg);
   }

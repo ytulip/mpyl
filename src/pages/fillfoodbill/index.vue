@@ -188,7 +188,6 @@
                             <div class="cus-row-col-1-7"><span class="fs-16-fc-212229-m"  v-bind:class="{'op3':data[item][4].forbiddenChosen,'chosen':data[item][4].chosen}" v-on:click="setBegin(data[item][4].day)">{{data[item][4].day}}</span></div>
                             <div class="cus-row-col-1-7"><span class="fs-16-fc-212229-m"  v-bind:class="{'op3':data[item][5].forbiddenChosen,'chosen':data[item][5].chosen}" v-on:click="setBegin(data[item][5].day)">{{data[item][5].day}}</span></div>
                             <div class="cus-row-col-1-7"><span class="fs-16-fc-212229-m" v-bind:class="{'op3':data[item][6].forbiddenChosen,'chosen':data[item][6].chosen}" v-on:click="setBegin(data[item][6].day)">{{data[item][6].day}}</span></div>
-
                         </div>
 
                     </div>
@@ -250,10 +249,11 @@
                     [{day:''},{day:''},{day:''},{day:''},{day:''},{day:''},{day:''}],
                     [{day:''},{day:''},{day:''},{day:''},{day:''},{day:''},{day:''}],
                     [{day:''},{day:''},{day:''},{day:''},{day:''},{day:''},{day:''}],
+                    [{day:''},{day:''},{day:''},{day:''},{day:''},{day:''},{day:''}],
                     [{day:''},{day:''},{day:''},{day:''},{day:''},{day:''},{day:''}]
                 ],
                 s:'12',
-                lines:[0,1,2,3,4],
+                lines:[0,1,2,3,4,5],
                 tabIndex:1,
                 currentDay:'',
                 startDay:'',
@@ -366,16 +366,58 @@
             monthGo:function(direction)
             {
                 let currTmp = new Date(this.year,this.month - 1 + direction,1);
-//                this.year = currTmp.getFullYear();
-//                this.month = currTmp.getMonth + 1;
-                console.log(currTmp.getFullYear());
-                console.log(currTmp.getMonth + 1);
+                this.year = currTmp.getFullYear();
+                this.month = currTmp.getMonth() + 1;
+//                console.log(currTmp.getFullYear());
+//                console.log(currTmp.getMonth + 1);
 
                 this.updateCalder();
 
             },
             updateCalder:function()
             {
+                let fullDay = new Date(this.year,this.month,0).getDate();
+                let startWeek = new Date(this.year,this.month - 1,1).getDay();
+
+                console.log(fullDay);
+                console.log(startWeek);
+
+                let tmpData =  [
+                    [{day:''},{day:''},{day:''},{day:''},{day:''},{day:''},{day:''}],
+                    [{day:''},{day:''},{day:''},{day:''},{day:''},{day:''},{day:''}],
+                    [{day:''},{day:''},{day:''},{day:''},{day:''},{day:''},{day:''}],
+                    [{day:''},{day:''},{day:''},{day:''},{day:''},{day:''},{day:''}],
+                    [{day:''},{day:''},{day:''},{day:''},{day:''},{day:''},{day:''}],
+                    [{day:''},{day:''},{day:''},{day:''},{day:''},{day:''},{day:''}]
+
+                ];
+
+                for(let i = 0;i<fullDay;i++)
+                {
+                    let mo  = parseInt((i+startWeek) / 7);
+                    let mod = (i+startWeek)%7;
+
+                    console.log(mo);
+                    console.log(mod);
+
+                    //周六、周日不可点击
+                    tmpData[mo][mod].day = i+1;
+
+                    if(mod == 0 || mod == 6 || (new Date(this.year,this.month - 1,i + 1) < this.currentDay))
+                    {
+                        tmpData[mo][mod].forbiddenChosen = true;
+                    }
+
+                    //设置为选中
+                    if( _.indexOf(this.chosenDays, new Date(this.year,this.month - 1,i + 1)) ) {
+                        tmpData.data[mo][mod].chosen = true;
+                    }
+                }
+
+                this.data = tmpData;
+                console.log('渲染日历');
+                console.log(JSON.stringify(this.data));
+                this.$forceUpdate();
 
             },
             bindPickerChange:function(e)
@@ -428,6 +470,7 @@
             },
             setBegin:function(day)
             {
+                this.startDay = new Date(this.year,this.month - 1,day);
                 console.log(day);
                 //判断是否可以点击
                 let startWeek = new Date(this.year,this.month - 1,1).getDay();
@@ -473,6 +516,8 @@
             },
             setTab:function(index){
                 this.tabIndex = index;
+
+                this.updateCalder();
             }
         },
         mounted() {
@@ -490,8 +535,8 @@
                 [{day:''},{day:''},{day:''},{day:''},{day:''},{day:''},{day:''}],
                 [{day:''},{day:''},{day:''},{day:''},{day:''},{day:''},{day:''}],
                 [{day:''},{day:''},{day:''},{day:''},{day:''},{day:''},{day:''}],
+                [{day:''},{day:''},{day:''},{day:''},{day:''},{day:''},{day:''}],
                 [{day:''},{day:''},{day:''},{day:''},{day:''},{day:''},{day:''}]
-
             ];
             for(let i = 0;i<fullDay;i++)
             {
@@ -582,6 +627,11 @@
                 {
                     return 21;
                 }
+            },
+            chosenDays:function()
+            {
+//                this.
+                return [];
             }
         }
     }

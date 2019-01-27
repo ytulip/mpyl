@@ -32,20 +32,20 @@
     "list": [{
       "pagePath": "pages/index/main",
       "text": "首页",
-      "iconPath":"/static/images/tarbar/home.png",
-      "selectedIconPath":"/static/images/tarbar/home_active.png"
+      "iconPath":"/static/images/tarbar/home_icon_nor@3x.png",
+      "selectedIconPath":"/static/images/tarbar/home_icon_sel@3x.png"
       },
       {
         "pagePath": "pages/book/main",
         "text": "服务",
-        "iconPath":"/static/images/tarbar/message.png",
-        "selectedIconPath":"/static/images/tarbar/message_active.png"
+        "iconPath":"/static/images/tarbar/home_icon2_nor@3x.png",
+        "selectedIconPath":"/static/images/tarbar/home_icon2_sel@3x.png"
       },
       {
         "pagePath":"pages/mine/main",
         "text":"我的",
-        "iconPath":"/static/images/tarbar/mine.png",
-        "selectedIconPath":"/static/images/tarbar/mine_active.png"
+        "iconPath":"/static/images/tarbar/home_icon3_nor@3x.png",
+        "selectedIconPath":"/static/images/tarbar/home_icon3_sel@3x.png"
       }]
   }
 }

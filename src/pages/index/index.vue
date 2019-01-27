@@ -13,14 +13,23 @@
       <div class="cus-row-col-6 v-a-t" style="padding-right: 7.5px;box-sizing: border-box;">
           <div class="food-panel" v-on:click="goCommunity">
               <div class="item-fc">订餐服务</div>
+              <div style="position: absolute;right: 24px;bottom: 24px;">
+                  <image style="width:54px;" src="/static/images/home_icon_food@3x.png" mode="widthFix"/>
+              </div>
           </div>
       </div>
       <div class="cus-row-col-6" style="padding-left: 7.5px;box-sizing: border-box;">
           <div class="clean-panel" v-on:click="goClean">
              <div class="item-fc">家庭清洁</div>
+              <div style="position: absolute;right: 21px;bottom: 21px;">
+                  <image style="width:29px;" src="/static/images/hone_clean_nor@3x.png" mode="widthFix"/>
+              </div>
           </div>
           <div class="hood-panel m-t-16" v-on:click="goCommunity">
              <div class="item-fc">社区管家</div>
+              <div style="position: absolute;right: 21px;bottom: 21px;">
+                  <image style="width:29px;" src="/static/images/home_master_nor@3x.png" mode="widthFix"/>
+              </div>
           </div>
       </div>
     </div>
@@ -40,6 +49,8 @@
                 <a class="l-btn-red">立即开通</a>
             </div>
         </div>
+
+
     </div>
   </div>
 </template>
@@ -161,6 +172,7 @@
     box-shadow: 0 2px 8px 0 rgba(191,25,132,0.34);
     border-radius: 5px;
     height: 166px;
+    position: relative;
   }
 
   .clean-panel
@@ -169,6 +181,7 @@
     box-shadow: 0 2px 8px 0 rgba(248,125,39,0.36);
     border-radius: 5px;
     height: 75px;
+    position: relative;
   }
   .hood-panel
   {
@@ -176,6 +189,7 @@
     box-shadow: 0 2px 8px 0 rgba(51,158,251,0.35);
     border-radius: 5px;
     height: 75px;
+    position: relative;
   }
 
   .vip-panel
@@ -184,6 +198,7 @@
       border: 1px solid #F3F3F3;
       border-radius: 4px;
       padding: 26px 24px;
+      position: relative;
   }
 
   .item-fc

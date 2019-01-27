@@ -27,7 +27,7 @@
     "backgroundColor":"#f9f9fb"
   },
   "tabBar": {
-    "selectedColor": "#5EC11A",
+    "selectedColor": "#C50081",
     "backgroundColor":"#ffffff",
     "list": [{
       "pagePath": "pages/index/main",

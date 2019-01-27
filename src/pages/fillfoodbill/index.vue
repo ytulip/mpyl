@@ -61,8 +61,8 @@
                 </div>
             </div>
 
-            <div class="in-bl fs-16-fc-000000-m m-t-16">共计:{{chosenTypeText}}天</div>
-            <div class="fs-14-fc-7e7e7e-r m-t-6">{{deliverDays}}</div>
+            <div class="in-bl fs-16-fc-000000-m m-t-16">共计:{{days}}天</div>
+            <div class="fs-14-fc-7e7e7e-r m-t-6" style="line-height: 20px;">{{deliverDays}}</div>
 
             <div class="fs-14-fc-7e7e7e-r m-t-16">午餐配送时间：11:30 - 12:30</div>
             <div class="fs-14-fc-7e7e7e-r m-t-6">晚餐配送时间：18:30 - 19:30</div>
@@ -240,7 +240,6 @@
                 periodIndex:0,
                 product:{},
                 quantity:0,
-                days:1,
 
                 year:2019,
                 month:1,
@@ -267,34 +266,6 @@
 
         },
         watch: {
-            pct: function (val) {
-                console.log('watch:');
-                console.log(val);
-                //找对应的array
-                for( let i of this.attrArr)
-                {
-                    if( i.neighborhood_id == this.pct ){
-                        this.signTypeIndex = 0;
-                        // this.signTypeArray = i.kv;
-                        let arrTmpSize = [];
-                        let arrTmpPrice = [];
-                        let arrTmpId = [];
-
-                        for ( let j of i.kv)
-                        {
-                            arrTmpSize.push(j.size);
-                            arrTmpPrice.push(j.price);
-                            arrTmpId.push(j.attr_id);
-                        }
-                        this.signTypeArray = arrTmpSize;
-                        this.priceArray = arrTmpPrice;
-                        this.idArray = arrTmpId;
-                        console.log(i.kv);
-                        break;
-                    }
-                }
-
-            }
         },
         onShow:function(){
             if( globalStore.state.habbitRemarkShare )
@@ -409,8 +380,10 @@
                     }
 
                     //设置为选中
-                    if( _.indexOf(this.chosenDays, new Date(this.year,this.month - 1,i + 1)) ) {
-                        tmpData.data[mo][mod].chosen = true;
+                    console.log('選中的日期');
+                    console.log(this.chosenDays);
+                    if( _.indexOf(this.chosenDays, new Date(this.year,this.month - 1,i + 1).toString()) !== -1 ) {
+                        tmpData[mo][mod].chosen = true;
                     }
                 }
 
@@ -449,6 +422,10 @@
             nextStep: function()
             {
                 let id = param.getParamValue('product_id');
+
+                //TODO:判断地址是否为空
+
+
                 let requestData = {pct_code:this.pct,pct_code_name:this.pct_code_name,phone:this.phone,name:this.name,address:this.address,clean_service_time:this.timeService[this.timeServiceIndex],product_id:id,remark:this.remark,openid:wx.getStorageSync('openid'),size:this.signTypeArray[this.signTypeIndex],attr_id:this.idArray[this.signTypeIndex],lunch_service:this.lunchService[this.lunchIndex],dinner_service:this.dinnerService[this.dinnerIndex],people:2,attr_id:this.periodPrice[this.periodIndex].attr_id,service_start_time:this.deliverStartList[this.deliverStartIndex]};
                 let url = globalStore.state.host + 'user/report-bill';
                 this.$http.post(url,requestData).then((res)=>{
@@ -470,9 +447,8 @@
             },
             setBegin:function(day)
             {
-                this.startDay = new Date(this.year,this.month - 1,day);
-                console.log(day);
-                //判断是否可以点击
+                let tmpStartDay = new Date(this.year,this.month - 1,day);
+
                 let startWeek = new Date(this.year,this.month - 1,1).getDay();
                 day = day - 1;
                 let mo  = parseInt((startWeek + day) / 7);
@@ -483,7 +459,11 @@
                     return;
                 }
 
-                if( this.data[mo][mod].chosen )
+                // if( this.data[mo][mod].chosen )
+                // {
+                //     return;
+                // }
+                if ( tmpStartDay == this.startDay)
                 {
                     return;
                 }
@@ -501,23 +481,36 @@
                     }
                 }
 
-
-
-                this.data[mo][mod].chosen = true;
-
-
-
-//                        let tmpData = this.data;
-//                        this.data = tmpData;
-//
-//                        console.log(this.data[mo][mod].chosen);
-                this.$forceUpdate();
-
+                this.startDay = tmpStartDay;
+                this.updateCalder()
             },
             setTab:function(index){
                 this.tabIndex = index;
 
                 this.updateCalder();
+            },
+            getDateArr:function(startDay,n)
+            {
+                let conFlag = true;
+                let arr = [startDay.toString()];
+                let beginDay = new Date(startDay.getFullYear(),startDay.getMonth(),startDay.getDate());
+                while(conFlag)
+                {
+                    //
+                    beginDay = new Date(beginDay.getFullYear(),beginDay.getMonth(),beginDay.getDate() + 1);
+                    if( _.indexOf([0,6],beginDay.getDay()) !== -1 )
+                    {
+                        continue;
+                    }
+
+                    arr.push(beginDay.toString());
+
+                    if( arr.length > (n - 1))
+                    {
+                        conFlag = false;
+                    }
+                }
+                return arr;
             }
         },
         mounted() {
@@ -529,6 +522,8 @@
             let fullDay = new Date(this.year,this.month,0).getDate();
             let startWeek = new Date(this.year,this.month - 1,1).getDay();
             this.currentDay = new Date();
+            this.startDay = this.currentDay;
+            this.chosenDay = this.startDay;
 
             let tmpData =  [
                 [{day:''},{day:''},{day:''},{day:''},{day:''},{day:''},{day:''}],
@@ -561,6 +556,16 @@
             this.$http.get(url,{id:id,openid:wx.getStorageSync('openid')}).then((res)=>{
                 console.log(res.data.data.arr);
                 a.attrArr = res.data.data.arr;
+                if( res.data.data.userAddress[0] )
+                {
+                    a.name = res.data.data.userAddress[0].address_name;
+                    a.phone = res.data.data.userAddress[0].mobile;
+                    a.pct = res.data.data.userAddress[0].pct_code;
+                    a.pct_code_name = res.data.data.userAddress[0].pct_code_name;
+                    a.address = res.data.data.userAddress[0].address;
+                }
+
+
                 a.timeService = res.data.data.timeArr;
                 a.lunchService = res.data.data.lunchArr;
                 a.dinnerService = res.data.data.dinnerArr;
@@ -575,9 +580,8 @@
         computed:{
             price:function()
             {
-                let totalPrice = 0;
+                let totalPrice = this.quantity * this.product.price * this.days;
                 return totalPrice.toFixed(2);
-//                return this.priceArray[this.signTypeIndex]
             },
             periodService:function()
             {
@@ -613,7 +617,35 @@
             },
             deliverDays:function()
             {
-                return '';
+                let arr = [];
+
+                if(!this.chosenDay)
+                {
+                    return '';
+                }
+
+                let dateArr = [];
+                console.log(this.chosenDay.toString());
+                if( this.days == 1 )
+                {
+                    dateArr = [this.chosenDay.toString()];
+                } else
+                {
+                    dateArr = this.getDateArr(this.chosenDay,this.days);
+                }
+
+                console.log(dateArr);
+
+                dateArr.forEach(function(value, index, array){
+                    //执行某些操作
+                    let tmpDate = new Date(value);
+                    let tmpStr = (tmpDate.getMonth() +1) + '月' + (tmpDate.getDate()) + '日';
+                    arr.push(tmpStr);
+                });
+
+                let arrStr = arr.join(',');
+                console.log(arrStr);
+                return arrStr;
             },
             chosenTypeText:function()
             {
@@ -630,8 +662,34 @@
             },
             chosenDays:function()
             {
-//                this.
-                return [];
+                if ( this.startDay > this.currentDay )
+                {
+                    if( this.tabIndex == 1 )
+                    {
+                        return [this.startDay.toString()];
+                    } else if( this.tabIndex == 2)
+                    {
+                        return this.getDateArr(this.startDay,5);
+                    } else {
+                        return this.getDateArr(this.startDay,22);
+                    }
+                } else
+                {
+                    return [];
+                }
+            },
+            days:function()
+            {
+                if ( this.chosenType == 1 )
+                {
+                    return 1;
+                }else if ( this.chosenType == 2)
+                {
+                    return 5;
+                }else
+                {
+                    return 22;
+                }
             }
         }
     }

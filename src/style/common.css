@@ -471,3 +471,20 @@ margin-bottom: 24px;
     width: 21px;
     height: 21px;
 }
+
+
+.mine-list{
+    background: #FFFFFF;
+    box-shadow: 0 10px 24px 0 rgba(0,0,0,0.08);
+    border-radius: 8px;
+}
+
+.mine-list-item{padding: 19px}
+
+
+.mine-record{
+    background: #FFFFFF;
+    box-shadow: 0 10px 24px 0 rgba(0,0,0,0.08);
+    border-radius: 8px;
+    padding: 18px 16px;
+}

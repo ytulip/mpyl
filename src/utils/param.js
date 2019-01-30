@@ -45,9 +45,78 @@ function getOpenid()
     return wx.getStorageSync('openid');
 }
 
-module.exports = {
+
+function commonRequest(config)
+{
+    // let defaultConfig = {
+    //     prepositionJudge:function(){
+    //         return true;
+    //     },
+    //     then:function(res){
+    //
+    //     },
+    //     catch:function(res)
+    //     {
+    //
+    //     }
+    // }
+
+
+    // Object.assign(config,defaultConfig);
+    // config = _.extend(config,defaultConfig);
+
+
+    // if(!config.prepositionJudge()){
+    //     return;
+    // }
+    //
+    // //这里要弹出弹层了
+    wx.showLoading({
+      title: '正在处理',
+      mask:true
+    })
+
+
+    let requestData = config.data;
+    requestData.openid = getOpenid();
+
+    if( config.type == 'get')
+    {
+        config.page.$http.get(config.url,requestData).then((res)=>{
+            wx.hideLoading();
+            //判断是不是json
+            if( res.data.hasAttribute('status') )
+            {
+                config.success(res.data);
+            } else {
+                config.page.$mptoast('网络异常');
+            }
+        }).catch(err=>{
+            config.page.$mptoast('通信故障');
+        });
+    } else {
+        config.page.$http.post(config.url,requestData).then((res)=>{
+            wx.hideLoading();
+            //判断是不是json
+            console.log(res.data);
+            // console.log(typeof  res.data);
+            if( typeof res.data === 'object' )
+            {
+                config.success(res.data);
+            } else {
+                config.page.$mptoast('网络异常');
+            }
+        }).catch(err=>{
+            console.log(err);
+            config.page.$mptoast('通信故障');
+        });
+    }
+}
+
+export default {
     getCurrentPageUrl: getCurrentPageUrl,
     getCurrentPageUrlWithArgs: getCurrentPageUrlWithArgs,
     getParamValue: getParamValue,
-    getOpenid:getOpenid
+    getOpenid:getOpenid,
+    commonRequest:commonRequest
 }

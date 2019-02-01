@@ -35,7 +35,7 @@
       <div class="cus-row">
         <div class="cus-row-col-6 fs-16-fc-000000-m v-a-m">设置为默认地址</div>
         <div class="cus-row-col-6 v-a-m t-al-r">
-          <div class="in-bl v-a-m fs-16-fc-7E7E7E-r">关</div>
+          <div class="in-bl v-a-m fs-16-fc-7E7E7E-r">{{switchTxt}}</div>
           <div class="in-bl v-a-m"><image v-bind:src="defaultSwitchSrc" style="width:51px;height: 31px;margin-left: 12px;"  v-on:click="setDefault"/></div>
         </div>
       </div>
@@ -102,7 +102,7 @@
                 //   mask:true
                 // })
 
-              let requestData =  {real_name:this.real_name, phone:this.phone,address:this.address,neighborhood:this.neighborhoodId(),is_default:0};
+              let requestData =  {real_name:this.real_name, phone:this.phone,address:this.address,neighborhood:this.neighborhoodId(),is_default:this.addressDefault};
 
               param.commonRequest(
                       {
@@ -156,7 +156,11 @@
            },
            defaultSwitchSrc:function () {
               return this.addressDefault?'/static/images/icon_On@3x.png':'/static/images/icon_Off@3x.png'
-           }
+           },
+          switchTxt:function()
+          {
+            return this.addressDefault?'开':'关'
+          }
         }
     }
 </script>

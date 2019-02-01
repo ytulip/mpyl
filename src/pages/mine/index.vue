@@ -4,13 +4,13 @@
 
 
     <div class="" style="background-color: #ffffff;padding: 25px 24px;border-bottom: 1px solid #F3F3F3;">
-      <div class="cus-row">
+      <navigator  class="cus-row" open-type="navigate" url="/pages/info/main"  hover-class="none">
         <div class="cus-row-col-6 fs-18-fc-2E3133 f-f-m v-a-m" style="">用户登录</div>
         <div class="cus-row-col-6 v-a-m t-al-r">
           <image class="v-a-m in-bl" src="/static/images/user_pic_nor@3x.png" mode="widthFix" style="width:60px;height: 60px"></image>
           <image class="v-a-m in-bl" src="/static/images/icon_bnext_nor@3x.png" mode="widthFix" style="width:8px;height: 13px;margin-left: 8px;"></image>
         </div>
-      </div>
+      </navigator>
     </div>
 
 
@@ -44,7 +44,7 @@
         </view>
       </navigator>
 
-      <navigator open-type="navigate" url="/pages/mine/qrcode"  hover-class="none"  style="padding: 19px 16px;">
+      <navigator open-type="navigate" url="/pages/bonus/main"  hover-class="none"  style="padding: 19px 16px;">
         <view class="cus-row">
           <view class="cus-row-col-10 fs-16-fc-000000-m v-a-m">我的红包</view>
           <view class="cus-row-col-2 t-al-r v-a-m">
@@ -54,7 +54,7 @@
       </navigator>
 
 
-      <navigator open-type="navigate" url="/pages/mine/team" hover-class="none" style="padding: 19px 16px;">
+      <navigator open-type="navigate" url="/pages/coupon/main" hover-class="none" style="padding: 19px 16px;">
         <view class="cus-row">
           <view class="cus-row-col-10 fs-16-fc-000000-m v-a-m">优惠券</view>
           <view class="cus-row-col-2 t-al-r v-a-m">

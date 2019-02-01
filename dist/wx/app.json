@@ -17,7 +17,11 @@
     "pages/status/main",
     "pages/sms/main",
     "pages/commonweb/main",
-    "pages/remark/main"
+    "pages/remark/main",
+    "pages/bonus/main",
+    "pages/coupon/main",
+    "pages/info/main",
+    "pages/edit/main"
   ],
   "window": {
     "backgroundTextStyle": "light",

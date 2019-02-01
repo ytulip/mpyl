@@ -3,10 +3,10 @@
 
 
         <div v-for="(item,index) in list" style="margin-bottom: 16px;" class="address-panel p16">
-            <div class="fs-16-fc-000000-m" v-bind:class="{'default-address':item.is_default}">
-               <div class="l-btn-red2" style="position: absolute;top:0;left: 0;">
+            <div class="fs-16-fc-000000-m">
+               <span class="l-btn-red2 in-bl" v-if="item.is_default">
                    默认
-               </div> {{item.pct_code_name}} {{item.address}}
+               </span> <span class="in-bl" style="margin-left: 8px;">{{item.pct_code_name}} {{item.address}}</span>
             </div>
 
             <div class="fs-14-fc-7E7E7E-r m-t-10">

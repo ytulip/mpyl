@@ -29,7 +29,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 11,
+			"current": 17,
 			"list": [
 				{
 					"id": 0,
@@ -103,6 +103,48 @@
 					"id": -1,
 					"name": "编辑地址",
 					"pathName": "pages/editaddress/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "地址列表",
+					"pathName": "pages/address/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "新增地址",
+					"pathName": "pages/editaddress/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "我的红包",
+					"pathName": "pages/bonus/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "优惠券",
+					"pathName": "pages/coupon/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "设置",
+					"pathName": "pages/info/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "设置页面",
+					"pathName": "pages/edit/main",
 					"scene": null
 				}
 			]

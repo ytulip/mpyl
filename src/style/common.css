@@ -23,6 +23,8 @@ page { background-color: #f9f9fb; }
 .m-l-16{margin-left: 16px;}
 .m-b-16{margin-bottom: 16px;}
 
+.m-r-14{margin-right: 14px}
+
 .m-t-33{margin-top: 33px;}
 .m-t-16{margin-top: 16px;}
 .m-r-19{margin-right: 19px;}
@@ -71,7 +73,7 @@ page { background-color: #f9f9fb; }
     right: 0;
     bottom: 0;
     left:0;
-    background-color: rgba(22,22,22,.6);
+    background: rgba(28,36,75,0.80);
     z-index: 1000;
 }
 
@@ -298,6 +300,15 @@ letter-spacing: -0.31px;
 }
 
 
+.fs-16-fc-7E7E7E-m {
+    font-size: 16px;
+    color: #7E7E7E;
+    line-height: 16px;
+    font-family: PingFangSC-Regular;
+    letter-spacing: -0.23px;
+}
+
+
 .fw-m{font-weight: 800;}
 
 
@@ -444,6 +455,7 @@ letter-spacing: -0.31px;
 .btn-gray{background-image: none; background: #CECCCC;color:#ffffff;box-shadow:none;}
 .btn-green{background-image: none; background: #03C160;color:#ffffff;box-shadow:none;}
 .btn-red{background-image: none; background: #ffffff;color:#C50081;box-shadow:none;border: 1px solid #C50081;}
+.btn-none{background-image: none;background: #F9F9FB;box-shadow: none;color:#000000;}
 
 .white-panel
 {
@@ -496,4 +508,27 @@ margin-bottom: 24px;
     box-shadow: 0 10px 24px 0 rgba(0,0,0,0.08);
     border-radius: 8px;
     padding: 18px 16px;
+}
+
+
+.address-panel
+{
+    background: #FFFFFF;
+    box-shadow: 0 2px 6px 0 #E7E9F0;
+    border-radius: 5px;
+    position: relative;
+}
+
+
+
+
+.layer-center {
+    background: #F9F9FB;
+    box-shadow: 0 3px 16px 0 rgba(31, 34, 39, 0.15);
+    border-radius: 24px;
+    top:50%;
+    left:24px;
+    right: 24px;
+    transform: translateY(-50%);
+    position: absolute;
 }

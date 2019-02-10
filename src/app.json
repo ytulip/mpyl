@@ -21,7 +21,9 @@
     "pages/bonus/main",
     "pages/coupon/main",
     "pages/info/main",
-    "pages/edit/main"
+    "pages/edit/main",
+    "pages/bind2/main",
+    "pages/sms2/main"
   ],
   "window": {
     "backgroundTextStyle": "light",

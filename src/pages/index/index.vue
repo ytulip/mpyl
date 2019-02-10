@@ -35,7 +35,7 @@
     </div>
 
 
-    <div class="vip-panel m-t-16" v-on:click="cusNavigate('vip')">
+    <div class="vip-panel m-t-16" v-on:click="cusNavigate('vip')" style="position: relative;overflow: hidden;">
         <div class="cus-row">
             <div class="cus-row-col-8 v-a-m">
                 <div class="fs-18-fc-000000-m" style="line-height: 25px;">
@@ -49,6 +49,8 @@
                 <a class="l-btn-red">立即开通</a>
             </div>
         </div>
+
+        <div style="width: 0;height: 0;border-style: solid;border-width: 24px 24px 0 0;border-color: #CE388E transparent transparent transparent;position: absolute;top:0;left: 0;"></div>
 
 
     </div>

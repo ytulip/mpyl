@@ -107,6 +107,7 @@ function commonRequest(config)
                 config.page.$mptoast('网络异常');
             }
         }).catch(err=>{
+            wx.hideLoading();
             console.log(err);
             config.page.$mptoast('通信故障');
         });

@@ -16,7 +16,7 @@
 
     <div style="">
     <view  class="mine-list m-t-16">
-      <navigator open-type="navigate" url="/pages/mine/invited_code_list"  hover-class="none" style="padding: 19px 16px;">
+      <navigator open-type="navigate" v-bind:url="'/pages/edit/main?type=1&val=' + user.real_name"  hover-class="none" style="padding: 19px 16px;">
         <view class="cus-row">
           <view class="cus-row-col-4 fs-16-fc-000000-m v-a-m">姓名</view>
           <view class="cus-row-col-8 t-al-r v-a-m">
@@ -30,13 +30,12 @@
         <view class="cus-row">
           <view class="cus-row-col-4 fs-16-fc-000000-m v-a-m">年龄</view>
           <view class="cus-row-col-8 t-al-r v-a-m">
-            <span class="in-bl v-a-m fs-16-fc-7E7E7E-r m-r-14">{{age}}</span>
-            <image class="in-bl v-a-m" src="/static/images/icon_bnext_nor@3x.png" mode="widthFix" style="width:8px;height: 13px;"></image>
+            <span class="in-bl v-a-m fs-16-fc-7E7E7E-r m-r-22">{{age}}</span>
           </view>
         </view>
       </navigator>
 
-      <navigator open-type="navigate" url="/pages/bonus/main"  hover-class="none"  style="padding: 19px 16px;">
+      <navigator open-type="navigate" url="/pages/bind2/main"  hover-class="none"  style="padding: 19px 16px;">
         <view class="cus-row">
           <view class="cus-row-col-4 fs-16-fc-000000-m v-a-m">手机号码</view>
           <view class="cus-row-col-8 t-al-r v-a-m">
@@ -47,7 +46,7 @@
       </navigator>
 
 
-      <navigator open-type="navigate" url="/pages/coupon/main" hover-class="none" style="padding: 19px 16px;">
+      <navigator open-type="navigate" v-bind:url="'/pages/edit/main?type=2&val=' + user.id_card" hover-class="none" style="padding: 19px 16px;">
         <view class="cus-row">
           <view class="cus-row-col-4 fs-16-fc-000000-m v-a-m">身份证号码</view>
           <view class="cus-row-col-8 t-al-r v-a-m">
@@ -111,24 +110,35 @@
               this.$http.get(url,requestData).then((res)=>{
                 console.log(res);
                 this.user = res.data.data.user;
+
               }).catch(err=>{console.log(3)})
             }
+        },
+        onShow()
+        {
+          this.initPage();
         },
         mounted() {
             // this.src = globalStore.state.host + 'user/my-services?&openid=' +wx.getStorageSync('openid');
           this.initPage();
         },
-        compute:
+        computed:
         {
           age:function()
           {
+
+            if(!this.user.id_card)
+            {
+              return '';
+            }
+
              if( !IdCard.checkIdCard(this.user.id_card) )
              {
                return '';
              }
 
              let birthDay = IdCard.birthDay(this.user.id_card)
-             birth = birthDay.date;
+             let birth = birthDay.date;
              let   r   =   birth.match(/^(\d{1,4})(-|\/)(\d{1,2})\2(\d{1,2})$/);
               if(r==null)return   '';
               let   d=   new   Date(r[1],   r[3]-1,   r[4]);

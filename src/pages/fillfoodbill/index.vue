@@ -261,10 +261,6 @@
                 chosenType:''
             }
         },
-        created:function()
-        {
-
-        },
         watch: {
         },
         onShow:function(){
@@ -382,6 +378,8 @@
                     //设置为选中
                     console.log('選中的日期');
                     console.log(this.chosenDays);
+                    console.log(new Date(this.year,this.month - 1,i + 1).toString());
+                    console.log('選中的日期end');
                     if( _.indexOf(this.chosenDays, new Date(this.year,this.month - 1,i + 1).toString()) !== -1 ) {
                         tmpData[mo][mod].chosen = true;
                     }
@@ -515,43 +513,28 @@
         },
         mounted() {
             let id = param.getParamValue('product_id');
+            let startDayStr = param.getParamValue('startDay');
+            let startDayStrArr = startDayStr.split('-');
             let url = globalStore.state.host + 'passport/product-info';
             let a = this;
 
 
-            let fullDay = new Date(this.year,this.month,0).getDate();
-            let startWeek = new Date(this.year,this.month - 1,1).getDay();
+
+            
+            this.startDay = new Date(startDayStrArr[0],startDayStrArr[1] - 1,startDayStrArr[2]);
+
+
             this.currentDay = new Date();
-            this.startDay = this.currentDay;
+            this.quantity =  parseInt(param.getParamValue('quantity'));
             this.chosenDay = this.startDay;
-
-            let tmpData =  [
-                [{day:''},{day:''},{day:''},{day:''},{day:''},{day:''},{day:''}],
-                [{day:''},{day:''},{day:''},{day:''},{day:''},{day:''},{day:''}],
-                [{day:''},{day:''},{day:''},{day:''},{day:''},{day:''},{day:''}],
-                [{day:''},{day:''},{day:''},{day:''},{day:''},{day:''},{day:''}],
-                [{day:''},{day:''},{day:''},{day:''},{day:''},{day:''},{day:''}],
-                [{day:''},{day:''},{day:''},{day:''},{day:''},{day:''},{day:''}]
-            ];
-            for(let i = 0;i<fullDay;i++)
-            {
-                let mo  = parseInt((i+startWeek) / 7);
-                let mod = (i+startWeek)%7;
+            this.year = this.startDay.getFullYear();
+            this.month = this.startDay.getMonth() + 1;
+            this.tabIndex = param.getParamValue('tabIndex');
+            this.chosenType = this.tabIndex;
 
 
-                //周六、周日不可点击
-                tmpData[mo][mod].day = i+1;
+            this.updateCalder();
 
-                if(mod == 0 || mod == 6 || (new Date(this.year,this.month - 1,i + 1) < this.currentDay))
-                {
-                    tmpData[mo][mod].forbiddenChosen = true;
-                }
-            }
-
-            this.data = tmpData;
-            console.log('渲染日历');
-            console.log(JSON.stringify(this.data));
-            this.$forceUpdate();
 
             this.$http.get(url,{id:id,openid:wx.getStorageSync('openid')}).then((res)=>{
                 console.log(res.data.data.arr);

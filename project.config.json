@@ -29,7 +29,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 17,
+			"current": 20,
 			"list": [
 				{
 					"id": 0,
@@ -145,6 +145,28 @@
 					"id": -1,
 					"name": "设置页面",
 					"pathName": "pages/edit/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "编辑",
+					"pathName": "pages/edit/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "新增手机号码",
+					"pathName": "pages/sms2/main",
+					"query": "phone=18681332356",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "下单",
+					"pathName": "pages/fillfoodbill/main",
+					"query": "product_id=4&openid=8792&tabIndex=1&quantity=1&startDay=2019-02-12",
 					"scene": null
 				}
 			]

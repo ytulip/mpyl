@@ -258,7 +258,8 @@
                 startDay:'',
                 calderSwitch:false,
                 chosenDay:'',
-                chosenType:''
+                chosenType:'',
+                openid:''
             }
         },
         watch: {
@@ -420,11 +421,18 @@
             nextStep: function()
             {
                 let id = param.getParamValue('product_id');
+                let a = this;
+
+
 
                 //TODO:判断地址是否为空
+                if( !this.openid )
+                {
+                    this.$mptoast('页面获取用户信息失败');
+                }
 
 
-                let requestData = {pct_code:this.pct,pct_code_name:this.pct_code_name,phone:this.phone,name:this.name,address:this.address,clean_service_time:this.timeService[this.timeServiceIndex],product_id:id,remark:this.remark,openid:wx.getStorageSync('openid'),size:this.signTypeArray[this.signTypeIndex],attr_id:this.idArray[this.signTypeIndex],lunch_service:this.lunchService[this.lunchIndex],dinner_service:this.dinnerService[this.dinnerIndex],people:2,attr_id:this.periodPrice[this.periodIndex].attr_id,service_start_time:this.deliverStartList[this.deliverStartIndex]};
+                let requestData = {pct_code:this.pct,pct_code_name:this.pct_code_name,phone:this.phone,name:this.name,address:this.address,clean_service_time:this.timeService[this.timeServiceIndex],product_id:id,remark:this.remark,openid:wx.getStorageSync('openid'),size:this.signTypeArray[this.signTypeIndex],attr_id:this.idArray[this.signTypeIndex],lunch_service:this.lunchService[this.lunchIndex],dinner_service:this.dinnerService[this.dinnerIndex],people:2,attr_id:this.periodPrice[this.periodIndex].attr_id,service_start_time:this.deliverStartList[this.deliverStartIndex],user_openid:this.openid};
                 let url = globalStore.state.host + 'user/report-bill';
                 this.$http.post(url,requestData).then((res)=>{
                     // console.log(res.data.data.arr);
@@ -433,12 +441,34 @@
 
                     //下单成功跳转呀
                     if(res.data.status) {
-                        let url = Base64.encode('/passport/pay-success');
-                        wx.redirectTo(
-                            {
-                                url:'/pages/commonweb/main?url=' + url,
+                        // let url = Base64.encode('/passport/pay-success');
+                        // wx.redirectTo(
+                        //     {
+                        //         url:'/pages/commonweb/main?url=' + url,
+                        //     }
+                        // );
+                        var jsonData = JSON.parse(res.data.data);
+                        console.log(jsonData);
+                        wx.requestPayment({
+                            'timeStamp': jsonData.timeStamp,
+                            'nonceStr': jsonData.nonceStr,
+                            'package': jsonData.package,
+                            'signType': jsonData.signType,
+                            'paySign': jsonData.paySign,
+                            'success':function(res){
+                                a.$mptoast('支付成功');
+                                // util.mAlert('支付成功');
+                                // util.kit.goHome();
+                                // wx.redirectTo(
+                                //     {
+                                //         url:'/pages/activity/success'
+                                //     }
+                                // );
+                            },
+                            'fail':function(res){
+                                a.$mptoast('支付成功');
                             }
-                        );
+                        });
                     }
 
                 }).catch(err=>{console.log('网络异常')})
@@ -509,7 +539,34 @@
                     }
                 }
                 return arr;
+            },
+            userOpenid(){
+                let a = this;
+                wx.login({
+                    success: function (res) {
+                        if (res.code) {
+                            //发起网络请求
+                            console.log(res.code);
+                            wx.request({
+                                url: globalStore.state.host + 'activity/common-info2',
+                                data: {
+                                    code: res.code
+                                },
+                                success: function (requestRes) {
+                                    console.log(requestRes);
+                                    if (requestRes.data.status) {
+                                        a.openid = requestRes.data.data.openid;
+                                    }
+
+                                }
+                            })
+                        } else {
+                            console.log('登录失败！' + res.errMsg)
+                        }
+                    }
+                });
             }
+
         },
         mounted() {
             let id = param.getParamValue('product_id');
@@ -556,6 +613,11 @@
                 a.periodPrice = res.data.data.periodPrice;
                 a.product = res.data.data.product;
             }).catch(err=>{console.log('网络异常')});
+
+
+
+            /*尝试异步去获取用户的openid*/
+            this.userOpenid();
 
 
 

@@ -29,7 +29,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 21,
+			"current": 23,
 			"list": [
 				{
 					"id": 0,
@@ -175,6 +175,18 @@
 					"pathName": "pages/fillfoodbill/main",
 					"query": "product_id=4&openid=8792&tabIndex=1&quantity=1&startDay=2019-02-22",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "发送短信验证码",
+					"pathName": "pages/sms/main",
+					"query": "phone=18681332356"
+				},
+				{
+					"id": -1,
+					"name": "会员开通页面",
+					"pathName": "pages/vip/main",
+					"query": ""
 				}
 			]
 		}

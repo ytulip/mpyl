@@ -252,6 +252,23 @@ letter-spacing: -0.31px;line-height: 18px;}
 color: #4A4A4A;
 letter-spacing: 0.19px;line-height: 12px;}
 
+.fs-21-fc-ffffff-m{font-family: PingFangSC-Medium;
+    font-size: 21px;
+    color: #FFFFFF;
+    letter-spacing: -0.41px;}
+
+.txt-tag-f{font-family: PingFangSC-Medium;
+    font-size: 14px;
+    color: #FFFFFF;
+    letter-spacing: -0.41px;
+    border: 1px solid #FFFFFF;
+    border-radius: 16px;
+    line-height: 25px;
+    box-sizing: border-box;
+    display: inline-block;
+    padding: 0 20px;
+}
+
 /*字体样式*/
 .fs-24-fc-000000 {
     font-family: PingFangSC-Medium;
@@ -267,6 +284,14 @@ letter-spacing: 0.19px;line-height: 12px;}
     color: #2E3133;
     letter-spacing: -0.43px;
     line-height: 18px;
+}
+
+.fs-32-fc-2E3133 {
+    font-family: PingFangSC-Medium;
+    font-size: 32px;
+    color: #2E3133;
+    letter-spacing: -0.43px;
+    line-height: 32px;
 }
 
 .fs-12-fc-c50081

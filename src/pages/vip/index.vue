@@ -1,5 +1,19 @@
 <template>
-    <div>
+    <div class="p16 bg-f9f9fb">
+
+        <div style="position: relative">
+            <img src="/static/images/home_banner_nor@3x.png" mode="widthFix" style="width: 100%;"/>
+
+            <div class="all-center" style="width: 100%;">
+                <div class="fs-21-fc-ffffff-m t-al-c">开通花甲会员，最省钱！</div>
+                <div class="m-t-24 t-al-c"><a class="txt-tag-f">更多优惠  服务更多！</a></div>
+            </div>
+        </div>
+
+
+
+
+
         <div>
             <img src="http://graphis.zhuyan.me/header1.jpg" class="header-img1"/>
             <div class="in-bl v-a-m">
@@ -36,7 +50,12 @@
 
 
 
-        <div class="btn4" v-on:click="buyNow">立即开通</div>
+        <!--<div class="btn4" v-on:click="buyNow">立即开通</div>-->
+        <div class="fix-bottom3" style="background-color: #ffffff;padding: 14px;border-top:1px solid #EBE9E9 ;">
+            <a class="yl_btn1"  v-on:click="buyNow" style="margin-top: 0;">¥60 立即开通</a>
+        </div>
+
+
     </div>
 </template>
 

@@ -39,14 +39,14 @@
         <div class="cus-row">
             <div class="cus-row-col-8 v-a-m">
                 <div class="fs-18-fc-000000-m" style="line-height: 25px;">
-                    花甲会员· ¥60/月
+                    {{(!isVip)?'花甲会员· ¥60/月':'花甲会员 已开通'}}
                 </div>
                 <div class="fs-12-fc-7E7E7E-r m-t-6" style="line-height: 17px">
-                    更多优惠，服务更多！
+                    {{(!isVip)?'更多优惠，服务更多！': (expire + ' 到期')}}
                 </div>
             </div>
             <div class="cus-row-col-4 v-a-m t-al-r">
-                <a class="l-btn-red">立即开通</a>
+                <a class="l-btn-red">{{(!isVip)?'立即开通':'免费福利'}}</a>
             </div>
         </div>
 
@@ -63,47 +63,14 @@
         data () {
             return {
                 msg: 'Hello',
-                banners:{}
+                banners:{},
+                isVip:false
             }
         },
         created:function()
         {
-//            console.log('index' + wx.getStorageSync('openid'));
-            //定时等待10s
-            // (function(a,timer){
-            //     let countDownHandler = setInterval(function(){
-            //         timer = timer - 1;
-            //         console.log(timer);
-            //         //判断是否拥有openid
-            //         if( wx.getStorageSync('openid'))
-            //         {f
-            //             a.openid = wx.getStorageSync('openid');
-            //             if( a.hasOwnProperty('userInit') )
-            //             {
-            //                 console.log('has userInit');
-            //                 a.userInit();
-            //             } else {
-            //                 console.log('donot has userInit');
-            //             }
-            //             clearInterval(countDownHandler);
-            //             return;
-            //         }
-            //         a.userInit();
-            //         if( timer < 1) {
-            //             clearInterval(countDownHandler);
-            //             return;
-            //         }
-            //     },1000);
-            // })(this,7);
         },
         methods: {
-            clickHandle () {
-                let url = 'http://yl.zhuyan.me/activity/user-info'
-                let param = {code:1}
-                //网络请求
-                this.$http.get(url,param).then((res)=>{}).catch(err=>{console.log(3)});
-                this.msg = 'Clicked!!!!!!'
-            },
             userInit () {
                 let url = globalStore.state.host + 'index/home-main';
                 let param = {code:1}
@@ -111,6 +78,12 @@
                 this.$http.get(url,param).then((res)=>{
                     console.log(res.data.data);
                     this.banners = res.data.data.banners;
+                    this.isVip = res.data.data.vip.isVip;
+                    this.expire = res.data.data.vip.expire;
+                    //判断用户是不是花甲会员
+
+
+
                 }).catch(err=>{console.log(3)})
             },
             goClean() {

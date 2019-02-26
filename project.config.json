@@ -29,7 +29,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 23,
+			"current": 24,
 			"list": [
 				{
 					"id": 0,
@@ -187,6 +187,12 @@
 					"name": "会员开通页面",
 					"pathName": "pages/vip/main",
 					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "vip",
+					"pathName": "pages/vip/main",
+					"scene": null
 				}
 			]
 		}

@@ -558,3 +558,10 @@ margin-bottom: 24px;
     transform: translateY(-50%);
     position: absolute;
 }
+
+.p24-block{
+    background: #FFFFFF;
+    box-shadow: 0 2px 6px 0 #E7E9F0;
+    border-radius: 5px;
+    padding: 24px;
+}

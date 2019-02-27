@@ -212,7 +212,7 @@
             </div>
         </div>
 
-
+        <mptoast />
     </div>
 
 </template>
@@ -221,6 +221,7 @@
     import globalStore from '../../stores/global-store'
     import param from '../../utils/param'
     import _ from 'underscore'
+    import mptoast from 'mptoast'
     import { Base64 } from 'js-base64'
 
     export default {
@@ -282,6 +283,9 @@
             }
         },
         watch: {
+        },
+        components: {
+            mptoast
         },
         onShow:function(){
             if( globalStore.state.habbitRemarkShare )
@@ -431,14 +435,27 @@
 
 
 
+                if( !this.selectedTabIndex )
+                {
+                    this.$mptoast('请选择服务时长');
+                    return;
+                }
+
                 //TODO:判断地址是否为空
                 if( !this.openid )
                 {
                     this.$mptoast('页面获取用户信息失败');
+                    return;
+                }
+
+                if( !this.selectedValue.length )
+                {
+                    this.$mptoast('请选择服务时间');
+                    return;
                 }
 
 
-                let requestData = {pct_code:this.pct,pct_code_name:this.pct_code_name,phone:this.phone,name:this.name,address:this.address,clean_service_time:this.timeService[this.timeServiceIndex],product_id:id,remark:this.remark,openid:wx.getStorageSync('openid'),size:this.signTypeArray[this.signTypeIndex],attr_id:this.periodPrice[this.periodIndex].attr_id,service_start_time:this.deliverStartList[this.deliverStartIndex],user_openid:this.openid};
+                let requestData = {pct_code:this.pct,pct_code_name:this.pct_code_name,phone:this.phone,name:this.name,address:this.address,clean_service_time:this.selectedTabIndex,product_id:id,remark:this.remark,openid:wx.getStorageSync('openid'),service_start_time:this.selectedValue,user_openid:this.openid};
                 let url = globalStore.state.host + 'user/report-bill';
                 this.$http.post(url,requestData).then((res)=>{
                     // console.log(res.data.data.arr);

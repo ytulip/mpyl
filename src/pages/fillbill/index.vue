@@ -479,17 +479,17 @@
                             'signType': jsonData.signType,
                             'paySign': jsonData.paySign,
                             'success':function(res){
-                                a.$mptoast('支付成功');
+                                // a.$mptoast('支付成功');
                                 // util.mAlert('支付成功');
                                 // util.kit.goHome();
-                                // wx.redirectTo(
-                                //     {
-                                //         url:'/pages/activity/success'
-                                //     }
-                                // );
+                                wx.redirectTo(
+                                    {
+                                        url:'/pages/activity/success'
+                                    }
+                                );
                             },
                             'fail':function(res){
-                                a.$mptoast('支付成功');
+                                a.$mptoast('支付失败');
                             }
                         });
                     }

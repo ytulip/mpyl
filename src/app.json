@@ -23,7 +23,8 @@
     "pages/info/main",
     "pages/edit/main",
     "pages/bind2/main",
-    "pages/sms2/main"
+    "pages/sms2/main",
+    "pages/billdetail/main"
   ],
   "window": {
     "backgroundTextStyle": "light",

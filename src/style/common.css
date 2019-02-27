@@ -565,3 +565,16 @@ margin-bottom: 24px;
     border-radius: 5px;
     padding: 24px;
 }
+
+.l-btn-red2{
+    border: 1px solid #C50081;
+    border-radius: 17px;
+    line-height: 20px;
+    box-sizing: border-box;
+    padding: 0 8px;
+    font-family: PingFangSC-Medium;
+    font-size: 14px;
+    color: #C50081;
+    letter-spacing: -0.27px;
+    display: inline-block;
+}

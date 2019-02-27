@@ -1,15 +1,39 @@
 <template>
-  <web-view src="{{src}}"></web-view>
+  <div class="p16 bg-f9f9fb">
+    <div class="bill-panel" v-for="(item,index) in list" v-on:click="goDetail(item.id)">
+      <div class="row">
+        <div class="cus-row-col-6">
+          <img src="/static/images/clean_icon@3x.png" class="in-bl v-a-m" style="width: 24px;height: 24px"/>
+          <div class="cus-row-col-6 fs-14-fc-484848 f-f-r v-a-m" style="margin-left:8px; ">{{item.product_name}}</div>
+        </div>
+        <div class="cus-row-col-6 t-al-r v-a-m">
+          <div class="l-btn-red2">花甲会员</div>
+        </div>
+      </div>
+
+      <div class="m-t-20">
+        <div class="in-bl fs-18-fc-000000-m v-a-m">常规餐</div>
+        <div class="in-bl fs-14-fc-484848 f-f-r v-a-m" style="margin-left: 16px;">剩余天数 1/1天</div>
+      </div>
+
+      <div class="fs-14-fc-7E7E7E-r m-t-10">服务时间：2018年12月30日（明天）</div>
+
+    </div>
+  </div>
 </template>
 
 <script>
     import globalStore from '../../stores/global-store'
+    import param from "../../utils/param";
+
+
     export default {
         data () {
             return {
                 msg: 'Hello',
                 banners:{},
-                src:''
+                src:'',
+                list:[]
             }
         },
         created:function()
@@ -17,16 +41,28 @@
 
         },
         methods: {
-            clickHandle () {
-                let url = 'http://yl.zhuyan.me/activity/user-info'
-                let param = {code:1}
-                //网络请求
-                this.$http.get(url,param).then((res)=>{}).catch(err=>{console.log(3)});
-                this.msg = 'Clicked!!!!!!'
+           pageInit(){
+               let url = globalStore.state.host + '/user/user-order';
+               this.$http.get(url,{openid:param.getOpenid()}).then((res)=>{
+                   console.log(res);
+                   this.list = res.data.data;
+               }).catch(err=>{console.log(3)});
+           },
+            goDetail(id){
+               console.log(id);
+               wx.navigateTo(
+                   {
+                       url:'/pages/billdetail/main?id=' + id
+                   }
+               );
             }
         },
+        onShow(){
+            this.pageInit();
+        },
         mounted() {
-            this.src = globalStore.state.host + 'user/my-services?&openid=' +wx.getStorageSync('openid');
+            // this.src = globalStore.state.host + 'user/my-services?&openid=' +wx.getStorageSync('openid');
+            this.pageInit();
         }
     }
 </script>
@@ -37,4 +73,8 @@
     padding: 10px;
     text-align: center;
   }
+
+  .bill-panel{background: #FFFFFF;
+    box-shadow: 0 2px 6px 0 #E7E9F0;
+    border-radius: 5px;padding: 16px;}
 </style>

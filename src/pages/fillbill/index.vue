@@ -24,13 +24,10 @@
             <div class="cus-row">
                 <div class="cus-row-col-6 v-a-m">
                     <div class="fs-18-fc-000000-m">服务时间</div>
-                    <div class="fs-14-fc-7e7e7e-r m-t-10">{{timeAndPlaceholder}}</div>
+                    <div class="fs-14-fc-7e7e7e-r m-t-10">{{selectedValueText}}</div>
                 </div>
-                <div class="cus-row-col-5 v-a-m">
-
-                </div>
-                <div class="cus-row-col-1 v-a-m t-al-r">
-                    <img src="/static/images/icon_close_nor@3x.png" style="width: 13px;" mode="widthFix"/>
+                <div class="cus-row-col-6 v-a-m t-al-r" v-on:click="pctSwitch">
+                    <img src="/static/images/icon_next_nor@3x.png" style="width: 13px;" mode="widthFix"/>
                 </div>
             </div>
         </div>
@@ -49,32 +46,30 @@
                 </div>
                 <div class="v-a-t in-bl m-l-24">
                     <div class="fs-16-fc-000000-m">{{product.product_name}}</div>
-                    <div class="m-t-10"><span class="fs-14-fc-c50081-m">￥{{product.price}}</span><span class="fs-14-fc-7e7e7e-r"> ×{{quantity}}份 ×{{days}}天</span></div>
+                    <div class="m-t-10"><span class="fs-14-fc-c50081-m">￥{{product.price}}</span><span class="fs-14-fc-7e7e7e-r"> × {{selectedTabIndexText}}</span></div>
                 </div>
             </div>
 
             <div class="barr-line"></div>
             <div class="cus-row">
                 <div class="cus-row-col-6 v-a-m">
-                    <span class="fs-16-fc-000000-m in-bl" style="line-height: 25px;">预定时间</span>
+                    <span class="fs-16-fc-000000-m in-bl" style="line-height: 25px;">服务时长</span>
                 </div>
                 <div class="cus-row-col-6 v-a-m t-al-r">
                     <span class="fs-16-fc-c50081-m" v-on:click="openCalderSwitch">修改</span>
                 </div>
             </div>
 
-            <div class="in-bl fs-16-fc-000000-m m-t-16">共计:{{days}}天</div>
+            <div class="in-bl fs-16-fc-000000-m m-t-16">共计:{{selectedTabIndexText}}</div>
         </div>
 
 
         <div class="white-panel m-t-16">
 
-            <div class="fs-16-fc-000000-m">优惠</div><br/>
-
             <div class="cus-row" style="margin-top: 14px;">
                 <div class="cus-row-col-6 v-a-m">
-                    <div class="fs-16-fc-000000-m">花甲红包</div>
-                    <div class="fs-14-fc-7e7e7e-r m-t-10">红包不能叠加使用</div>
+                    <div class="fs-16-fc-000000-m">代金券</div>
+                    <div class="fs-14-fc-7e7e7e-r m-t-10">暂无代金券</div>
                 </div>
                 <div class="cus-row-col-5 v-a-m">
 
@@ -101,7 +96,7 @@
         <div class="white-panel m-t-16" v-on:click="doRemark" style="margin-bottom: 80px;">
             <div class="cus-row">
                 <div class="cus-row-col-6 v-a-m">
-                    <div class="fs-18-fc-000000-m">忌口备注</div>
+                    <div class="fs-18-fc-000000-m">服务备注</div>
                     <div class="fs-14-fc-7e7e7e-r m-t-10">{{remarkAndPlaceholder}}</div>
                 </div>
                 <div class="cus-row-col-5 v-a-m">
@@ -123,6 +118,33 @@
                 </div>
             </div>
         </div>
+
+
+
+        <view class="fix-bottom2 t-al-c" wx:if="{{layerShow}}">
+            <view class="cus-row" style="padding: 0 16px;border-bottom: 1px solid #eeeeee;border-top: 1px solid #eeeeee">
+                <view class="cus-row-col-2 fs-14-fc-95909E v-a-m" style="line-height: 40px;" v-on:click="cancelPCT">
+                    取消
+                </view>
+                <view class="cus-row-col-8">
+
+                </view>
+                <view class="cus-row-col-2 fs-14-fc-5EC11A v-a-m t-al-r" style="line-height: 40px;" v-on:click="choosePCT">
+                    确定
+                </view>
+            </view>
+            <picker-view indicator-style="height: 50px;" style="width: 100%; height: 220px;font-size: 14px;color: #484848;" :value="value" @change="bindChange">
+                <picker-view-column>
+                    <view wx:for="{{years}}" style="line-height: 50px">{{item}}</view>
+                </picker-view-column>
+                <picker-view-column>
+                    <view wx:for="{{months}}" style="line-height: 50px">{{item}}点</view>
+                </picker-view-column>
+                <picker-view-column>
+                    <view wx:for="{{days}}" style="line-height: 50px">{{item}}分</view>
+                </picker-view-column>
+            </picker-view>
+        </view>
 
 
         <div style="position: fixed;top:0;bottom: 0;left: 0;right: 0;background-color: rgba(28,36,75,0.80);z-index:9999" id="calder" v-if="calderSwitch">
@@ -249,7 +271,14 @@
                 calderSwitch:false,
                 chosenDay:'',
                 chosenType:'',
-                openid:''
+                openid:'',
+                selectedTabIndex:0,
+                years:['2月28日 明天','3月1日 星期五'],
+                months:['9','10','13','14'],
+                days:['00','10','20','30','40','50'],
+                layerShow:false,
+                value: [0, 0, 0],
+                selectedValue:[]
             }
         },
         watch: {
@@ -284,6 +313,42 @@
             globalStore.commit('sethabbitRemarkShare','');
         },
         methods: {
+            pctSwitch:function()
+            {
+                this.layerShow = true;
+            },
+            cancelPCT:function(e){
+                // this.setData(
+                //     {
+                //         layerShow:false
+                //     }
+                // );
+                this.layerShow = false;
+            },
+
+            choosePCT:function(e)
+            {
+
+
+                //回写数据
+
+
+                this.layerShow = false;
+                this.selectedValue = this.value;
+                // this.setData(
+                //     {
+                //         chooseText:this.data.years[this.data.value[0]] + this.data.months[this.data.value[1]] + this.data.days[this.data.value[2]],
+                //         chooseValue:this.data.value,
+                //         layerShow:false
+                //     }
+                // );
+            },
+            bindChange:function(e)
+            {
+                // console.log('pickerview');
+                // console.log(e.mp.detail);
+                // value: [0, 0, 0]
+            },
             closeCalderSwitch:function()
             {
                 this.calderSwitch = false;
@@ -309,6 +374,7 @@
                     });
             },
             setChosenDay:function () {
+                this.selectedTabIndex = this.tabIndex;
                 this.chosenDay = this.startDay;
                 this.chosenType = this.tabIndex;
                 this.closeCalderSwitch();
@@ -372,7 +438,7 @@
                 }
 
 
-                let requestData = {pct_code:this.pct,pct_code_name:this.pct_code_name,phone:this.phone,name:this.name,address:this.address,clean_service_time:this.timeService[this.timeServiceIndex],product_id:id,remark:this.remark,openid:wx.getStorageSync('openid'),size:this.signTypeArray[this.signTypeIndex],attr_id:this.idArray[this.signTypeIndex],lunch_service:this.lunchService[this.lunchIndex],dinner_service:this.dinnerService[this.dinnerIndex],people:2,attr_id:this.periodPrice[this.periodIndex].attr_id,service_start_time:this.deliverStartList[this.deliverStartIndex],user_openid:this.openid};
+                let requestData = {pct_code:this.pct,pct_code_name:this.pct_code_name,phone:this.phone,name:this.name,address:this.address,clean_service_time:this.timeService[this.timeServiceIndex],product_id:id,remark:this.remark,openid:wx.getStorageSync('openid'),size:this.signTypeArray[this.signTypeIndex],attr_id:this.periodPrice[this.periodIndex].attr_id,service_start_time:this.deliverStartList[this.deliverStartIndex],user_openid:this.openid};
                 let url = globalStore.state.host + 'user/report-bill';
                 this.$http.post(url,requestData).then((res)=>{
                     // console.log(res.data.data.arr);
@@ -537,6 +603,29 @@
             {
                 return globalStore.state.host + this.product.cover_image;
             },
+            remarkAndPlaceholder()
+            {
+                return '暂无备注';
+            },
+            selectedTabIndexText:function()
+            {
+                if(this.selectedTabIndex)
+                {
+                    return  (1.5 + this.selectedTabIndex * 0.5) +  '小时';
+                }else {
+                    return '0小时';
+                }
+            },
+            selectedValueText()
+            {
+                if( this.selectedValue.length )
+                {
+                    return this.years[this.selectedValue[0]] + this.months[this.selectedValue[1]] + this.days[this.selectedValue[2]];
+                } else
+                {
+                    return '';
+                }
+            }
         }
     }
 </script>

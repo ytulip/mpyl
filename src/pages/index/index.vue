@@ -96,7 +96,7 @@
             goCommunity() {
                 wx.navigateTo(
                     {
-                        url:'/pages/clean/main?type=community'
+                        url:'/pages/community/main'
                     }
                 );
             },

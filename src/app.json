@@ -24,7 +24,8 @@
     "pages/edit/main",
     "pages/bind2/main",
     "pages/sms2/main",
-    "pages/billdetail/main"
+    "pages/billdetail/main",
+    "pages/community/main"
   ],
   "window": {
     "backgroundTextStyle": "light",

@@ -335,6 +335,14 @@ letter-spacing: -0.31px;
     letter-spacing: -0.23px;
 }
 
+.fs-14-fc-2e3133-m{
+    font-family: PingFangSC-Regular;
+    font-size: 14px;
+    color: #7E7E7E;
+    letter-spacing: -0.27px;
+    line-height: 14px;
+}
+
 
 .fw-m{font-weight: 800;}
 

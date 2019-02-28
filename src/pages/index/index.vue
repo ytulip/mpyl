@@ -11,7 +11,7 @@
 
     <div class="cus-row m-t-16">
       <div class="cus-row-col-6 v-a-t" style="padding-right: 7.5px;box-sizing: border-box;">
-          <div class="food-panel" v-on:click="goCommunity">
+          <div class="food-panel" v-on:click="goFood">
               <div class="item-fc">订餐服务</div>
               <div style="position: absolute;right: 24px;bottom: 24px;">
                   <image style="width:54px;" src="/static/images/home_icon_food@3x.png" mode="widthFix"/>
@@ -85,6 +85,13 @@
 
 
                 }).catch(err=>{console.log(3)})
+            },
+            goFood() {
+                wx.navigateTo(
+                    {
+                        url:'/pages/clean/main?type=2'
+                    }
+                );
             },
             goClean() {
                 wx.navigateTo(

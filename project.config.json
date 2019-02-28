@@ -29,7 +29,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 27,
+			"current": 28,
 			"list": [
 				{
 					"id": 0,
@@ -213,6 +213,13 @@
 					"name": "服务",
 					"pathName": "pages/book/main",
 					"query": "product_id=1&openid=8797",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "保洁详情",
+					"pathName": "pages/billdetail/main",
+					"query": "id=8774",
 					"scene": null
 				}
 			]

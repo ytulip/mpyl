@@ -1,6 +1,6 @@
 <template>
   <div class="p16 bg-f9f9fb">
-    <div class="bill-panel" v-for="(item,index) in list" v-on:click="goDetail(item.id)">
+    <div class="bill-panel m-b-16" v-for="(item,index) in list" v-on:click="goDetail(item.id)">
       <div class="row">
         <div class="cus-row-col-6">
           <img src="/static/images/clean_icon@3x.png" class="in-bl v-a-m" style="width: 24px;height: 24px"/>

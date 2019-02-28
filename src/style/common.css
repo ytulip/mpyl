@@ -41,6 +41,7 @@ page { background-color: #f9f9fb; }
 .p-t-b-16{padding-top: 16px;padding-bottom: 16px;}
 
 .p-24-16{padding: 24px 16px;}
+.p-16-24{padding: 16px 24px;}
 .p-30-24{padding: 30px 24px;}
 .p-13-26{padding: 13px 24px;}
 .dp-n{display: none}
@@ -577,4 +578,26 @@ margin-bottom: 24px;
     color: #C50081;
     letter-spacing: -0.27px;
     display: inline-block;
+}
+
+
+.info-panel
+{
+    background: #FFFFFF;
+    box-shadow: 0 2px 6px 0 #E7E9F0;
+    border-radius: 5px;
+    height: 156px;
+    padding: 18px 18px 18px 52px;
+    box-sizing: border-box;
+    position: relative;
+}
+
+
+.common-panel
+{
+    background: #FFFFFF;
+    box-shadow: 0 2px 6px 0 #E7E9F0;
+    border-radius: 5px;
+    box-sizing: border-box;
+    position: relative;
 }

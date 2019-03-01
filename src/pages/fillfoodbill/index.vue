@@ -456,7 +456,14 @@
                             'signType': jsonData.signType,
                             'paySign': jsonData.paySign,
                             'success':function(res){
-                                a.$mptoast('支付成功');
+
+                                let url = Base64.encode('/passport/pay-success');
+                                wx.redirectTo(
+                                    {
+                                        url:'/pages/commonweb/main?url=' + url,
+                                    }
+                                )
+                                // a.$mptoast('支付成功');
                                 // util.mAlert('支付成功');
                                 // util.kit.goHome();
                                 // wx.redirectTo(

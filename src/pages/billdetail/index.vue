@@ -56,9 +56,13 @@
           </div>
 
 
-          <div class="info-panel">
+          <div class="info-panel" style="position: relative;">
               <div class="fs-18-fc-000000-m" style="line-height: 25px;">{{product.product_name}}</div>
               <div class="fs-14-fc-7E7E7E-r" style="margin-top: 10px;line-height: 16px;">{{product.sub_desc}}</div>
+
+              <div class="" style="position: absolute;bottom: 18px;">
+                <div class="fs-14-fc-484848 f-f-r" style="border: 1px solid #E1E1E1;border-radius: 16px;padding: 0 12px;line-height:32px ">历史记录</div>
+              </div>
           </div>
       </div>
 
@@ -108,6 +112,9 @@
                     this.order = res.data.data.order;
                     this.product = res.data.data.product;
                     this.productType = this.product.type;
+
+                    //
+
                 }).catch(err=>{
                     console.log(3)
                 });

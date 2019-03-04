@@ -27,17 +27,28 @@
 
     <div class="common-panel m-t-24 p-16-24">
       <div class="fs-18-fc-000000-m">服务地址</div>
-      <div class="fs-14-fc-7E7E7E-r m-t-20" style="margin-top: 10px;line-height: 16px;"></div>
+
+      <div class="fs-16-fc-000000-m m-t-20">
+        <span>{{order.address_name}}</span> <span style="margin-left: 27px;">{{order.address_phone}}</span>
+      </div>
+
+      <div class="fs-14-fc-7E7E7E-r m-t-20" style="margin-top: 10px;line-height: 16px;">
+        {{order.address}}
+      </div>
     </div>
 
     <div class="common-panel m-t-24 p-16-24">
       <div class="fs-18-fc-000000-m">服务时长</div>
-      <div class="fs-14-fc-7E7E7E-r m-t-20" style="margin-top: 10px;line-height: 16px;"></div>
+      <div class="fs-16-fc-000000-m m-t-20" style="margin-top: 10px;line-height: 16px;">
+        {{order.quantity}}小时
+      </div>
     </div>
 
     <div class="common-panel m-t-24 p-16-24">
       <div class="fs-18-fc-000000-m">服务备注</div>
-      <div class="fs-14-fc-7E7E7E-r m-t-20" style="margin-top: 10px;line-height: 16px;"></div>
+      <div class="fs-14-fc-7E7E7E-r m-t-20" style="margin-top: 10px;line-height: 16px;">
+        {{order.remark}}
+      </div>
     </div>
 
     </div>
@@ -66,28 +77,86 @@
           </div>
       </div>
 
-      <div class="fs-18-fc-000000-m m-t-24">菜单</div>
+      <div class="cus-row m-t-24">
+        <div class="cus-row-col-6 fs-18-fc-000000-m v-a-m">
+          菜单
+        </div>
+        <div class="cus-row-col-6 fs-14-fc-484848 f-f-r v-a-m t-al-r">
+          仅显示2周内菜单
+        </div>
+      </div>
 
-      <div class="m-t-24 p24-block" >
-        <div class="fs-14-fc-2e3133-m">12月2日 周三</div>
+      <div class="m-t-24 p24-block" v-for="(item,index) in res">
+        <div class="fs-14-fc-2e3133-m">{{index}}</div>
         <div class="m-t-24">
-          <div class="in-bl v-a-b">
-            <img src=""/>
+          <div class="in-bl v-a-b" style="font-size: 0;">
+            <img :src="host + item['lunch']['cover_img']" style="width: 80px;height: 80px;border-radius: 4px;"/>
           </div>
-          <div class="in-bl v-a-b">
-
+          <div class="in-bl v-a-b" style="margin-left: 24px; ">
+            <div class="fs-16-fc-000000-m">
+              午餐
+            </div>
+            <div class="fs-14-fc-7E7E7E-r" style="line-height: 18px;margin-top: 14px;">
+              {{item['lunch']['foods']}}
+            </div>
           </div>
         </div>
+
+
+        <div class="m-t-24">
+          <div class="in-bl v-a-b" style="font-size: 0;">
+            <img :src="host + item['lunch']['cover_img']" style="width: 80px;height: 80px;border-radius: 4px;"/>
+          </div>
+          <div class="in-bl v-a-b" style="margin-left: 24px; ">
+            <div class="fs-16-fc-000000-m">
+              晚餐
+            </div>
+            <div class="fs-14-fc-7E7E7E-r" style="line-height: 18px;margin-top: 14px;">
+              {{item['dinner']['foods']}}
+            </div>
+          </div>
+
+          <!--如果是在第二天那么显示延后，或者显示已延后-->
+          <div class="cus-row m-t-24" v-if="'2019-03-04' == index">
+            <div class="cus-row-col-8 fs-14-fc-212229 f-f-r v-a-m">当日不在家，顺延到下次</div>
+            <div class="cus-row-col-4 v-a-m t-al-r"> <div class="l-btn-red2" v-on:click="notThisDay">我要延后</div> </div>
+          </div>
+
+        </div>
+
+
       </div>
 
 
     </div>
+
+
+    <div class="layer-shadow" v-if="layerFlag">
+      <div class="layer-center" style="padding: 24px;">
+        <div class="t-al-c fs-16-fc-000000-m">延后说明</div>
+        <div class="m-t-16 fs-14-fc-7E7E7E-r" style="line-height: 22px;">
+          这里是延后的说明，这里是延后的说明。这里是延后的说明这里是延后的说明。
+        </div>
+
+        <div class="cus-row" style="margin-top: 34px;">
+          <div class="cus-row-col-6">
+            <a class="yl_btn1 btn-none" v-on:click="cancelLayer">取消</a>
+          </div>
+          <div class="cus-row-col-6">
+            <a class="yl_btn1" v-on:click="yanhou">确定</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <mptoast />
   </div>
 </template>
 
 <script>
     import globalStore from '../../stores/global-store'
     import param from '../../utils/param'
+    import mptoast from 'mptoast'
+
     export default {
         data () {
             return {
@@ -95,7 +164,11 @@
                 banners:{},
                 src:'',
                 productType:0,
-                product:{}
+                product:{},
+                res:[],
+                host:globalStore.state.host,
+                layerFlag:0,
+                order:{}
             }
         },
         created:function()
@@ -103,6 +176,49 @@
 
         },
         methods: {
+          /**
+           * 不是今天
+           */
+            notThisDay()
+            {
+              this.layerFlag = 1;
+            },
+            cancelLayer()
+            {
+              this.layerFlag = 0;
+            },
+            components: {
+              mptoast
+            },
+            yanhou()
+            {
+              let a = this;
+              let requestData = {order_id:this.order.id};
+              param.commonRequest(
+                      {
+                        url:globalStore.state.host + '/user/yanhou',
+                        page:this,
+                        data:requestData,
+                        success:function(res)
+                        {
+                          if(res.status)
+                          {
+                            a.layerFlag = 0;
+                            a.pageInit();
+                            // wx.navigateBack({
+                            //   delta: 1
+                            // })
+
+                          }else{
+                            a.$mptoast(res.desc);
+                          }
+                        },
+                        error:function () {
+
+                        }
+                      }
+              );
+            },
             pageInit()
             {
                 let url = globalStore.state.host + '/user/order-detail-data';
@@ -112,6 +228,14 @@
                     this.order = res.data.data.order;
                     this.product = res.data.data.product;
                     this.productType = this.product.type;
+
+
+                    this.res = res.data.data.res;
+                    for( let i = 0; i < res.data.data.res.length;i++ )
+                    {
+
+                    }
+
 
                     //
 

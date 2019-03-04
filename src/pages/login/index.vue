@@ -249,7 +249,7 @@
                             //发起网络请求
                             console.log(res.code);
                             wx.request({
-                                url: 'http://yl.zhuyan.me/' + 'activity/common-info2',
+                                url: globalStore.state.host + 'activity/common-info2',
                                 data: {
                                     code: res.code
                                 },

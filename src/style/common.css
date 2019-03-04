@@ -609,3 +609,17 @@ margin-bottom: 24px;
     box-sizing: border-box;
     position: relative;
 }
+
+
+.l-btn-red2{
+    border: 1px solid #C50081;
+    border-radius: 16px;
+    line-height: 32px;
+    box-sizing: border-box;
+    padding: 0 13px;
+    font-family: PingFangSC-Regular;
+    font-size: 14px;
+    color: #C50081;
+    letter-spacing: -0.27px;
+    display: inline-block;
+}

@@ -623,3 +623,15 @@ margin-bottom: 24px;
     letter-spacing: -0.27px;
     display: inline-block;
 }
+
+.edit-btn
+{
+    font-family: PingFangSC-Regular;
+    font-size: 14px;
+    color: #C50081;
+    letter-spacing: -0.27px;
+    border: 1px solid #E1E1E1;
+    border-radius: 16px;
+    line-height: 32px;
+    padding: 0 24px;
+}

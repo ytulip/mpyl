@@ -29,7 +29,7 @@
     </div>
 
     <view  class="mine-list m-t-16">
-      <navigator open-type="navigate" url="/pages/mine/invited_code_list"  hover-class="none" style="padding: 19px 16px;">
+      <navigator open-type="navigate" url="/pages/bill2/main"  hover-class="none" style="padding: 19px 16px;">
         <view class="cus-row">
           <view class="cus-row-col-10 fs-16-fc-000000-m v-a-m">我的订单</view>
           <view class="cus-row-col-2 t-al-r v-a-m">
@@ -47,14 +47,14 @@
         </view>
       </navigator>
 
-      <navigator open-type="navigate" url="/pages/bonus/main"  hover-class="none"  style="padding: 19px 16px;">
-        <view class="cus-row">
-          <view class="cus-row-col-10 fs-16-fc-000000-m v-a-m">我的红包</view>
-          <view class="cus-row-col-2 t-al-r v-a-m">
-            <image src="/static/images/icon_bnext_nor@3x.png" mode="widthFix" style="width:8px;height: 13px;"></image>
-          </view>
-        </view>
-      </navigator>
+      <!--<navigator open-type="navigate" url="/pages/bonus/main"  hover-class="none"  style="padding: 19px 16px;">-->
+        <!--<view class="cus-row">-->
+          <!--<view class="cus-row-col-10 fs-16-fc-000000-m v-a-m">我的红包</view>-->
+          <!--<view class="cus-row-col-2 t-al-r v-a-m">-->
+            <!--<image src="/static/images/icon_bnext_nor@3x.png" mode="widthFix" style="width:8px;height: 13px;"></image>-->
+          <!--</view>-->
+        <!--</view>-->
+      <!--</navigator>-->
 
 
       <navigator open-type="navigate" url="/pages/coupon/main" hover-class="none" style="padding: 19px 16px;">

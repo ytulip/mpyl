@@ -2,7 +2,7 @@
     <div class="p16">
 
 
-        <div v-for="(item,index) in list" style="margin-bottom: 16px;" class="address-panel p16">
+        <div v-for="(item,index) in list" style="margin-bottom: 16px;" class="address-panel p16" v-on:click="chosen(index)">
             <div class="fs-16-fc-000000-m">
                <span class="l-btn-red2 in-bl" v-if="item.is_default">
                    默认
@@ -11,6 +11,10 @@
 
             <div class="fs-14-fc-7E7E7E-r m-t-10">
                 <span>{{item.address_name}}</span><span style="margin-left: 8px">{{item.mobile}}</span>
+            </div>
+
+            <div class="m-t-16 t-al-r">
+                <div class="in-bl edit-btn" v-on:click="editAddress(item.address_id)">编 辑</div>
             </div>
         </div>
 
@@ -22,6 +26,7 @@
 
 <script>
     import globalStore from '../../stores/global-store'
+    import param from "../../utils/param"
 
 
 
@@ -30,7 +35,9 @@
             return {
                 msg: 'Hello',
                 list:{},
-                src:''
+                src:'',
+                id:'',
+                chosenType:false
             }
         },
         created:function()
@@ -38,16 +45,26 @@
 
         },
         methods: {
-            clickHandle () {
-                let url = 'http://yl.zhuyan.me/activity/user-info'
-                let param = {code:1}
-                //网络请求
-                this.$http.get(url,param).then((res)=>{}).catch(err=>{console.log(3)});
-                this.msg = 'Clicked!!!!!!'
-            },
-            bindmessage(e){
-                console.log(e.target.data)
-                globalStore.commit("setAddressShare",e.target.data[0]);
+            chosen(ind)
+            {
+              if( !this.chosenType )
+              {
+                  return false;
+              }
+
+              //设置共享值
+
+                // var jsonData = JSON.stringify({ id: id, name:name,phone: phone,pct:pct,pct_code_name:pct_code_name,address:address});
+                // wx.miniProgram.postMessage({ data: jsonData});
+
+                let data = JSON.stringify({ id: this.list[ind].address_id, name:this.list[ind].name,phone: this.list[ind].phone,pct:this.list[ind].pct_code,pct_code_name:this.list[ind].pct_code_name,address:this.list[ind].address});
+
+
+                globalStore.commit("setAddressShare",data);
+                wx.navigateBack({
+                    delta: 1
+                })
+
             },
             pageInit()
             {
@@ -58,6 +75,14 @@
                     console.log(res);
                     this.list = res.data.data;
                 }).catch(err=>{console.log(3)})
+            },
+            editAddress(id)
+            {
+                wx.navigateTo(
+                    {
+                        url:'/pages/editaddress/main?id=' + id
+                    }
+                )
             },
             nextStep:function()
             {
@@ -70,6 +95,7 @@
         },
         mounted() {
             // this.src = globalStore.state.host + 'user/addresses?&openid=' +wx.getStorageSync('openid');
+            this.chosenType = param.getParamValue('chosenType');
             this.pageInit();
         }
     }

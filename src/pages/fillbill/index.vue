@@ -374,7 +374,7 @@
             {
                 wx.navigateTo(
                     {
-                        url: "/pages/address/main?openid=" + wx.getStorageSync('openid')
+                        url: "/pages/address/main?chosenType=1&openid=" + wx.getStorageSync('openid')
                     });
             },
             setChosenDay:function () {

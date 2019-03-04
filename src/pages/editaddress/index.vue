@@ -31,13 +31,19 @@
 
     </div>
 
-    <div class="address-panel m-t-16 p16">
+    <div class="address-panel m-t-16 p16" style="padding: 20px 16px;">
       <div class="cus-row">
         <div class="cus-row-col-6 fs-16-fc-000000-m v-a-m">设置为默认地址</div>
         <div class="cus-row-col-6 v-a-m t-al-r">
           <div class="in-bl v-a-m fs-16-fc-7E7E7E-r">{{switchTxt}}</div>
           <div class="in-bl v-a-m"><image v-bind:src="defaultSwitchSrc" style="width:51px;height: 31px;margin-left: 12px;"  v-on:click="setDefault"/></div>
         </div>
+      </div>
+    </div>
+
+    <div class="address-panel m-t-16 p16">
+      <div class="cus-row">
+        <div class="cus-row-col-6 fs-16-fc-c50081-m v-a-m" v-on:click="deleteAddress">删除地址</div>
       </div>
     </div>
 
@@ -87,9 +93,35 @@
               this.$http.get(url,param).then((res)=>{
                 // console.log(res);
                 // this.banners = res.data.banners;
+
+                //去拿地址
                 this.neighborhood = res.data.data.neighborhood;
                 this.neighborhoodArr = _.pluck(this.neighborhood,'ITEMNAME');
+                this.addressInfo();
               }).catch(err=>{console.log(3)})
+            },
+
+            addressInfo()
+            {
+                if( !this.id )
+                {
+                    return;
+                }
+
+                //UserAddressData
+                let url = globalStore.state.host + 'user/user-address-data';
+                let param = {openid:wx.getStorageSync('openid'),address_id:this.id}
+                this.$http.get(url,param).then((res)=>{
+                    this.real_name = res.data.data.address_name;
+                    this.phone = res.data.data.mobile;
+                    this.address = res.data.data.address;
+                    this.addressDefault = res.data.data.is_default;
+                    this.neighborhoodIndex = this.neighborhoodArr.indexOf(res.data.data.pct_code_name);
+
+                    //pct code
+                }).catch(err=>{console.log(3)})
+
+
             },
             bindAttend2Change(e)
             {
@@ -134,6 +166,7 @@
             }
         },
         mounted() {
+          this.id = param.getParamValue('id');
           this.pageInit();
             // this.src = globalStore.state.host + 'user/add-mod-address?&openid=' +wx.getStorageSync('openid');
         },

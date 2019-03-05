@@ -23,7 +23,10 @@
     "pages/info/main",
     "pages/edit/main",
     "pages/bind2/main",
-    "pages/sms2/main"
+    "pages/sms2/main",
+    "pages/billdetail/main",
+    "pages/community/main",
+    "pages/bill2/main"
   ],
   "window": {
     "backgroundTextStyle": "light",

@@ -29,7 +29,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 29,
+			"current": 33,
 			"list": [
 				{
 					"id": 0,
@@ -227,6 +227,33 @@
 					"name": "订单详情",
 					"pathName": "pages/billdetail/main",
 					"query": "id=8777",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "订餐详情",
+					"pathName": "pages/billdetail/main",
+					"query": "id=8772",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "订餐页面",
+					"pathName": "pages/fillfoodbill/main",
+					"query": "product_id=4&openid=8792&tabIndex=1&quantity=1&startDay=2019-03-05",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "日常保洁",
+					"pathName": "pages/billdetail/main",
+					"query": "id=8774",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "我的订单",
+					"pathName": "pages/bill2/main",
 					"scene": null
 				}
 			]

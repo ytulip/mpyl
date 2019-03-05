@@ -2,23 +2,29 @@
   <div class="p16 bg-f9f9fb">
     <div class="bill-panel m-b-16" v-for="(item,index) in list" v-on:click="goDetail(item.id)">
       <div class="row">
-        <div class="cus-row-col-6">
+        <div class="cus-row-col-6 v-a-m">
           <img src="/static/images/food_icon@3x.png" class="in-bl v-a-m" style="width: 24px;height: 24px" v-if="item.type != 1"/>
           <img src="/static/images/clean_icon@3x.png" class="in-bl v-a-m" style="width: 24px;height: 24px" v-else/>
           <div class="cus-row-col-6 fs-14-fc-484848 f-f-r v-a-m" style="margin-left:8px; " ><span v-if="item.type != 1">订餐服务</span><span v-else>家庭清洁</span></div>
         </div>
-        <div class="cus-row-col-6 t-al-r v-a-m">
-          <div class="l-btn-red2" v-if="item.is_vip">花甲会员</div>
+        <div class="cus-row-col-6 fs-14-fc-c50081-m t-al-r v-a-m f-f-r" v-if="item.days_count">
+          订单进行中
         </div>
+      <div class="cus-row-col-6 t-al-r v-a-m fs-14-fc-7E7E7E-r" v-else>
+        已完成
+      </div>
       </div>
 
       <div class="m-t-20">
         <div class="in-bl fs-18-fc-000000-m v-a-m">{{item.product_name}}</div>
-        <div class="in-bl fs-14-fc-484848 f-f-r v-a-m" style="margin-left: 16px;" v-if="item.type != 1">剩余天数 {{item.days_count}}/{{item.days}}天</div>
       </div>
 
-      <div class="fs-14-fc-7E7E7E-r m-t-10" v-if="item.type == 1">服务时间：{{item.service_start_time_format}}</div>
-      <div class="fs-14-fc-7E7E7E-r m-t-10" v-else>服务时间：{{item.service_start_time_format}}</div>
+      <div class="cus-row m-t-10">
+        <div class="cus-row-col-6 v-a-m fs-14-fc-7E7E7E-r">购买</div>
+        <div class="cus-row-col-6 v-a-m fs-16-fc-000000-m">￥</div>
+      </div>
+
+      <!--<div class="fs-14-fc-7E7E7E-r m-t-10">服务时间：2018年12月30日（明天）</div>-->
 
     </div>
   </div>
@@ -44,7 +50,7 @@
         },
         methods: {
            pageInit(){
-               let url = globalStore.state.host + '/user/user-order';
+               let url = globalStore.state.host + '/user/user-order2';
                this.$http.get(url,{openid:param.getOpenid()}).then((res)=>{
                    console.log(res);
                    this.list = res.data.data;

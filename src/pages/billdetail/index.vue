@@ -5,8 +5,11 @@
 
     <div v-if="productType == 1">
 
-    <div class="fs-18-fc-000000-m">查看订单</div>
-    <div class="m-t-16 fs-14-fc-484848 f-f-r">服务时间:2019-02-28</div>
+    <div class="fs-18-fc-000000-m">家庭保洁</div>
+      <div class="m-t-16 cus-row">
+        <div class="fs-14-fc-484848 f-f-r cus-row-col-8">服务时间:2019-02-28</div>
+        <div class="fs-14-fc-484848 f-f-r cus-row-col-4 t-al-r" v-on:click="goDetail">查看订单</div>
+      </div>
 
     <div  class="m-t-24" style="overflow: hidden;position: relative;margin-bottom: 16px;padding-left: 84px;box-sizing: border-box">
 
@@ -56,7 +59,10 @@
 
     <div v-if="productType == 2">
       <div class="fs-18-fc-000000-m">订餐服务</div>
-      <div class="m-t-16 fs-14-fc-484848 f-f-r">服务时间:2019-02-28</div>
+      <div class="m-t-16 cus-row">
+      <div class="fs-14-fc-484848 f-f-r cus-row-col-8">服务时间:2019-02-28</div>
+      <div class="fs-14-fc-484848 f-f-r cus-row-col-4 t-al-r" v-on:click="goDetail">查看订单</div>
+      </div>
 
 
       <div  class="m-t-24" style="overflow: hidden;position: relative;margin-bottom: 16px;padding-left: 84px;box-sizing: border-box">
@@ -189,6 +195,10 @@
             },
             components: {
               mptoast
+            },
+            goDetail()
+            {
+
             },
             yanhou()
             {

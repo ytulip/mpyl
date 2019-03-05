@@ -44,6 +44,10 @@
         {
 
         },
+        onShow()
+        {
+            this.pageInit();
+        },
         methods: {
             chosen(ind)
             {
@@ -57,7 +61,7 @@
                 // var jsonData = JSON.stringify({ id: id, name:name,phone: phone,pct:pct,pct_code_name:pct_code_name,address:address});
                 // wx.miniProgram.postMessage({ data: jsonData});
 
-                let data = JSON.stringify({ id: this.list[ind].address_id, name:this.list[ind].name,phone: this.list[ind].phone,pct:this.list[ind].pct_code,pct_code_name:this.list[ind].pct_code_name,address:this.list[ind].address});
+                let data = JSON.stringify({ id: this.list[ind].address_id, name:this.list[ind].address_name,phone: this.list[ind].mobile,pct:this.list[ind].pct_code,pct_code_name:this.list[ind].pct_code_name,address:this.list[ind].address});
 
 
                 globalStore.commit("setAddressShare",data);

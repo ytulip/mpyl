@@ -26,7 +26,8 @@
     "pages/sms2/main",
     "pages/billdetail/main",
     "pages/community/main",
-    "pages/bill2/main"
+    "pages/bill2/main",
+    "pages/billinfo/main"
   ],
   "window": {
     "backgroundTextStyle": "light",

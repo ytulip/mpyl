@@ -60,7 +60,7 @@
                console.log(id);
                wx.navigateTo(
                    {
-                       url:'/pages/billdetail/main?id=' + id
+                       url:'/pages/billinfo/main?id=' + id
                    }
                );
             }

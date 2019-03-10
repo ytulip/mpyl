@@ -4,16 +4,16 @@
     <div class="common-panel p-16-24">
       <div class="cus-row">
         <div class="cus-row-col-6 v-a-m fs-18-fc-000000-m">订购服务</div>
-        <div class="cus-row-col-6 v-a-m fs-14-fc-c50081-m">订单进行中</div>
+        <div class="cus-row-col-6 v-a-m fs-14-fc-c50081-m t-al-r">订单进行中</div>
       </div>
 
       <div class="cus-row m-t-24">
         <div class="in-bl v-a-t food-icon-img">
-          <image :src="visitCoverImage" class="slide-image" style="width: 100%;height: 100%;"/>
+          <image :src="imgHost + product.cover_image" class="slide-image" style="width: 100%;height: 100%;"/>
         </div>
         <div class="v-a-t in-bl m-l-24">
           <div class="fs-16-fc-000000-m">{{product.product_name}}</div>
-          <div class="m-t-10"><span class="fs-14-fc-c50081-m">￥{{product.price}}</span><span class="fs-14-fc-7e7e7e-r"> ×{{quantity}}份 ×{{days}}天</span></div>
+          <div class="m-t-10"><span class="fs-14-fc-c50081-m">￥{{product.price}}</span><span class="fs-14-fc-7e7e7e-r"> ×{{order.quantity}}份 ×{{order.days}}天</span></div>
         </div>
       </div>
 
@@ -24,11 +24,11 @@
           <div class="fs-16-fc-000000-m">订餐份数</div>
           <div class="fs-14-fc-7e7e7e-r m-t-6">1份餐仅供一人</div>
         </div>
-        <div class="cus-row-col-6 v-a-m t-al-r">
-          <div class="in-bl v-a-m quantity-plus-icon" v-on:click="deQuantity"><image src="/static/images/tarbar/icon_out_nor@3x.png" class="quantity-plus-icon"/></div>
-          <div class="in-bl v-a-m" style="margin: 0 30px;"><div class="quantity-plus">    {{quantity}}    </div></div>
-          <div class="in-bl v-a-m quantity-plus-icon" v-on:click="addQuantity"><image src="/static/images/tarbar/icon_add_nor@3x.png" class="quantity-plus-icon"/></div>
+
+        <div class="cus-row-col-6 v-a-m t-al-r fs-16-fc-000000-m">
+          x{{order.quantity}}
         </div>
+
       </div>
 
       <div class="barr-line"></div>
@@ -36,14 +36,27 @@
 
       <div class="cus-row">
         <div class="cus-row-col-6 v-a-m">
-          <div class="fs-16-fc-000000-m">订餐份数</div>
-          <div class="fs-14-fc-7e7e7e-r m-t-6">1份餐仅供一人</div>
+          <div class="fs-16-fc-000000-m">预定时间</div>
         </div>
-        <div class="cus-row-col-6 v-a-m t-al-r">
-          <div class="in-bl v-a-m quantity-plus-icon" v-on:click="deQuantity"><image src="/static/images/tarbar/icon_out_nor@3x.png" class="quantity-plus-icon"/></div>
-          <div class="in-bl v-a-m" style="margin: 0 30px;"><div class="quantity-plus">    {{quantity}}    </div></div>
-          <div class="in-bl v-a-m quantity-plus-icon" v-on:click="addQuantity"><image src="/static/images/tarbar/icon_add_nor@3x.png" class="quantity-plus-icon"/></div>
+        <div class="cus-row-col-6 v-a-m t-al-r fs-14-fc-484848 f-f-r">
+          剩余天数{{countDays}}/{{order.days}}天
         </div>
+      </div>
+
+      <div class="m-t-16">
+
+        <!--<div class="day-item">11月12日</div>-->
+
+        <div v-for="(item,index) in list" :index="index" :key="index" :data-index="index">
+          <div class="recommend-game" v-for="(it,idx) in item" :key="idx" :data-index="idx">
+            <div class="game-info day-item-active" v-bind:class="{'day-item': it.through_line}">{{it.date_formate}}</div>
+          </div>
+        </div>
+
+        <div class="t-al-r m-t-24">
+          <div class="fs-14-fc-484848 f-f-r" style="border: 1px solid #E1E1E1;border-radius: 16px;padding: 0 12px;line-height:32px;display: inline-block; " v-on:click="goHistory()">历史记录</div>
+        </div>
+
       </div>
 
     </div>
@@ -71,20 +84,20 @@
 
       <div class="cus-row">
         <div class="cus-row-col-6 fs-16-fc-7E7E7E-r">代金券</div>
-        <div class="cus-row-col-6 fs-16-fc-000000-m">{{order.id}}</div>
+        <div class="cus-row-col-6 fs-16-fc-000000-m t-al-r">{{order.id}}</div>
       </div>
 
       <div class="barr-line"></div>
 
       <div class="cus-row">
         <div class="cus-row-col-6 fs-16-fc-7E7E7E-r">花甲会员优惠</div>
-        <div class="cus-row-col-6 fs-16-fc-000000-m">{{order.created_at}}</div>
+        <div class="cus-row-col-6 fs-16-fc-000000-m t-al-r">{{order.created_at}}</div>
       </div>
 
       <div class="barr-line"></div>
 
       <div class="cus-row">
-        <div class="cus-row-col-6 fs-16-fc-000000-m">合计￥165元</div>
+        <div class="cus-row-col-12 fs-16-fc-000000-m t-al-r">合计￥165元</div>
       </div>
 
     </div>
@@ -97,21 +110,21 @@
 
       <div class="cus-row">
         <div class="cus-row-col-6 fs-16-fc-7E7E7E-r">订单号码</div>
-        <div class="cus-row-col-6 fs-16-fc-000000-m">{{order.id}}</div>
+        <div class="cus-row-col-6 fs-16-fc-000000-m t-al-r">{{order.id}}</div>
       </div>
 
       <div class="barr-line"></div>
 
       <div class="cus-row">
         <div class="cus-row-col-6 fs-16-fc-7E7E7E-r">下单时间</div>
-        <div class="cus-row-col-6 fs-16-fc-000000-m">{{order.created_at}}</div>
+        <div class="cus-row-col-6 fs-16-fc-000000-m t-al-r">{{order.created_at}}</div>
       </div>
 
       <div class="barr-line"></div>
 
       <div class="cus-row">
         <div class="cus-row-col-6 fs-16-fc-7E7E7E-r">支付方式</div>
-        <div class="cus-row-col-6 fs-16-fc-000000-m">微信支付</div>
+        <div class="cus-row-col-6 fs-16-fc-000000-m t-al-r">微信支付</div>
       </div>
 
     </div>
@@ -123,6 +136,7 @@
 <script>
     import globalStore from '../../stores/global-store'
     import param from "../../utils/param";
+    import moment from "moment";
 
 
     export default {
@@ -138,7 +152,10 @@
                 res:[],
                 host:globalStore.state.host,
                 layerFlag:0,
-                order:{}
+                order:{},
+                imgHost:globalStore.state.host,
+                pastDays:[],
+                days:[]
             }
         },
         created:function()
@@ -154,9 +171,64 @@
                    this.order = res.data.data.order;
                    this.product = res.data.data.product;
                    this.productType = this.product.type;
+                   this.pastDays = res.data.data.pastDays;
+                   this.days = res.data.data.days;
 
 
-               }).catch(err=>{console.log(3)});
+                   //days list,两层循环
+                   let dayLines = [];
+                   let dayLinesFlag = 0;
+                   let dayLineArr = [];
+
+                   let i = 0;
+
+                   for( i = 0;i < this.pastDays.length;i++)
+                   {
+                       if( dayLinesFlag == 4)
+                       {
+
+                           //日期转换
+
+                           dayLines.push(dayLinesArr);
+                           dayLineArr = [];
+                           dayLinesFlag = 0;
+                       }
+
+                       let dateFormat = moment(this.days[i].date);
+                       this.days[i].date_formate = dateFormat.format('MM月DD日');
+                       this.days[i].through_line = 1;
+
+                       dayLineArr.push(this.pastDays[i]);
+                       dayLinesFlag +=  1;
+                   }
+
+
+                   for( i = 0;i < this.days.length;i++)
+                   {
+                       if( dayLinesFlag == 4)
+                       {
+                           dayLines.push(dayLinesArr);
+                           dayLineArr = [];
+                           dayLinesFlag = 0;
+                       }
+
+                       let dateFormat = moment(this.days[i].date);
+                       this.days[i].date_formate = dateFormat.format('MM月DD日');
+                       this.days[i].through_line = 0;
+
+                       dayLineArr.push(this.days[i]);
+                       dayLinesFlag +=  1;
+                   }
+
+                   if( dayLineArr.length )
+                   {
+                       dayLines.push(dayLineArr);
+                   }
+
+                   console.log('逐行打印');
+                   console.log(JSON.stringify(dayLines));
+                   this.list = dayLines;
+               }).catch(err=>{console.log(err)});
            },
             goDetail(id){
                console.log(id);
@@ -165,6 +237,14 @@
                        url:'/pages/billdetail/main?id=' + id
                    }
                );
+            },
+           goHistory()
+           {
+               
+           },
+            formatDate(dateStr)
+            {
+                //比如讲2019年11月12日，转换成11月12日
             }
         },
         onShow(){
@@ -174,6 +254,13 @@
             // this.src = globalStore.state.host + 'user/my-services?&openid=' +wx.getStorageSync('openid');
             this.id = param.getParamValue('id');
             this.pageInit();
+        },
+        computed:
+        {
+            countDays:function()
+            {
+                return this.days.length;
+            }
         }
     }
 </script>
@@ -188,4 +275,29 @@
   .bill-panel{background: #FFFFFF;
     box-shadow: 0 2px 6px 0 #E7E9F0;
     border-radius: 5px;padding: 16px;}
+
+
+  .day-item{
+    font-family: PingFangSC-Regular;
+    font-size: 12px;
+    color: #7E7E7E;
+    text-decoration:line-through;
+  }
+
+  .day-item-active
+  {
+    font-family: PingFangSC-Regular;
+    font-size: 12px;
+    color: #212229;
+    text-decoration:none;
+  }
+
+  .recommend-game{vertical-align: top;width: 20%;display: inline-block;font-size: 0;}
+  .recommend-game .game-info{width: 90%;text-align: center;}
+  .recommend-game .game-info img{width: 100%;}
+  /*.recommend-icon:nth-child(1){}*/
+  .recommend-game:nth-child(2) .game-info{margin-left: 2.5%}
+  .recommend-game:nth-child(3) .game-info{margin-left: 5%}
+  .recommend-game:nth-child(4) .game-info{margin-left: 7.5%}
+  .recommend-game:nth-child(5) .game-info{margin-left: 10%}
 </style>

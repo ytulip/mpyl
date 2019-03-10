@@ -198,7 +198,11 @@
             },
             goDetail()
             {
-
+                wx.navigateTo(
+                    {
+                        url:'/pages/billinfo/main?id=' + param.getParamValue('id')
+                    }
+                );
             },
             yanhou()
             {

@@ -20,8 +20,8 @@
       </div>
 
       <div class="cus-row m-t-10">
-        <div class="cus-row-col-6 v-a-m fs-14-fc-7E7E7E-r">购买</div>
-        <div class="cus-row-col-6 v-a-m fs-16-fc-000000-m">￥</div>
+        <div class="cus-row-col-6 v-a-m fs-14-fc-7E7E7E-r">购买{{(item.type == 1)? (item.quantity + '小时'):(item.days + '天')}}</div>
+        <div class="cus-row-col-6 v-a-m fs-16-fc-000000-m t-al-r">￥{{item.origin_pay}}</div>
       </div>
 
       <!--<div class="fs-14-fc-7E7E7E-r m-t-10">服务时间：2018年12月30日（明天）</div>-->

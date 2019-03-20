@@ -27,7 +27,8 @@
     "pages/billdetail/main",
     "pages/community/main",
     "pages/bill2/main",
-    "pages/billinfo/main"
+    "pages/billinfo/main",
+    "pages/chosencoupon/main"
   ],
   "window": {
     "backgroundTextStyle": "light",

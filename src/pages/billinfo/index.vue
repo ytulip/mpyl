@@ -53,7 +53,7 @@
           </div>
         </div>
 
-        <div class="t-al-r m-t-24">
+        <div class="t-al-r m-t-24" v-if="pastDays.length">
           <div class="fs-14-fc-484848 f-f-r" style="border: 1px solid #E1E1E1;border-radius: 16px;padding: 0 12px;line-height:32px;display: inline-block; " v-on:click="goHistory()">历史记录</div>
         </div>
 

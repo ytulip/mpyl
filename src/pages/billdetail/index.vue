@@ -75,10 +75,10 @@
 
           <div class="info-panel" style="position: relative;">
               <div class="fs-18-fc-000000-m" style="line-height: 25px;">{{product.product_name}}</div>
-              <div class="fs-14-fc-7E7E7E-r" style="margin-top: 10px;line-height: 16px;">{{product.sub_desc}}</div>
+              <div class="fs-14-fc-7E7E7E-r" style="margin-top: 10px;line-height: 16px;">剩余天数{{days.length}}/{{order.days}}天</div>
 
-              <div class="" style="position: absolute;bottom: 18px;">
-                <div class="fs-14-fc-484848 f-f-r" style="border: 1px solid #E1E1E1;border-radius: 16px;padding: 0 12px;line-height:32px ">历史记录</div>
+              <div class="" style="position: absolute;bottom: 18px;" v-if="pastDays.length">
+                <div class="fs-14-fc-484848 f-f-r" style="border: 1px solid #E1E1E1;border-radius: 16px;padding: 0 12px;line-height:32px " v-on:click="goHistory">历史记录</div>
               </div>
           </div>
       </div>
@@ -174,7 +174,9 @@
                 res:[],
                 host:globalStore.state.host,
                 layerFlag:0,
-                order:{}
+                order:{},
+                pastDays:[],
+                days:[]
             }
         },
         created:function()
@@ -185,6 +187,19 @@
           /**
            * 不是今天
            */
+              goHistory()
+            {
+              //优化
+              let days = this.pastDays.jion(',');
+              let url = Base64.encode('/passport/history?dates=' + $days + '&product_id=' + this.order.product_id);
+              wx.redirectTo(
+                      {
+                        url:'/pages/commonweb/main?url=' + url,
+                      }
+              )
+
+
+            },
             notThisDay()
             {
               this.layerFlag = 1;
@@ -242,6 +257,8 @@
                     this.order = res.data.data.order;
                     this.product = res.data.data.product;
                     this.productType = this.product.type;
+                    this.pastDays = res.data.data.pastDays;
+                    this.days = res.data.data.days;
 
 
                     this.res = res.data.data.res;

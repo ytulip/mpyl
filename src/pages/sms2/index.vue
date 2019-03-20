@@ -10,24 +10,9 @@
         </div>
 
         <div class="cus-row m-t-40" style="margin-left: -6px;margin-right: -6px;">
-            <div class="cus-row-col-3 divi-4-p">
+            <div class="cus-row-col-12 divi-4-p">
                 <div class="single-input-wrap">
-                    <input  class="cus-input fs-18-fc-2E3133 t-al-c" v-model="n1" type="number" maxlength="4"/>
-                </div>
-            </div>
-            <div class="cus-row-col-3 divi-4-p">
-                <div class="single-input-wrap">
-                    <input  class="cus-input fs-18-fc-2E3133 t-al-c" v-model="n2" type="number" maxlength="1"/>
-                </div>
-            </div>
-            <div class="cus-row-col-3 divi-4-p">
-                <div class="single-input-wrap">
-                    <input  class="cus-input fs-18-fc-2E3133 t-al-c" v-model="n3" type="number" maxlength="1"/>
-                </div>
-            </div>
-            <div class="cus-row-col-3 divi-4-p">
-                <div class="single-input-wrap">
-                    <input  class="cus-input fs-18-fc-2E3133 t-al-c" v-model="n4" type="number" maxlength="1"/>
+                    <input  class="cus-input fs-32-fc-2E3133 t-al-c" style="line-height: 49px !important;height: 32px;" v-model="n1" type="number" maxlength="4"/>
                 </div>
             </div>
         </div>
@@ -65,7 +50,7 @@
         {
         },
         watch:{
-            n1:function(val){
+            n1ss:function(val){
                 if(val)
                 {
                     let strArray = val.split("");
@@ -164,26 +149,6 @@
                         }
                     }
                 );
-
-                // var a = this;
-                // this.$http.post(globalStore.state.host + 'passport/register',{
-                //     phone:this.phone,
-                //     register_sms_code:this.smsCode,
-                //     openid:
-                // }).then((res)=>{
-                //     if(res.data.status)
-                //     {
-                //         //设置用户登录
-                //         console.log('login:' + res.data.data.userId);
-                //         wx.setStorageSync("openid",res.data.data.userId);
-                //         wx.switchTab({
-                //             url:'/pages/index/main'
-                //         })
-                //     } else {
-                //         console.log(res.data.desc);
-                //         a.$mptoast(res.data.desc)
-                //     }
-                // }).catch(err=>{console.log(4)})
             },
             sendSms(){
                 if(!(/^1[3|4|5|8|7][0-9]\d{8}$/.test(this.phone))) {
@@ -242,16 +207,21 @@
         computed:{
             btnGray:function()
             {
-                if(this.n1.length && this.n2.length && this.n3.length && this.n4.length) {
-                    return false;
-                } else
+                if( this.n1.length == 4)
                 {
+                    return false;
+                } else {
                     return true;
                 }
+                // if(this.n1.length && this.n2.length && this.n3.length && this.n4.length) {
+                //     return false;
+                // } else
+                // {
+                //     return true;
+                // }
             },
             smsCode:function () {
-                let arr = [this.n1,this.n2,this.n3,this.n4];
-                return arr.join("");
+                return this.n1;
             }
         }
     }

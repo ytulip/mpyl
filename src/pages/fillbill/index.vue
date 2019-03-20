@@ -66,10 +66,9 @@
 
         <div class="white-panel m-t-16">
 
-            <div class="cus-row" style="margin-top: 14px;">
+            <div class="cus-row" style="margin-top: 14px;" v-on:click="goCoupon(1)">
                 <div class="cus-row-col-6 v-a-m">
-                    <div class="fs-16-fc-000000-m">代金券</div>
-                    <div class="fs-14-fc-7e7e7e-r m-t-10">暂无代金券</div>
+                    <div class="fs-18-fc-000000-m">代金券</div>
                 </div>
                 <div class="cus-row-col-5 v-a-m">
 
@@ -317,6 +316,13 @@
             globalStore.commit('sethabbitRemarkShare','');
         },
         methods: {
+            goCoupon(type){
+                wx.navigateTo(
+                    {
+                        url:'/pages/chosencoupon/main'
+                    }
+                );
+            },
             pctSwitch:function()
             {
                 this.layerShow = true;

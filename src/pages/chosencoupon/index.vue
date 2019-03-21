@@ -1,6 +1,6 @@
 <template>
   <div class="p16 bg-f9f9fb">
-      <div class="address-panel p16" v-for="(item,index) in currentList" style="margin-bottom: 16px;position: relative;">
+      <div class="address-panel p16" v-for="(item,index) in currentList" style="margin-bottom: 16px;position: relative;" v-on:click="chosenCoupon(item.id)">
 
 
           <div style="width: 0;height: 0;border-style: solid;border-width: 24px 24px 0 0;border-color: #CE388E transparent transparent transparent;position: absolute;top:0;left: 0;" v-if="item.id == couponId"></div>
@@ -75,6 +75,13 @@
             cancelLayer()
             {
                 this.layerFlag = 0;
+            },
+            chosenCoupon(id)
+            {
+                globalStore.commit("setAddressShare",data);
+                wx.navigateBack({
+                    delta: 1
+                })
             }
         },
         onShow(){

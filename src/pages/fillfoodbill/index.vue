@@ -256,7 +256,8 @@
                 calderSwitch:false,
                 chosenDay:'',
                 chosenType:'',
-                openid:''
+                openid:'',
+                couponId:''
             }
         },
         watch: {
@@ -294,7 +295,7 @@
             goCoupon(type){
                 wx.navigateTo(
                     {
-                        url:'/pages/chosencoupon/main?id=' + type
+                        url:'/pages/chosencoupon/main?id=' + this.couponId
                     }
                 );
             },
@@ -623,6 +624,7 @@
                 a.deliverStartList = res.data.data.start_deliver_day;
                 a.periodPrice = res.data.data.periodPrice;
                 a.product = res.data.data.product;
+                a.couponId = res.data.data.couponId;
             }).catch(err=>{console.log('网络异常')});
 
 

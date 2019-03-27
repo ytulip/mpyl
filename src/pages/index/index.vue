@@ -59,12 +59,15 @@
 
 <script>
     import globalStore from '../../stores/global-store'
+    import param from '../../utils/param'
+
     export default {
         data () {
             return {
                 msg: 'Hello',
                 banners:{},
-                isVip:false
+                isVip:false,
+                expire:''
             }
         },
         created:function()
@@ -73,9 +76,9 @@
         methods: {
             userInit () {
                 let url = globalStore.state.host + 'index/home-main';
-                let param = {code:1}
-                Object.assign(param,{openid:this.openid});
-                this.$http.get(url,param).then((res)=>{
+                let requestParam = {code:1}
+                Object.assign(requestParam,{openid:param.getOpenid()});
+                this.$http.get(url,requestParam).then((res)=>{
                     console.log(res.data.data);
                     this.banners = res.data.data.banners;
                     this.isVip = res.data.data.vip.isVip;
@@ -128,6 +131,10 @@
                         url: "/pages/"+url+"/main"
                     });
             }
+        },
+        onShow()
+        {
+            this.userInit();
         },
         mounted:function()
         {

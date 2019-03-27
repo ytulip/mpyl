@@ -18,13 +18,6 @@
 
         },
         methods: {
-            clickHandle () {
-                let url = 'http://yl.zhuyan.me/activity/user-info'
-                let param = {code:1}
-                //网络请求
-                this.$http.get(url,param).then((res)=>{}).catch(err=>{console.log(3)});
-                this.msg = 'Clicked!!!!!!'
-            }
         },
         mounted() {
             let url = param.getParamValue('url');

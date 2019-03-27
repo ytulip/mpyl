@@ -50,53 +50,10 @@
         },
         created:function()
         {
-            console.log('index' + wx.getStorageSync('openid'));
-            //定时等待10s
-            (function(a,timer){
-                let countDownHandler = setInterval(function(){
-                    timer = timer - 1;
-                    console.log(timer);
-                    //判断是否拥有openid
-                    if( wx.getStorageSync('openid'))
-                    {
-                        a.openid = wx.getStorageSync('openid');
-                        if( a.hasOwnProperty('userInit') )
-                        {
-                            console.log('has userInit');
-                            a.userInit();
-                        } else {
-                            console.log('donot has userInit');
-                        }
-                        clearInterval(countDownHandler);
-                        return;
-                    }
-                    a.userInit();
-                    if( timer < 1) {
-                        clearInterval(countDownHandler);
-                        return;
-                    }
-                },1000);
-            })(this,7);
         },
         methods: {
             setTab:function(index){
                 this.tabIndex = index;
-            },
-            clickHandle () {
-                let url = 'http://yl.zhuyan.me/activity/user-info'
-                let param = {code:1}
-                //网络请求
-                this.$http.get(url,param).then((res)=>{}).catch(err=>{console.log(3)});
-                this.msg = 'Clicked!!!!!!'
-            },
-            userInit () {
-                let url = globalStore.state.host + 'index/home-main';
-                let param = {code:1}
-                Object.assign(param,{openid:this.openid});
-                this.$http.get(url,param).then((res)=>{
-                    console.log(res.data.data);
-                    this.banners = res.data.data.banners;
-                }).catch(err=>{console.log(3)})
             },
             goClean() {
                 wx.navigateTo(

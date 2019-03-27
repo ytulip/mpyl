@@ -35,11 +35,35 @@
                     <div style="padding: 26px 16px 6px; background-color: #ffffff">
 
                         <div style="">
-                            <span class="fs-18-fc-212229-m">预定时间</span><span style="margin-left: 16px;" class="fs-14-fc-7E7E7E-r">单次预定限五天内 节假日暂不供应</span>
+                            <span class="fs-18-fc-212229-m">选择会员方案</span>
                         </div>
 
+                        <div class="t-al-c" style="font-size: 0;margin-top: 26px;margin-bottom: 22px;">
+                            <div class="in-bl" style="background: #F9F9FB;border: 1px solid #E1E1E1;border-radius: 17px 0px 0px 17px;" v-bind:class="{ 'active-type': (tabIndex == 1) }" v-on:click="setTab(1)"><span class="fs-16-fc-080808-r" style="line-height: 36px;padding: 0 24px;">会员A</span></div>
+                            <div class="in-bl" style="background: #F9F9FB;border: 1px solid #E1E1E1;border-radius: 0px 17px 17px 0px;" v-bind:class="{ 'active-type': (tabIndex == 2) }" v-on:click="setTab(2)"><span class="fs-16-fc-080808-r" style="line-height: 36px;padding: 0 24px;">会员B</span></div>
+                        </div>
+
+                        <div style="background: #FFFFFF;border: 1px solid #E1E1E1;border-radius: 4px;padding: 24px;margin-top: 24px;" v-for="(item,index) in vip[tabIndex - 1]">
+                            <div class="cus-row">
+                                <div class="cus-row-col-6 v-a-m fs-18-fc-000000-m">
+                                    {{item.title}}个月
+                                </div>
+                                <div class="cus-row-col-6 v-a-m fs-20-fc-000033-m t-al-r">
+                                    ￥{{item.price}}
+                                </div>
+                            </div>
+
+                            <div class="fs-14-fc-7e7e7e-r" style="line-height: 21px;margin-top: 12px;">
+                                {{item.desc}}
+                            </div>
+                        </div>
+
+                        <!--<div style="">-->
+                            <!--<span class="fs-18-fc-212229-m">预定时间</span><span style="margin-left: 16px;" class="fs-14-fc-7E7E7E-r">单次预定限五天内 节假日暂不供应</span>-->
+                        <!--</div>-->
+
                         <div style="margin-top: 26px;">
-                            <a class="yl_btn1 m-t-20" style="margin-top: 0;display: block;">￥60 微信支付</a>
+                            <a class="yl_btn1 m-t-20" style="margin-top: 0;display: block;" @click="doBuy">￥60 微信支付</a>
                         </div>
                     </div>
                 </div>
@@ -49,47 +73,57 @@
 
 
         <div v-if="isVip">
+            <div style="position: relative">
+                <img src="/static/images/home_banner_nor@3x.png" mode="widthFix" style="width: 100%;"/>
 
-        <div>
-            <img src="http://graphis.zhuyan.me/header1.jpg" class="header-img1"/>
-            <div class="in-bl v-a-m">
-                <span class="fs-14-fc-212229">李老头</span><br/>
-                <span class="fs-12-fc-95909e">{{isVip?'家庭会员':'您当前尚未开通家庭会员'}}</span>
+                <div class="all-center" style="width: 100%;">
+                    <div class="fs-21-fc-ffffff-m t-al-c">已开通花甲会员</div>
+                    <div class="m-t-24 t-al-c"><a class="txt-tag-f">{{expireDay}}到期（到期后可续费）</a></div>
+                </div>
             </div>
-        </div>
 
-        <div v-if="isVip" class="fs-14-fc-A6A6A6">
-            会员到期日:{{expireDay}}
-        </div>
+            <div class="fs-18-fc-000000-m m-t-24">会员特权</div>
 
-        <div class="fs-16-fc-212229 t-al-c">会员介绍</div>
-        <div class="fs-16-fc-212229 t-al-c">会员特权</div>
+            <div class="cus-row m-t-16">
+                <div class="cus-row-col-6" style="padding-right: 9px;box-sizing: border-box;">
+                    <div class="common-panel p-16-16-24-16">
+                        <div class="fs-16-fc-000000-m"><span class="short-line" style="border-right-color: #C50081;"></span>订餐服务</div>
+                        <div class="m-t-20"><span class="fs-14-fc-000000-m">剩余</span><span class="fs-16-fc-000000-m">15</span><span class="fs-14-fc-7e7e7e-r">/60天</span></div>
+                    </div>
+                </div>
+                <div class="cus-row-col-6" style="padding-left: 9px;box-sizing: border-box;">
+                    <div class="common-panel p-16-16-24-16">
+                        <div class="fs-16-fc-000000-m"><span class="short-line" style="border-right-color: #FFB11B;"></span>家庭清洁</div>
+                        <div class="m-t-20"><span class="fs-14-fc-000000-m">剩余</span><span class="fs-16-fc-000000-m">15</span><span class="fs-14-fc-7e7e7e-r">/3次</span></div>
+                    </div>
+                </div>
+            </div>
 
-        <div class="cus-row">
-            <div class="cus-row-col-3 t-al-c"><span class="fs-14-fc-212229 " v-bind:class="{ 'active-tab': (tabIndex == 1) }" v-on:click="setTab(1)">助餐服务</span></div>
-            <div class="cus-row-col-3 t-al-c"><span class="fs-14-fc-212229" v-bind:class="{ 'active-tab': (tabIndex == 2) }" v-on:click="setTab(2)">保洁服务</span></div>
-            <div class="cus-row-col-3 t-al-c"><span class="fs-14-fc-212229" v-bind:class="{ 'active-tab': (tabIndex == 3) }" v-on:click="setTab(3)">金融服务</span></div>
-            <div class="cus-row-col-3 t-al-c"><span class="fs-14-fc-212229" v-bind:class="{ 'active-tab': (tabIndex == 4) }" v-on:click="setTab(4)">体检服务</span></div>
-        </div>
+            <div class="cus-row m-t-16">
+                <div class="cus-row-col-6" style="padding-right: 9px;box-sizing: border-box;">
+                    <div class="common-panel p-16-16-24-16">
+                        <div class="fs-16-fc-000000-m"><span class="short-line" style="border-right-color: #2E82FF;"></span>理财咨询</div>
+                        <div class="m-t-20"><span class="fs-14-fc-000000-m">下次预约:08月23日</span></div>
+                    </div>
+                </div>
+                <div class="cus-row-col-6" style="padding-left: 9px;box-sizing: border-box;">
+                    <div class="common-panel p-16-16-24-16">
+                        <div class="fs-16-fc-000000-m"><span class="short-line" style="border-right-color: #0AD87B;"></span>健康体检</div>
+                        <div class="m-t-20"><span class="fs-14-fc-000000-m">剩余</span><span class="fs-16-fc-000000-m">15</span><span class="fs-14-fc-7e7e7e-r">/1次</span></div>
+                    </div>
+                </div>
+            </div>
 
 
 
-        <div>
+            <div class="common-panel fs-18-fc-000000-m m-t-24" style="padding:20px 16px;line-height: 22px;">
+                <div class="cus-row">
+                    <div class="cus-row-col-6 v-a-m fs-16-fc-000000-m"><span class="short-line" style="border-right-color: #966FEE;"></span>24小时 小花帮忙</div>
+                    <div class="cus-row-col-6 v-a-m fs-14-fc-7e7e7e-r t-al-r">点击拨打</div>
+                </div>
+            </div>
 
 
-            <div class="dp-n" v-bind:class="{ 'active-div': (tabIndex == 1) }">aaaa</div>
-            <div class="dp-n" v-bind:class="{ 'active-div': (tabIndex == 2) }">bbbb</div>
-            <div class="dp-n" v-bind:class="{ 'active-div': (tabIndex == 3) }">cccc</div>
-            <div class="dp-n" v-bind:class="{ 'active-div': (tabIndex == 4) }">dddd</div>
-
-        </div>
-
-
-
-        <!--<div class="btn4" v-on:click="buyNow">立即开通</div>-->
-        <!--<div class="fix-bottom3" style="background-color: #ffffff;padding: 14px;border-top:1px solid #EBE9E9 ;">-->
-            <!--<a class="yl_btn1"  v-on:click="buyNow" style="margin-top: 0;">¥60 立即开通</a>-->
-        <!--</div>-->
         </div>
 
 
@@ -98,6 +132,7 @@
 
 <script>
     import globalStore from '../../stores/global-store'
+    import param from '../../utils/param'
     export default {
         data () {
             return {
@@ -111,49 +146,24 @@
                     {title:'特权2 您的专属理财专家',desc:'这里是一段套餐介绍的，午餐晚餐，每餐标准为2荤2素搭配堂主食为米饭，进了比这里是描述，目前还没有文况来定，之后文字补充上'},
                     {title:'特权3 免费健康体检',desc:'这里是一段套餐介绍的，午餐晚餐，每餐标准为2荤2素搭配堂主食为米饭，进了比这里是描述，目前还没有文况来定，之后文字补充上'},
                     {title:'特权4 社区管家24小时',desc:'这里是一段套餐介绍的，午餐晚餐，每餐标准为2荤2素搭配堂主食为米饭，进了比这里是描述，目前还没有文况来定，之后文字补充上'}],
-                calderSwitch:true
+                calderSwitch:false,
+                vip: [
+                        [{price:'100',title:'3',desc:'三个月(90次 )B餐；每月二次的日常保洁和每月一次的深度保洁(共18次)；1次日常体检；参加花甲全部会员活动'},{price:'300',title:'6',desc:'三个月(90次 )B餐；每月二次的日常保洁和每月一次的深度保洁(共18次)；1次日常体检；参加花甲全部会员活动'}],
+                        [{price:'500',title:'3',desc:'三个月(90次 )B餐；每月二次的日常保洁和每月一次的深度保洁(共18次)；1次日常体检；参加花甲全部会员活动'},{price:'900',title:'6',desc:'三个月(90次 )B餐；每月二次的日常保洁和每月一次的深度保洁(共18次)；1次日常体检；参加花甲全部会员活动'}]
+                    ],
+                openid:''
             }
         },
         created:function()
         {
-            console.log('index' + wx.getStorageSync('openid'));
-            //定时等待10s
-            (function(a,timer){
-                let countDownHandler = setInterval(function(){
-                    timer = timer - 1;
-                    console.log(timer);
-                    //判断是否拥有openid
-                    if( wx.getStorageSync('openid'))
-                    {
-                        a.openid = wx.getStorageSync('openid');
-                        if( a.hasOwnProperty('userInit') )
-                        {
-                            console.log('has userInit');
-                            a.userInit();
-                        } else {
-                            console.log('donot has userInit');
-                        }
-                        clearInterval(countDownHandler);
-                        return;
-                    }
-                    a.userInit();
-                    if( timer < 1) {
-                        clearInterval(countDownHandler);
-                        return;
-                    }
-                },1000);
-            })(this,7);
         },
         methods: {
             setTab:function(index){
                 this.tabIndex = index;
             },
-            clickHandle () {
-                let url = 'http://yl.zhuyan.me/activity/user-info'
-                let param = {code:1}
-                //网络请求
-                this.$http.get(url,param).then((res)=>{}).catch(err=>{console.log(3)});
-                this.msg = 'Clicked!!!!!!'
+            closeCalderSwitch:function()
+            {
+                this.calderSwitch = false;
             },
             userInit () {
                 let url = globalStore.state.host + 'index/home-main';
@@ -186,12 +196,76 @@
                     }
                 );
             },
-            buyNow(){
-                wx.navigateTo(
-                    {
-                        url:'/pages/vipbuy/main'
+            doBuy(){
+
+                if( !this.openid )
+                {
+                    this.$mptoast('页面获取用户信息失败');
+                    return;
+                }
+
+
+                let requestData = {user_openid:this.openid,openid:param.getOpenid()};
+                let url = globalStore.state.host + 'user/report-vip';
+                this.$http.post(url,requestData).then((res)=>{
+                    // console.log(res.data.data.arr);
+                    // a.attrArr = res.data.data.arr;
+                    // a.timeService = res.data.data.timeArr;
+
+                    //下单成功跳转呀
+                    if(res.data.status) {
+                        // let url = Base64.encode('/passport/pay-success');
+                        // wx.redirectTo(
+                        //     {
+                        //         url:'/pages/commonweb/main?url=' + url,
+                        //     }
+                        // );
+                        var jsonData = JSON.parse(res.data.data);
+                        console.log(jsonData);
+                        wx.requestPayment({
+                            'timeStamp': jsonData.timeStamp,
+                            'nonceStr': jsonData.nonceStr,
+                            'package': jsonData.package,
+                            'signType': jsonData.signType,
+                            'paySign': jsonData.paySign,
+                            'success':function(res){
+
+                                a.$mptoast('支付成功');
+                                // let url = Base64.encode('/passport/pay-success');
+                                // wx.redirectTo(
+                                //     {
+                                //         url:'/pages/commonweb/main?url=' + url,
+                                //     }
+                                // )
+                                // a.$mptoast('支付成功');
+                                // util.mAlert('支付成功');
+                                // util.kit.goHome();
+                                // wx.redirectTo(
+                                //     {
+                                //         url:'/pages/activity/success'
+                                //     }
+                                // );
+                            },
+                            'fail':function(res){
+                                a.$mptoast('支付失败');
+                            }
+                        });
                     }
-                );
+
+                }).catch(err=>{console.log('网络异常')})
+                return;
+            },
+            buyNow(){
+
+
+
+
+                this.calderSwitch = true;
+                // wx.navigateTo(
+                //     {
+                //         url:'/pages/vipbuy/main'
+                //     }
+                // );
             },
             init(){
                 let url = globalStore.state.host + 'user/vip-page-info';
@@ -204,9 +278,36 @@
                     a.expireDay = res.data.data.expireDay;
 
                 }).catch(err=>{console.log('网络异常')})
+            },
+            userOpenid(){
+                let a = this;
+                wx.login({
+                    success: function (res) {
+                        if (res.code) {
+                            //发起网络请求
+                            console.log(res.code);
+                            wx.request({
+                                url: globalStore.state.host + 'activity/common-info2',
+                                data: {
+                                    code: res.code
+                                },
+                                success: function (requestRes) {
+                                    console.log(requestRes);
+                                    if (requestRes.data.status) {
+                                        a.openid = requestRes.data.data.openid;
+                                    }
+
+                                }
+                            })
+                        } else {
+                            console.log('登录失败！' + res.errMsg)
+                        }
+                    }
+                });
             }
         },
         mounted(){
+            this.userOpenid();
             this.init();
         },
         onShow(){

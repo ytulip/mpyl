@@ -59,7 +59,7 @@
 
       <navigator open-type="navigate" url="/pages/coupon/main" hover-class="none" style="padding: 19px 16px;">
         <view class="cus-row">
-          <view class="cus-row-col-10 fs-16-fc-000000-m v-a-m">优惠券</view>
+          <view class="cus-row-col-10 fs-16-fc-000000-m v-a-m">代金券</view>
           <view class="cus-row-col-2 t-al-r v-a-m">
             <image src="/static/images/icon_bnext_nor@3x.png" mode="widthFix" style="width:8px;height: 13px;"></image>
           </view>

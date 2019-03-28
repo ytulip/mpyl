@@ -162,6 +162,7 @@
     import globalStore from '../../stores/global-store'
     import param from '../../utils/param'
     import mptoast from 'mptoast'
+    import _ from 'underscore'
 
     export default {
         data () {
@@ -190,8 +191,10 @@
               goHistory()
             {
               //优化
-              let days = this.pastDays.jion(',');
-              let url = Base64.encode('/passport/history?dates=' + $days + '&product_id=' + this.order.product_id);
+
+              let days = _.pluck(this.pastDays,'date');
+              days = days.join(',');
+              let url = Base64.encode('/passport/history?dates=' + days + '&product_id=' + this.order.product_id);
               wx.redirectTo(
                       {
                         url:'/pages/commonweb/main?url=' + url,

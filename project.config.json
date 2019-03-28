@@ -29,7 +29,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 35,
+			"current": 38,
 			"list": [
 				{
 					"id": 0,
@@ -269,6 +269,27 @@
 					"name": "下单",
 					"pathName": "pages/fillfoodbill/main",
 					"query": "product_id=4&openid=8797&tabIndex=1&quantity=1&startDay=2019-03-22",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "vip",
+					"pathName": "pages/vip/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "优惠券",
+					"pathName": "pages/chosencoupon/main",
+					"query": "product_id=4&ids=363&max=1",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "优惠券",
+					"pathName": "pages/fillfoodbill/main",
+					"query": "product_id=4&openid=8797&tabIndex=1&quantity=1&startDay=2019-03-29",
 					"scene": null
 				}
 			]

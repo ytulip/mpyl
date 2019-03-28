@@ -1,9 +1,9 @@
 <template>
   <div class="p16 bg-f9f9fb">
-      <div class="address-panel p16" v-for="(item,index) in currentList" style="margin-bottom: 16px;position: relative;" v-on:click="chosenCoupon(item.id)">
+      <div class="address-panel p16" v-for="(item,index) in currentList" style="margin-bottom: 16px;position: relative;" v-on:click="chosenCoupon(index)">
 
 
-          <div style="width: 0;height: 0;border-style: solid;border-width: 24px 24px 0 0;border-color: #CE388E transparent transparent transparent;position: absolute;top:0;left: 0;" v-if="item.id == couponId"></div>
+          <div style="width: 0;height: 0;border-style: solid;border-width: 24px 24px 0 0;border-color: #CE388E transparent transparent transparent;position: absolute;top:0;left: 0;" v-if="item.chosen"></div>
 
           <div class="cus-row">
               <div class="cus-row-col-6 fs-16-fc-000000-m">
@@ -16,8 +16,11 @@
           </div>
       </div>
 
+
+      <div style="margin-bottom: 100px;"></div>
+
       <div class="fix-bottom3" style="background-color: #ffffff;padding: 14px;border-top:1px solid #EBE9E9 ;">
-          <a class="yl_btn1"  v-on:click="nextStep()" style="margin-top: 0;">兑换优惠券</a>
+          <a class="yl_btn1"  v-on:click="nextStep()" style="margin-top: 0;">确认使用</a>
       </div>
 
 
@@ -52,7 +55,8 @@
                 banners:{},
                 list:[],
                 layerFlag:0,
-                couponId:''
+                couponId:'',
+                couponType:''
             }
         },
         created:function()
@@ -70,7 +74,22 @@
             },
             nextStep()
             {
-                this.layerFlag = 1;
+                // this.layerFlag = 1;
+                let activeCouponId = [];
+                for( let i = 0; i < this.currentList.length; i++ )
+                {
+                    if( this.currentList[i].chosen )
+                    {
+                        activeCouponId.push(this.currentList[i].id);
+                    }
+                }
+                console.log(activeCouponId);
+                globalStore.commit("setChosenCoupon",activeCouponId);
+
+                wx.navigateBack({
+                    delta: 1
+                })
+
             },
             cancelLayer()
             {
@@ -78,10 +97,12 @@
             },
             chosenCoupon(id)
             {
-                globalStore.commit("setAddressShare",data);
-                wx.navigateBack({
-                    delta: 1
-                })
+                this.currentList[id].chosen = this.currentList[id].chosen?0:1;
+                this.$forceUpdate();
+                // globalStore.commit("setAddressShare",data);
+                // wx.navigateBack({
+                //     delta: 1
+                // })
             }
         },
         onShow(){
@@ -90,12 +111,28 @@
         mounted:function()
         {
             this.couponId = param.getParamValue('id');
+            this.couponType = param.getParamValue('product_id');
             this.initPage();
         },
         computed:{
             currentList()
             {
-                return this.list;
+
+                let ids = this.couponId.split(',');
+
+                var tmpList = [];
+                for( var i=0; i < this.list.length; i++)
+                {
+                    if( this.list[i].coupon_type == this.couponType )
+                    {
+                        if( ids.indexOf(this.list[i].id) !== -1  )
+                        {
+                            this.list[i].chosen = 1;
+                        }
+                        tmpList.push(this.list[i]);
+                    }
+                }
+                return tmpList;
             }
         }
     }

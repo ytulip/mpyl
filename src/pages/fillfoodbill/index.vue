@@ -73,7 +73,8 @@
             <div class="cus-row" style="margin-top: 14px;" v-on:click="goCoupon(product.id)">
                 <div class="cus-row-col-6 v-a-m">
                     <div class="fs-16-fc-000000-m">代金券</div>
-                    <div class="fs-14-fc-7e7e7e-r m-t-10">红包不能叠加使用</div>
+                    <div class="fs-14-fc-7e7e7e-r m-t-10" v-if="!activeCouponCount">暂无代金券</div>
+                    <div class="fs-14-fc-c50081-m m-t-10" v-else>常规餐代金券 {{activeCouponCount}}张</div>
                 </div>
                 <div class="cus-row-col-5 v-a-m">
 
@@ -89,11 +90,14 @@
 
             <div class="cus-row">
                 <div class="cus-row-col-6 v-a-m">
-                    <div class="fs-16-fc-000000-m">订购优惠</div>
-                    <div class="fs-14-fc-7e7e7e-r m-t-10">5日以上优惠20元</div>
+                    <div class="fs-16-fc-000000-m">花甲会员优惠</div>
+                    <div class="fs-14-fc-7e7e7e-r m-t-10">暂未开通会员</div>
                 </div>
-                <div class="cus-row-col-6 v-a-m fs-14-fc-7e7e7e-r t-al-r">暂无优惠</div>
             </div>
+
+            <div class="barr-line"></div>
+
+            <div class="t-al-r fs-18-fc-000000-m">小计 ￥{{product.price * activeCouponCount}}</div>
 
         </div>
 
@@ -257,7 +261,8 @@
                 chosenDay:'',
                 chosenType:'',
                 openid:'',
-                couponId:''
+                couponId:'',
+                chosenCoupon:[]
             }
         },
         watch: {
@@ -288,14 +293,22 @@
                 this.address = jsonData.address;
             }
 
+
+            if ( globalStore.state.chosenCoupon )
+            {
+                let chosenCoupon = globalStore.state.chosenCoupon;
+                this.chosenCoupon = chosenCoupon;
+            }
+
             globalStore.commit('setAddressShare','');
             globalStore.commit('sethabbitRemarkShare','');
+            globalStore.commit('setChosenCoupon','');
         },
         methods: {
             goCoupon(type){
                 wx.navigateTo(
                     {
-                        url:'/pages/chosencoupon/main?id=' + this.couponId
+                        url:'/pages/chosencoupon/main?product_id='+this.product.id+'&ids=' + this.join() + '&max=' + (this.days * this.quantity)
                     }
                 );
             },
@@ -625,6 +638,9 @@
                 a.periodPrice = res.data.data.periodPrice;
                 a.product = res.data.data.product;
                 a.couponId = res.data.data.couponId;
+
+                a.chosenCoupon= res.data.data.coupons;
+
             }).catch(err=>{console.log('网络异常')});
 
 
@@ -748,6 +764,12 @@
                 {
                     return 22;
                 }
+            },
+            activeCouponCount:function()
+            {
+                // return 3;
+                let activeIds = this.chosenCoupon.slice(0,this.quantity * this.days);
+                return activeIds.length;
             }
         }
     }

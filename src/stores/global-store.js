@@ -10,7 +10,8 @@ export default new Vuex.Store({
         host:'https://huajialife.com/',
         addressShare:'',
         webViewUrl:'',
-        habbitRemarkShare:''
+        habbitRemarkShare:'',
+        chosenCoupon:[]
     },
     mutations: {
         increment: (state) => {
@@ -31,6 +32,11 @@ export default new Vuex.Store({
             console.log('mark:');
             console.log(data);
             state.habbitRemarkShare = data
+        },
+        setChosenCoupon: (state,data) =>{
+            console.log('mark:');
+            console.log(data);
+            state.chosenCoupon = data
         }
     }
 });

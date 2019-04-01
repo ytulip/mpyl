@@ -45,9 +45,9 @@
                     <div class="fs-14-fc-7e7e7e-r m-t-6">1份餐仅供一人</div>
                 </div>
                 <div class="cus-row-col-6 v-a-m t-al-c">
-                    <div class="in-bl v-a-m quantity-plus-icon dp-n" v-on:click="deQuantity"><image src="/static/images/tarbar/icon_out_nor@3x.png" class="quantity-plus-icon"/></div>
+                    <!--<div class="in-bl v-a-m quantity-plus-icon dp-n" v-on:click="deQuantity"><image src="/static/images/tarbar/icon_out_nor@3x.png" class="quantity-plus-icon"/></div>-->
                     <div class="in-bl v-a-m" style="margin: 0 30px;"><div class="quantity-plus">    {{quantity}}    </div></div>
-                    <div class="in-bl v-a-m quantity-plus-icon dp-n" v-on:click="addQuantity"><image src="/static/images/tarbar/icon_add_nor@3x.png" class="quantity-plus-icon"/></div>
+                    <!--<div class="in-bl v-a-m quantity-plus-icon dp-n" v-on:click="addQuantity"><image src="/static/images/tarbar/icon_add_nor@3x.png" class="quantity-plus-icon"/></div>-->
                 </div>
             </div>
 
@@ -56,9 +56,9 @@
                 <div class="cus-row-col-6 v-a-m">
                     <span class="fs-16-fc-000000-m in-bl" style="line-height: 25px;">预定时间</span>
                 </div>
-                <div class="cus-row-col-6 v-a-m t-al-r dp-n">
-                    <span class="fs-16-fc-c50081-m" v-on:click="openCalderSwitch">修改</span>
-                </div>
+                <!--<div class="cus-row-col-6 v-a-m t-al-r dp-n">-->
+                    <!--<span class="fs-16-fc-c50081-m" v-on:click="openCalderSwitch">修改</span>-->
+                <!--</div>-->
             </div>
 
             <div class="in-bl fs-16-fc-000000-m m-t-16">共计:{{days}}天</div>
@@ -270,17 +270,8 @@
         onShow:function(){
             if( globalStore.state.habbitRemarkShare )
             {
-                //设置默认地址
-//                let jsonData = JSON.parse(globalStore.state.addressShare);
-//                this.name = jsonData.name;
-//                this.phone = jsonData.phone;
-//                this.pct = jsonData.pct;
-//                this.pct_code_name = jsonData.pct_code_name;
-//                this.address = jsonData.address;
                 console.log(globalStore.state.habbitRemarkShare);
                 this.remark = globalStore.state.habbitRemarkShare;
-
-                //如果地址变了，那么面积也应当相应的变化哟
             }
 
             if ( globalStore.state.addressShare )
@@ -297,6 +288,8 @@
             if ( globalStore.state.chosenCoupon )
             {
                 let chosenCoupon = globalStore.state.chosenCoupon;
+                console.log('回调的:');
+                console.log(JSON.stringify(chosenCoupon));
                 this.chosenCoupon = chosenCoupon;
             }
 
@@ -306,9 +299,11 @@
         },
         methods: {
             goCoupon(type){
+                console.log('当前选中');
+                console.log(JSON.stringify(this.activeIdArr));
                 wx.navigateTo(
                     {
-                        url:'/pages/chosencoupon/main?product_id='+this.product.id+'&ids=' + this.join() + '&max=' + (this.days * this.quantity)
+                        url:'/pages/chosencoupon/main?product_id='+this.product.id+'&ids=' + this.activeIdArr.join(',') + '&max=' + (this.days * this.quantity)
                     }
                 );
             },
@@ -639,7 +634,7 @@
                 a.product = res.data.data.product;
                 a.couponId = res.data.data.couponId;
 
-                a.chosenCoupon= res.data.data.coupons;
+                a.chosenCoupon= _.pluck(res.data.data.coupons,'id');
 
             }).catch(err=>{console.log('网络异常')});
 
@@ -770,6 +765,11 @@
                 // return 3;
                 let activeIds = this.chosenCoupon.slice(0,this.quantity * this.days);
                 return activeIds.length;
+            },
+            activeIdArr:function()
+            {
+                let ids = this.chosenCoupon.slice(0,this.quantity * this.days);
+                return ids;
             }
         }
     }

@@ -1,6 +1,6 @@
 <template>
   <div class="p16 bg-f9f9fb">
-      <div class="address-panel p16" v-for="(item,index) in currentList" style="margin-bottom: 16px;position: relative;" v-on:click="chosenCoupon(index)">
+      <div class="address-panel p16" v-for="(item,index) in currentList" style="margin-bottom: 16px;position: relative;" v-on:click="chosenCoupon(index)" :data-id="item.id">
 
 
           <div style="width: 0;height: 0;border-style: solid;border-width: 24px 24px 0 0;border-color: #CE388E transparent transparent transparent;position: absolute;top:0;left: 0;" v-if="item.chosen"></div>
@@ -110,7 +110,7 @@
         },
         mounted:function()
         {
-            this.couponId = param.getParamValue('id');
+            this.couponId = param.getParamValue('ids');
             this.couponType = param.getParamValue('product_id');
             this.initPage();
         },
@@ -119,13 +119,15 @@
             {
 
                 let ids = this.couponId.split(',');
+                console.log('选中');
+                console.log(JSON.stringify(ids));
 
                 var tmpList = [];
                 for( var i=0; i < this.list.length; i++)
                 {
                     if( this.list[i].coupon_type == this.couponType )
                     {
-                        if( ids.indexOf(this.list[i].id) !== -1  )
+                        if( ids.indexOf(this.list[i].id.toString()) !== -1  )
                         {
                             this.list[i].chosen = 1;
                         }

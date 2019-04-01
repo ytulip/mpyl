@@ -88,13 +88,13 @@
                 <div class="cus-row-col-6" style="padding-right: 9px;box-sizing: border-box;">
                     <div class="common-panel p-16-16-24-16">
                         <div class="fs-16-fc-000000-m"><span class="short-line" style="border-right-color: #C50081;"></span>订餐服务</div>
-                        <div class="m-t-20"><span class="fs-14-fc-000000-m">剩余</span><span class="fs-16-fc-000000-m">15</span><span class="fs-14-fc-7e7e7e-r">/60天</span></div>
+                        <div class="m-t-20"><span class="fs-14-fc-000000-m">剩余</span><span class="fs-16-fc-000000-m">{{foodActive}}</span><span class="fs-14-fc-7e7e7e-r">/{{foodTotal}}天</span></div>
                     </div>
                 </div>
                 <div class="cus-row-col-6" style="padding-left: 9px;box-sizing: border-box;">
                     <div class="common-panel p-16-16-24-16">
                         <div class="fs-16-fc-000000-m"><span class="short-line" style="border-right-color: #FFB11B;"></span>家庭清洁</div>
-                        <div class="m-t-20"><span class="fs-14-fc-000000-m">剩余</span><span class="fs-16-fc-000000-m">15</span><span class="fs-14-fc-7e7e7e-r">/3次</span></div>
+                        <div class="m-t-20"><span class="fs-14-fc-000000-m">剩余</span><span class="fs-16-fc-000000-m">{{cleanActive}}</span><span class="fs-14-fc-7e7e7e-r">/{{cleanTotal}}次</span></div>
                     </div>
                 </div>
             </div>
@@ -151,7 +151,11 @@
                         [{price:'100',title:'3',desc:'三个月(90次 )B餐；每月二次的日常保洁和每月一次的深度保洁(共18次)；1次日常体检；参加花甲全部会员活动'},{price:'300',title:'6',desc:'三个月(90次 )B餐；每月二次的日常保洁和每月一次的深度保洁(共18次)；1次日常体检；参加花甲全部会员活动'}],
                         [{price:'500',title:'3',desc:'三个月(90次 )B餐；每月二次的日常保洁和每月一次的深度保洁(共18次)；1次日常体检；参加花甲全部会员活动'},{price:'900',title:'6',desc:'三个月(90次 )B餐；每月二次的日常保洁和每月一次的深度保洁(共18次)；1次日常体检；参加花甲全部会员活动'}]
                     ],
-                openid:''
+                openid:'',
+                foodTotal:'',
+                foodActive:'',
+                cleanTotal:'',
+                cleanActive:''
             }
         },
         created:function()
@@ -276,6 +280,10 @@
                     // a.timeService = res.data.data.timeArr;
                     a.isVip = res.data.data.isVip;
                     a.expireDay = res.data.data.expireDay;
+                    a.foodTotal = res.data.data.foodTotal;
+                    a.foodActive = res.data.data.foodActive;
+                    a.cleanTotal = res.data.data.cleanTotal;
+                    a.cleanActive = res.data.data.cleanActive;
 
                 }).catch(err=>{console.log('网络异常')})
             },

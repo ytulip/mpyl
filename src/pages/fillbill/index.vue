@@ -66,9 +66,11 @@
 
         <div class="white-panel m-t-16">
 
-            <div class="cus-row" style="margin-top: 14px;" v-on:click="goCoupon(1)">
+            <div class="cus-row" style="margin-top: 14px;" v-on:click="goCoupon(product.id)">
                 <div class="cus-row-col-6 v-a-m">
                     <div class="fs-18-fc-000000-m">代金券</div>
+                    <div class="fs-14-fc-7e7e7e-r m-t-10" v-if="!activeCouponCount">暂无代金券</div>
+                    <div class="fs-14-fc-c50081-m m-t-10" v-else>常规餐代金券 {{activeCouponCount}}张</div>
                 </div>
                 <div class="cus-row-col-5 v-a-m">
 
@@ -84,7 +86,7 @@
 
             <div class="cus-row">
                 <div class="cus-row-col-6 v-a-m">
-                    <div class="fs-16-fc-000000-m">订购优惠</div>
+                    <div class="fs-16-fc-000000-m">花甲会员优惠</div>
                     <div class="fs-14-fc-7e7e7e-r m-t-10">5日以上优惠20元</div>
                 </div>
                 <div class="cus-row-col-6 v-a-m fs-14-fc-7e7e7e-r t-al-r">暂无优惠</div>
@@ -312,14 +314,25 @@
                 this.address = jsonData.address;
             }
 
+            if ( globalStore.state.chosenCoupon )
+            {
+                let chosenCoupon = globalStore.state.chosenCoupon;
+                console.log('回调的:');
+                console.log(JSON.stringify(chosenCoupon));
+                this.chosenCoupon = chosenCoupon;
+            }
+
             globalStore.commit('setAddressShare','');
             globalStore.commit('sethabbitRemarkShare','');
+            globalStore.commit('setChosenCoupon','');
         },
         methods: {
             goCoupon(type){
+                console.log('当前选中');
+                console.log(JSON.stringify(this.activeIdArr));
                 wx.navigateTo(
                     {
-                        url:'/pages/chosencoupon/main'
+                        url:'/pages/chosencoupon/main?product_id='+this.product.id+'&ids=' + this.activeIdArr.join(',') + '&max=' + (this.days * this.quantity)
                     }
                 );
             },
@@ -608,6 +621,7 @@
                     a.pct = res.data.data.userAddress[0].pct_code;
                     a.pct_code_name = res.data.data.userAddress[0].pct_code_name;
                     a.address = res.data.data.userAddress[0].address;
+                    a.chosenCoupon= _.pluck(res.data.data.coupons,'id');
                 }
 
                 a.product = res.data.data.product;
@@ -648,6 +662,17 @@
                 {
                     return '';
                 }
+            },
+            activeCouponCount:function()
+            {
+                // return 3;
+                let activeIds = this.chosenCoupon.slice(0,this.quantity * this.days);
+                return activeIds.length;
+            },
+            activeIdArr:function()
+            {
+                let ids = this.chosenCoupon.slice(0,this.quantity * this.days);
+                return ids;
             }
         }
     }

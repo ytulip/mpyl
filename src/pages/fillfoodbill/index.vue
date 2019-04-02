@@ -445,23 +445,27 @@
                 }
 
 
-                let requestData = {pct_code:this.pct,pct_code_name:this.pct_code_name,phone:this.phone,name:this.name,address:this.address,clean_service_time:this.timeService[this.timeServiceIndex],product_id:id,remark:this.remark,openid:wx.getStorageSync('openid'),size:this.signTypeArray[this.signTypeIndex],attr_id:this.idArray[this.signTypeIndex],lunch_service:this.lunchService[this.lunchIndex],dinner_service:this.dinnerService[this.dinnerIndex],people:2,attr_id:this.periodPrice[this.periodIndex].attr_id,service_start_time:this.deliverStartList[this.deliverStartIndex],user_openid:this.openid,quantity:this.quantity,tabIndex:this.chosenType};
+                let requestData = {pct_code:this.pct,pct_code_name:this.pct_code_name,phone:this.phone,name:this.name,address:this.address,clean_service_time:this.timeService[this.timeServiceIndex],product_id:id,remark:this.remark,openid:wx.getStorageSync('openid'),size:this.signTypeArray[this.signTypeIndex],attr_id:this.idArray[this.signTypeIndex],lunch_service:this.lunchService[this.lunchIndex],dinner_service:this.dinnerService[this.dinnerIndex],people:2,attr_id:this.periodPrice[this.periodIndex].attr_id,service_start_time:this.deliverStartList[this.deliverStartIndex],user_openid:this.openid,quantity:this.quantity,tabIndex:this.chosenType,couponIds:this.activeIdArr.join(',')};
                 let url = globalStore.state.host + 'user/report-bill';
                 this.$http.post(url,requestData).then((res)=>{
-                    // console.log(res.data.data.arr);
-                    // a.attrArr = res.data.data.arr;
-                    // a.timeService = res.data.data.timeArr;
-
                     //下单成功跳转呀
                     if(res.data.status) {
-                        // let url = Base64.encode('/passport/pay-success');
-                        // wx.redirectTo(
-                        //     {
-                        //         url:'/pages/commonweb/main?url=' + url,
-                        //     }
-                        // );
+
+                        if( res.data.data == '333' )
+                        {
+                            let url = Base64.encode('/passport/pay-success');
+                            wx.redirectTo(
+                                {
+                                    url:'/pages/commonweb/main?url=' + url,
+                                }
+                            )
+                            return;
+                        }
+
+
                         var jsonData = JSON.parse(res.data.data);
                         console.log(jsonData);
+
                         wx.requestPayment({
                             'timeStamp': jsonData.timeStamp,
                             'nonceStr': jsonData.nonceStr,
@@ -469,21 +473,12 @@
                             'signType': jsonData.signType,
                             'paySign': jsonData.paySign,
                             'success':function(res){
-
                                 let url = Base64.encode('/passport/pay-success');
                                 wx.redirectTo(
                                     {
                                         url:'/pages/commonweb/main?url=' + url,
                                     }
                                 )
-                                // a.$mptoast('支付成功');
-                                // util.mAlert('支付成功');
-                                // util.kit.goHome();
-                                // wx.redirectTo(
-                                //     {
-                                //         url:'/pages/activity/success'
-                                //     }
-                                // );
                             },
                             'fail':function(res){
                                 a.$mptoast('支付成功');
@@ -738,9 +733,9 @@
                         return [this.startDay.toString()];
                     } else if( this.tabIndex == 2)
                     {
-                        return this.getDateArr(this.startDay,5);
+                        return this.getDateArr(this.startDay,7);
                     } else {
-                        return this.getDateArr(this.startDay,22);
+                        return this.getDateArr(this.startDay,30);
                     }
                 } else
                 {
@@ -754,10 +749,10 @@
                     return 1;
                 }else if ( this.chosenType == 2)
                 {
-                    return 5;
+                    return 7;
                 }else
                 {
-                    return 22;
+                    return 30;
                 }
             },
             activeCouponCount:function()

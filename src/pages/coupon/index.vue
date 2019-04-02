@@ -3,14 +3,12 @@
       <div class="address-panel p16" v-for="(item,index) in list" style="margin-bottom: 16px;">
           <div class="cus-row">
               <div class="cus-row-col-6 fs-16-fc-000000-m">
-                    日常清洁优惠券
+                  {{item.type_text}}
               </div>
-              <div class="cus-row-col-6 t-al-r ">
-                 <span class="fs-14-fc-000033-m">￥</span><span class="fs-18-fc-000033-m" style="font-size: 28px;">50</span></div>
+              <div class="cus-row-col-6 t-al-r "></div>
           </div>
           <div class="cus-row" style="margin-top: 10px;">
-              <div class="cus-row-col-6 fs-14-fc-7E7E7E-r">有效期至：2019.08.01</div>
-              <div class="cus-row-col-6 fs-14-fc-7E7E7E-r t-al-r">满40可用</div>
+              <div class="cus-row-col-6 fs-14-fc-7E7E7E-r">有效期至：{{item.expire_at}}</div>
           </div>
       </div>
 
@@ -36,17 +34,21 @@
           </div>
       </div>
 
+      <div style="margin-bottom: 100px;"></div>
+
   </div>
 </template>
 
 <script>
     import globalStore from '../../stores/global-store'
+    import param from '../../utils/param'
+
     export default {
         data () {
             return {
                 msg: 'Hello',
                 banners:{},
-                list:[{},{}],
+                list:[],
                 layerFlag:0
             }
         },
@@ -56,7 +58,12 @@
         methods: {
             initPage:function()
             {
-
+                let url = globalStore.state.host + 'user/coupon-list';
+                let requestData = {}
+                Object.assign(requestData,{openid:param.getOpenid()});
+                this.$http.get(url,requestData).then((res)=>{
+                    this.list = res.data.data;
+                }).catch(err=>{console.log(3)})
             },
             nextStep()
             {

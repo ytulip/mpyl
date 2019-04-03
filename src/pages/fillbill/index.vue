@@ -70,7 +70,7 @@
                 <div class="cus-row-col-6 v-a-m">
                     <div class="fs-18-fc-000000-m">代金券</div>
                     <div class="fs-14-fc-7e7e7e-r m-t-10" v-if="!activeCouponCount">暂无代金券</div>
-                    <div class="fs-14-fc-c50081-m m-t-10" v-else>常规餐代金券 {{activeCouponCount}}张</div>
+                    <div class="fs-14-fc-c50081-m m-t-10" v-else>{{product.product_name}}代金券 {{activeCouponCount}}张</div>
                 </div>
                 <div class="cus-row-col-5 v-a-m">
 
@@ -253,7 +253,7 @@
                 periodPrice:[],
                 periodIndex:0,
                 product:{},
-                quantity:0,
+                quantity:1,
 
                 year:2019,
                 month:1,
@@ -280,7 +280,8 @@
                 days:['00','10','20','30','40','50'],
                 layerShow:false,
                 value: [0, 0, 0],
-                selectedValue:[]
+                selectedValue:[],
+                chosenCoupon:[]
             }
         },
         watch: {
@@ -332,7 +333,7 @@
                 console.log(JSON.stringify(this.activeIdArr));
                 wx.navigateTo(
                     {
-                        url:'/pages/chosencoupon/main?product_id='+this.product.id+'&ids=' + this.activeIdArr.join(',') + '&max=' + (this.days * this.quantity)
+                        url:'/pages/chosencoupon/main?product_id='+this.product.id+'&ids=' + this.activeIdArr.join(',') + '&max=' + (this.quantity)
                     }
                 );
             },
@@ -379,15 +380,6 @@
             openCalderSwitch:function()
             {
                 this.calderSwitch = true;
-            },
-            deQuantity:function () {
-                if( this.quantity > 1)
-                {
-                    this.quantity = this.quantity - 1;
-                }
-            },
-            addQuantity:function(){
-                this.quantity = this.quantity + 1;
             },
             goAddressList:function()
             {
@@ -474,7 +466,7 @@
                 }
 
 
-                let requestData = {pct_code:this.pct,pct_code_name:this.pct_code_name,phone:this.phone,name:this.name,address:this.address,clean_service_time:this.selectedTabIndex,product_id:id,remark:this.remark,openid:wx.getStorageSync('openid'),service_start_time:this.selectedValue,user_openid:this.openid};
+                let requestData = {pct_code:this.pct,pct_code_name:this.pct_code_name,phone:this.phone,name:this.name,address:this.address,clean_service_time:this.selectedTabIndex,product_id:id,remark:this.remark,openid:wx.getStorageSync('openid'),service_start_time:this.selectedValue,user_openid:this.openid,couponIds:this.activeIdArr.join(',')};
                 let url = globalStore.state.host + 'user/report-bill';
                 this.$http.post(url,requestData).then((res)=>{
                     // console.log(res.data.data.arr);
@@ -621,10 +613,12 @@
                     a.pct = res.data.data.userAddress[0].pct_code;
                     a.pct_code_name = res.data.data.userAddress[0].pct_code_name;
                     a.address = res.data.data.userAddress[0].address;
-                    a.chosenCoupon= _.pluck(res.data.data.coupons,'id');
                 }
 
                 a.product = res.data.data.product;
+                console.log('默认返回的优惠券:');
+                console.log(res.data.data.coupon);
+                a.chosenCoupon= _.pluck(res.data.data.coupons,'id');
             }).catch(err=>{console.log('网络异常')});
 
 
@@ -666,12 +660,15 @@
             activeCouponCount:function()
             {
                 // return 3;
-                let activeIds = this.chosenCoupon.slice(0,this.quantity * this.days);
+                console.log('计算优惠券');
+                console.log(this.chosenCoupon);
+                console.log(this.quantity);
+                let activeIds = this.chosenCoupon.slice(0,this.quantity);
                 return activeIds.length;
             },
             activeIdArr:function()
             {
-                let ids = this.chosenCoupon.slice(0,this.quantity * this.days);
+                let ids = this.chosenCoupon.slice(0,this.quantity);
                 return ids;
             }
         }

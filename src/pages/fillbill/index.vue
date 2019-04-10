@@ -275,7 +275,7 @@
                 chosenType:'',
                 openid:'',
                 selectedTabIndex:0,
-                years:['2月28日 明天','3月1日 星期五'],
+                years:[],
                 months:['9','10','13','14'],
                 days:['00','10','20','30','40','50'],
                 layerShow:false,
@@ -490,14 +490,12 @@
                             'signType': jsonData.signType,
                             'paySign': jsonData.paySign,
                             'success':function(res){
-                                // a.$mptoast('支付成功');
-                                // util.mAlert('支付成功');
-                                // util.kit.goHome();
+                                let url = Base64.encode('/passport/pay-success?openid=' + param.getOpenid());
                                 wx.redirectTo(
                                     {
-                                        url:'/pages/activity/success'
+                                        url:'/pages/commonweb/main?url=' + url,
                                     }
-                                );
+                                )
                             },
                             'fail':function(res){
                                 a.$mptoast('支付失败');
@@ -616,6 +614,7 @@
                 }
 
                 a.product = res.data.data.product;
+                a.years = res.data.data.cleanTime;
                 console.log('默认返回的优惠券:');
                 console.log(res.data.data.coupon);
                 a.chosenCoupon= _.pluck(res.data.data.coupons,'id');

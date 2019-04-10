@@ -445,7 +445,7 @@
                 }
 
 
-                let requestData = {pct_code:this.pct,pct_code_name:this.pct_code_name,phone:this.phone,name:this.name,address:this.address,clean_service_time:this.timeService[this.timeServiceIndex],product_id:id,remark:this.remark,openid:wx.getStorageSync('openid'),size:this.signTypeArray[this.signTypeIndex],attr_id:this.idArray[this.signTypeIndex],lunch_service:this.lunchService[this.lunchIndex],dinner_service:this.dinnerService[this.dinnerIndex],people:2,attr_id:this.periodPrice[this.periodIndex].attr_id,service_start_time:this.deliverStartList[this.deliverStartIndex],user_openid:this.openid,quantity:this.quantity,tabIndex:this.chosenType,couponIds:this.activeIdArr.join(',')};
+                let requestData = {pct_code:this.pct,pct_code_name:this.pct_code_name,phone:this.phone,name:this.name,address:this.address,clean_service_time:this.timeService[this.timeServiceIndex],product_id:id,remark:this.remark,openid:wx.getStorageSync('openid'),size:this.signTypeArray[this.signTypeIndex],lunch_service:this.lunchService[this.lunchIndex],dinner_service:this.dinnerService[this.dinnerIndex],people:2,service_start_time:this.deliverStartList[this.deliverStartIndex],user_openid:this.openid,quantity:this.quantity,tabIndex:this.chosenType,couponIds:this.activeIdArr.join(',')};
                 let url = globalStore.state.host + 'user/report-bill';
                 this.$http.post(url,requestData).then((res)=>{
                     //下单成功跳转呀
@@ -453,7 +453,7 @@
 
                         if( res.data.data == '333' )
                         {
-                            let url = Base64.encode('/passport/pay-success');
+                            let url = Base64.encode('/passport/pay-success?openid=' + param.getOpenid());
                             wx.redirectTo(
                                 {
                                     url:'/pages/commonweb/main?url=' + url,
@@ -473,7 +473,7 @@
                             'signType': jsonData.signType,
                             'paySign': jsonData.paySign,
                             'success':function(res){
-                                let url = Base64.encode('/passport/pay-success');
+                                let url = Base64.encode('/passport/pay-success?openid=' + param.getOpenid());
                                 wx.redirectTo(
                                     {
                                         url:'/pages/commonweb/main?url=' + url,

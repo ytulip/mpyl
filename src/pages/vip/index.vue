@@ -43,7 +43,7 @@
                             <div class="in-bl" style="background: #F9F9FB;border: 1px solid #E1E1E1;border-radius: 0px 17px 17px 0px;" v-bind:class="{ 'active-type': (tabIndex == 2) }" v-on:click="setTab(2)"><span class="fs-16-fc-080808-r" style="line-height: 36px;padding: 0 24px;">会员B</span></div>
                         </div>
 
-                        <div style="background: #FFFFFF;border: 1px solid #E1E1E1;border-radius: 4px;padding: 24px;margin-top: 24px;" v-for="(item,index) in vip[tabIndex - 1]">
+                        <div style="background: #FFFFFF;border: 1px solid #E1E1E1;border-radius: 4px;padding: 24px;margin-top: 24px;position: relative;" v-for="(item,index) in vip[tabIndex - 1]" v-on:click="changeSubTabIndex(index)">
                             <div class="cus-row">
                                 <div class="cus-row-col-6 v-a-m fs-18-fc-000000-m">
                                     {{item.title}}个月
@@ -56,6 +56,11 @@
                             <div class="fs-14-fc-7e7e7e-r" style="line-height: 21px;margin-top: 12px;">
                                 {{item.desc}}
                             </div>
+
+
+                            <div style="width: 0;height: 0;border-style: solid;border-width: 24px 24px 0 0;border-color: #CE388E transparent transparent transparent;position: absolute;top:0;left: 0;"  v-if="subTabIndex == index"></div>
+
+
                         </div>
 
                         <!--<div style="">-->
@@ -85,13 +90,13 @@
             <div class="fs-18-fc-000000-m m-t-24">会员特权</div>
 
             <div class="cus-row m-t-16">
-                <div class="cus-row-col-6" style="padding-right: 9px;box-sizing: border-box;">
+                <div class="cus-row-col-6" style="padding-right: 9px;box-sizing: border-box;"  v-on:click="goServer">
                     <div class="common-panel p-16-16-24-16">
                         <div class="fs-16-fc-000000-m"><span class="short-line" style="border-right-color: #C50081;"></span>订餐服务</div>
                         <div class="m-t-20"><span class="fs-14-fc-000000-m">剩余</span><span class="fs-16-fc-000000-m">{{foodActive}}</span><span class="fs-14-fc-7e7e7e-r">/{{foodTotal}}天</span></div>
                     </div>
                 </div>
-                <div class="cus-row-col-6" style="padding-left: 9px;box-sizing: border-box;">
+                <div class="cus-row-col-6" style="padding-left: 9px;box-sizing: border-box;"  v-on:click="goServer">
                     <div class="common-panel p-16-16-24-16">
                         <div class="fs-16-fc-000000-m"><span class="short-line" style="border-right-color: #FFB11B;"></span>家庭清洁</div>
                         <div class="m-t-20"><span class="fs-14-fc-000000-m">剩余</span><span class="fs-16-fc-000000-m">{{cleanActive}}</span><span class="fs-14-fc-7e7e7e-r">/{{cleanTotal}}次</span></div>
@@ -100,13 +105,13 @@
             </div>
 
             <div class="cus-row m-t-16">
-                <div class="cus-row-col-6" style="padding-right: 9px;box-sizing: border-box;">
+                <div class="cus-row-col-6" style="padding-right: 9px;box-sizing: border-box;" v-on:click="goFinance">
                     <div class="common-panel p-16-16-24-16">
                         <div class="fs-16-fc-000000-m"><span class="short-line" style="border-right-color: #2E82FF;"></span>理财咨询</div>
                         <div class="m-t-20"><span class="fs-14-fc-000000-m">下次预约:08月23日</span></div>
                     </div>
                 </div>
-                <div class="cus-row-col-6" style="padding-left: 9px;box-sizing: border-box;">
+                <div class="cus-row-col-6" style="padding-left: 9px;box-sizing: border-box;" v-on:click="goHealth">
                     <div class="common-panel p-16-16-24-16">
                         <div class="fs-16-fc-000000-m"><span class="short-line" style="border-right-color: #0AD87B;"></span>健康体检</div>
                         <div class="m-t-20"><span class="fs-14-fc-000000-m">剩余</span><span class="fs-16-fc-000000-m">15</span><span class="fs-14-fc-7e7e7e-r">/1次</span></div>
@@ -155,7 +160,8 @@
                 foodTotal:'',
                 foodActive:'',
                 cleanTotal:'',
-                cleanActive:''
+                cleanActive:'',
+                subTabIndex:0
             }
         },
         created:function()
@@ -168,6 +174,15 @@
             closeCalderSwitch:function()
             {
                 this.calderSwitch = false;
+            },
+            goServer()
+            {
+                wx.switchTab({
+                    url: '/pages/book/main'
+                });
+            },
+            changeSubTabIndex(ind){
+                this.subTabIndex = ind;
             },
             userInit () {
                 let url = globalStore.state.host + 'index/home-main';
@@ -182,6 +197,24 @@
                 wx.navigateTo(
                     {
                         url:'/pages/clean/main'
+                    }
+                );
+            },
+            goFinance()
+            {
+                let url = Base64.encode('/index/attend-finance?user_id=' + param.getOpenid());
+                wx.navigateTo(
+                    {
+                        url:'/pages/commonweb/main?url=' + url,
+                    }
+                );
+            },
+            goHealth()
+            {
+                let url = Base64.encode('/index/health?user_id=' + param.getOpenid());
+                wx.navigateTo(
+                    {
+                        url:'/pages/commonweb/main?url=' + url,
                     }
                 );
             },
@@ -209,21 +242,13 @@
                 }
 
 
-                let requestData = {user_openid:this.openid,openid:param.getOpenid()};
+                let a = this;
+                let requestData = {user_openid:this.openid,openid:param.getOpenid(),type: (this.tabIndex - 1) * 2 + this.subTabIndex + 1};
                 let url = globalStore.state.host + 'user/report-vip';
                 this.$http.post(url,requestData).then((res)=>{
-                    // console.log(res.data.data.arr);
-                    // a.attrArr = res.data.data.arr;
-                    // a.timeService = res.data.data.timeArr;
 
                     //下单成功跳转呀
                     if(res.data.status) {
-                        // let url = Base64.encode('/passport/pay-success');
-                        // wx.redirectTo(
-                        //     {
-                        //         url:'/pages/commonweb/main?url=' + url,
-                        //     }
-                        // );
                         var jsonData = JSON.parse(res.data.data);
                         console.log(jsonData);
                         wx.requestPayment({
@@ -233,22 +258,8 @@
                             'signType': jsonData.signType,
                             'paySign': jsonData.paySign,
                             'success':function(res){
-
-                                a.$mptoast('支付成功');
-                                // let url = Base64.encode('/passport/pay-success');
-                                // wx.redirectTo(
-                                //     {
-                                //         url:'/pages/commonweb/main?url=' + url,
-                                //     }
-                                // )
                                 // a.$mptoast('支付成功');
-                                // util.mAlert('支付成功');
-                                // util.kit.goHome();
-                                // wx.redirectTo(
-                                //     {
-                                //         url:'/pages/activity/success'
-                                //     }
-                                // );
+                                a.init();
                             },
                             'fail':function(res){
                                 a.$mptoast('支付失败');

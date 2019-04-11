@@ -114,7 +114,7 @@
                 <div class="cus-row-col-6" style="padding-left: 9px;box-sizing: border-box;" v-on:click="goHealth">
                     <div class="common-panel p-16-16-24-16">
                         <div class="fs-16-fc-000000-m"><span class="short-line" style="border-right-color: #0AD87B;"></span>健康体检</div>
-                        <div class="m-t-20"><span class="fs-14-fc-000000-m">剩余</span><span class="fs-16-fc-000000-m">15</span><span class="fs-14-fc-7e7e7e-r">/1次</span></div>
+                        <div class="m-t-20"><span class="fs-14-fc-000000-m">剩余</span><span class="fs-16-fc-000000-m">{{healthActive}}</span><span class="fs-14-fc-7e7e7e-r">/{{healthTotal}}次</span></div>
                     </div>
                 </div>
             </div>
@@ -153,7 +153,7 @@
                     {title:'特权4 社区管家24小时',desc:'这里是一段套餐介绍的，午餐晚餐，每餐标准为2荤2素搭配堂主食为米饭，进了比这里是描述，目前还没有文况来定，之后文字补充上'}],
                 calderSwitch:false,
                 vip: [
-                        [{price:'100',title:'3',desc:'三个月(90次 )B餐；每月二次的日常保洁和每月一次的深度保洁(共18次)；1次日常体检；参加花甲全部会员活动'},{price:'300',title:'6',desc:'三个月(90次 )B餐；每月二次的日常保洁和每月一次的深度保洁(共18次)；1次日常体检；参加花甲全部会员活动'}],
+                        [{price:'110',title:'3',desc:'三个月(90次 )B餐；每月二次的日常保洁和每月一次的深度保洁(共18次)；1次日常体检；参加花甲全部会员活动'},{price:'300',title:'6',desc:'三个月(90次 )B餐；每月二次的日常保洁和每月一次的深度保洁(共18次)；1次日常体检；参加花甲全部会员活动'}],
                         [{price:'500',title:'3',desc:'三个月(90次 )B餐；每月二次的日常保洁和每月一次的深度保洁(共18次)；1次日常体检；参加花甲全部会员活动'},{price:'900',title:'6',desc:'三个月(90次 )B餐；每月二次的日常保洁和每月一次的深度保洁(共18次)；1次日常体检；参加花甲全部会员活动'}]
                     ],
                 openid:'',
@@ -161,7 +161,9 @@
                 foodActive:'',
                 cleanTotal:'',
                 cleanActive:'',
-                subTabIndex:0
+                subTabIndex:0,
+                healthTotal:0,
+                healthActive:0
             }
         },
         created:function()
@@ -295,6 +297,8 @@
                     a.foodActive = res.data.data.foodActive;
                     a.cleanTotal = res.data.data.cleanTotal;
                     a.cleanActive = res.data.data.cleanActive;
+                    a.healthTotal = res.data.data.healthTotal;
+                    a.healthActive = res.data.data.healthActive;
 
                 }).catch(err=>{console.log('网络异常')})
             },

@@ -1,6 +1,7 @@
 <template>
   <div class="p16 bg-f9f9fb">
 
+    <div v-if="productType == 1">
     <div class="common-panel p-16-24">
       <div class="cus-row">
         <div class="cus-row-col-6 v-a-m fs-18-fc-000000-m">订购服务</div>
@@ -13,7 +14,7 @@
         </div>
         <div class="v-a-t in-bl m-l-24">
           <div class="fs-16-fc-000000-m">{{product.product_name}}</div>
-          <div class="m-t-10"><span class="fs-14-fc-c50081-m">￥{{product.price}}</span><span class="fs-14-fc-7e7e7e-r"> ×{{order.quantity}}份 ×{{order.days}}天</span></div>
+          <div class="m-t-10"><span class="fs-14-fc-c50081-m">￥{{product.price}}</span><span class="fs-14-fc-7e7e7e-r"> ×{{order.quantity}}小时</span></div>
         </div>
       </div>
 
@@ -127,6 +128,137 @@
         <div class="cus-row-col-6 fs-16-fc-000000-m t-al-r">微信支付</div>
       </div>
 
+    </div>
+    </div>
+
+    <div v-else>
+      <div class="common-panel p-16-24">
+        <div class="cus-row">
+          <div class="cus-row-col-6 v-a-m fs-18-fc-000000-m">订购服务</div>
+          <div class="cus-row-col-6 v-a-m fs-14-fc-c50081-m t-al-r">订单进行中</div>
+        </div>
+
+        <div class="cus-row m-t-24">
+          <div class="in-bl v-a-t food-icon-img">
+            <image :src="imgHost + product.cover_image" class="slide-image" style="width: 100%;height: 100%;"/>
+          </div>
+          <div class="v-a-t in-bl m-l-24">
+            <div class="fs-16-fc-000000-m">{{product.product_name}}</div>
+            <div class="m-t-10"><span class="fs-14-fc-c50081-m">￥{{product.price}}</span><span class="fs-14-fc-7e7e7e-r"> ×{{order.quantity}}份 ×{{order.days}}天</span></div>
+          </div>
+        </div>
+
+
+        <div class="barr-line"></div>
+        <div class="cus-row">
+          <div class="cus-row-col-6 v-a-m">
+            <div class="fs-16-fc-000000-m">订餐份数</div>
+            <div class="fs-14-fc-7e7e7e-r m-t-6">1份餐仅供一人</div>
+          </div>
+
+          <div class="cus-row-col-6 v-a-m t-al-r fs-16-fc-000000-m">
+            x{{order.quantity}}
+          </div>
+
+        </div>
+
+        <div class="barr-line"></div>
+
+
+        <div class="cus-row">
+          <div class="cus-row-col-6 v-a-m">
+            <div class="fs-16-fc-000000-m">预定时间</div>
+          </div>
+          <div class="cus-row-col-6 v-a-m t-al-r fs-14-fc-484848 f-f-r">
+            剩余天数{{countDays}}/{{order.days}}天
+          </div>
+        </div>
+
+        <div class="m-t-16">
+
+          <!--<div class="day-item">11月12日</div>-->
+
+          <div v-for="(item,index) in list" :index="index" :key="index" :data-index="index">
+            <div class="recommend-game" v-for="(it,idx) in item" :key="idx" :data-index="idx">
+              <div class="game-info day-item-active" v-bind:class="{'day-item': it.through_line}">{{it.date_formate}}</div>
+            </div>
+          </div>
+
+          <div class="t-al-r m-t-24" v-if="pastDays.length">
+            <div class="fs-14-fc-484848 f-f-r" style="border: 1px solid #E1E1E1;border-radius: 16px;padding: 0 12px;line-height:32px;display: inline-block; " v-on:click="goHistory()">历史记录</div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!--配送地址-->
+      <div class="common-panel p-16-24 m-t-16">
+        <div class="cus-row">
+          <div class="cus-row-col-6 v-a-m">
+            <span class="fs-18-fc-000000-m in-bl" style="line-height: 25px;">配送地址</span>
+          </div>
+          <div class="cus-row-col-6 v-a-m t-al-r">
+          </div>
+        </div>
+
+        <div class="m-t-16">
+          <div class="fs-16-fc-000000-m in-bl" style="line-height: 22px;">{{order.address_name}}  {{order.address_phone}}</div>
+
+          <div class="fs-14-fc-7e7e7e-r" style="margin-top: 8px;">{{order.address}}</div>
+        </div>
+      </div>
+
+
+
+      <div class="common-panel m-t-16 p-16-24">
+
+        <div class="cus-row">
+          <div class="cus-row-col-6 fs-16-fc-7E7E7E-r">代金券</div>
+          <div class="cus-row-col-6 fs-16-fc-000000-m t-al-r">{{order.id}}</div>
+        </div>
+
+        <div class="barr-line"></div>
+
+        <div class="cus-row">
+          <div class="cus-row-col-6 fs-16-fc-7E7E7E-r">花甲会员优惠</div>
+          <div class="cus-row-col-6 fs-16-fc-000000-m t-al-r">{{order.created_at}}</div>
+        </div>
+
+        <div class="barr-line"></div>
+
+        <div class="cus-row">
+          <div class="cus-row-col-12 fs-16-fc-000000-m t-al-r">合计￥165元</div>
+        </div>
+
+      </div>
+
+
+
+      <div class="fs-18-fc-000000-m m-t-16">订单信息</div>
+
+      <div class="common-panel m-t-16 p-16-24">
+
+        <div class="cus-row">
+          <div class="cus-row-col-6 fs-16-fc-7E7E7E-r">订单号码</div>
+          <div class="cus-row-col-6 fs-16-fc-000000-m t-al-r">{{order.id}}</div>
+        </div>
+
+        <div class="barr-line"></div>
+
+        <div class="cus-row">
+          <div class="cus-row-col-6 fs-16-fc-7E7E7E-r">下单时间</div>
+          <div class="cus-row-col-6 fs-16-fc-000000-m t-al-r">{{order.created_at}}</div>
+        </div>
+
+        <div class="barr-line"></div>
+
+        <div class="cus-row">
+          <div class="cus-row-col-6 fs-16-fc-7E7E7E-r">支付方式</div>
+          <div class="cus-row-col-6 fs-16-fc-000000-m t-al-r">微信支付</div>
+        </div>
+
+      </div>
     </div>
 
 

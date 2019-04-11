@@ -87,9 +87,15 @@
             <div class="cus-row">
                 <div class="cus-row-col-6 v-a-m">
                     <div class="fs-16-fc-000000-m">花甲会员优惠</div>
-                    <div class="fs-14-fc-7e7e7e-r m-t-10">5日以上优惠20元</div>
+                    <div class="fs-14-fc-7e7e7e-r m-t-10">享服务8折优惠</div>
                 </div>
-                <div class="cus-row-col-6 v-a-m fs-14-fc-7e7e7e-r t-al-r">暂无优惠</div>
+                <div class="cus-row-col-6 v-a-m fs-14-fc-7e7e7e-r t-al-r" style="text-decoration: line-through;">￥{{couponPrice}}</div>
+            </div>
+
+            <div class="barr-line"></div>
+
+            <div class="cus-row">
+                <div class="cus-row-col-12 v-a-m fs-16-fc-000000-m t-al-r">小计 ¥ {{price}}</div>
             </div>
 
         </div>
@@ -475,12 +481,18 @@
 
                     //下单成功跳转呀
                     if(res.data.status) {
-                        // let url = Base64.encode('/passport/pay-success');
-                        // wx.redirectTo(
-                        //     {
-                        //         url:'/pages/commonweb/main?url=' + url,
-                        //     }
-                        // );
+                        if( res.data.data == '333' )
+                        {
+                            let url = Base64.encode('/passport/pay-success?openid=' + param.getOpenid());
+                            wx.redirectTo(
+                                {
+                                    url:'/pages/commonweb/main?url=' + url,
+                                }
+                            )
+                            return;
+                        }
+
+
                         var jsonData = JSON.parse(res.data.data);
                         console.log(jsonData);
                         wx.requestPayment({
@@ -669,6 +681,42 @@
             {
                 let ids = this.chosenCoupon.slice(0,this.quantity);
                 return ids;
+            },
+            price:function()
+            {
+                console.log('计算价格:');
+                console.log(this.activeIdArr);
+                console.log(this.selectedTabIndex);
+
+                if( this.activeIdArr.length )
+                {
+                    return '0.00';
+                }
+
+                if(this.selectedTabIndex)
+                {
+                    // return  (1.5 + this.selectedTabIndex * 0.5) +  '小时';
+                    console.log(this.product.price);
+                    console.log(this.product.price * (1.5 + this.selectedTabIndex * 0.5));
+                    console.log(parseFloat(this.product.price) * (1.5 + this.selectedTabIndex * 0.5));
+                    return (this.product.price * (1.5 + this.selectedTabIndex * 0.5)).toFixed(2);
+                }
+
+                return '0.00';
+            },
+            couponPrice:function()
+            {
+                if( !this.activeIdArr.length )
+                {
+                    return '0.00';
+                }
+
+                if(this.selectedTabIndex)
+                {
+                    return (this.product.price * (1.5 + this.selectedTabIndex * 0.5)).toFixed(2);
+                }
+
+                return '0.00';
             }
         }
     }

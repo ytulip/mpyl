@@ -21,14 +21,11 @@
 
       <div class="barr-line"></div>
       <div class="cus-row">
-        <div class="cus-row-col-6 v-a-m">
-          <div class="fs-16-fc-000000-m">订餐份数</div>
-          <div class="fs-14-fc-7e7e7e-r m-t-6">1份餐仅供一人</div>
+        <div class="cus-row-col-12 v-a-m">
+          <div class="fs-16-fc-000000-m">服务时间</div>
+          <div class="fs-14-fc-7e7e7e-r m-t-16">{{order.service_start_time}}</div>
         </div>
 
-        <div class="cus-row-col-6 v-a-m t-al-r fs-16-fc-000000-m">
-          x{{order.quantity}}
-        </div>
 
       </div>
 
@@ -36,11 +33,10 @@
 
 
       <div class="cus-row">
-        <div class="cus-row-col-6 v-a-m">
+        <div class="cus-row-col-12 v-a-m">
           <div class="fs-16-fc-000000-m">预定时间</div>
         </div>
-        <div class="cus-row-col-6 v-a-m t-al-r fs-14-fc-484848 f-f-r">
-          剩余天数{{countDays}}/{{order.days}}天
+        <div class="cus-row-col-12 v-a-m fs-14-fc-484848 f-f-r m-t-16">{{order.quantity}}小时
         </div>
       </div>
 
@@ -66,7 +62,7 @@
     <div class="common-panel p-16-24 m-t-16">
       <div class="cus-row">
         <div class="cus-row-col-6 v-a-m">
-          <span class="fs-18-fc-000000-m in-bl" style="line-height: 25px;">配送地址</span>
+          <span class="fs-18-fc-000000-m in-bl" style="line-height: 25px;">服务地址</span>
         </div>
         <div class="cus-row-col-6 v-a-m t-al-r">
         </div>
@@ -85,20 +81,20 @@
 
       <div class="cus-row">
         <div class="cus-row-col-6 fs-16-fc-7E7E7E-r">代金券</div>
-        <div class="cus-row-col-6 fs-16-fc-000000-m t-al-r">{{order.id}}</div>
+        <div class="cus-row-col-6 fs-16-fc-000000-m t-al-r">{{product.product_name}}代金券{{order.coupons?1:0}}张</div>
       </div>
 
       <div class="barr-line"></div>
 
       <div class="cus-row">
         <div class="cus-row-col-6 fs-16-fc-7E7E7E-r">花甲会员优惠</div>
-        <div class="cus-row-col-6 fs-16-fc-000000-m t-al-r">{{order.created_at}}</div>
+        <div class="cus-row-col-6 fs-16-fc-000000-m t-al-r">8折优惠</div>
       </div>
 
       <div class="barr-line"></div>
 
       <div class="cus-row">
-        <div class="cus-row-col-12 fs-16-fc-000000-m t-al-r">合计￥165元</div>
+        <div class="cus-row-col-12 fs-16-fc-000000-m t-al-r">合计￥{{order.coupons?order.origin_pay:0}}元</div>
       </div>
 
     </div>
@@ -125,7 +121,7 @@
 
       <div class="cus-row">
         <div class="cus-row-col-6 fs-16-fc-7E7E7E-r">支付方式</div>
-        <div class="cus-row-col-6 fs-16-fc-000000-m t-al-r">微信支付</div>
+        <div class="cus-row-col-6 fs-16-fc-000000-m t-al-r">{{order.coupons?'代金券全额抵扣':'微信支付'}}</div>
       </div>
 
     </div>

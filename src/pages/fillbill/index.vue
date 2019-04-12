@@ -282,8 +282,8 @@
                 openid:'',
                 selectedTabIndex:0,
                 years:[],
-                months:['9','10','13','14'],
-                days:['00','10','20','30','40','50'],
+                months:[],
+                days:[],
                 layerShow:false,
                 value: [0, 0, 0],
                 selectedValue:[],
@@ -450,6 +450,13 @@
                 let id = param.getParamValue('product_id');
                 let a = this;
 
+
+
+                if(!this.pct)
+                {
+                    this.$mptoast('请选择服务地址');
+                    return;
+                }
 
 
                 if( !this.selectedTabIndex )
@@ -627,6 +634,8 @@
 
                 a.product = res.data.data.product;
                 a.years = res.data.data.cleanTime;
+                a.months = res.data.data.hourTime;
+                a.days = res.data.data.minTime;
                 console.log('默认返回的优惠券:');
                 console.log(res.data.data.coupon);
                 a.chosenCoupon= _.pluck(res.data.data.coupons,'id');

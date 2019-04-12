@@ -436,12 +436,18 @@
                 let id = param.getParamValue('product_id');
                 let a = this;
 
+                if(!this.pct)
+                {
+                    this.$mptoast('请选择服务地址');
+                    return;
+                }
 
 
                 //TODO:判断地址是否为空
                 if( !this.openid )
                 {
                     this.$mptoast('页面获取用户信息失败');
+                    return;
                 }
 
 

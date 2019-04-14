@@ -23,7 +23,7 @@
       <div class="cus-row">
         <div class="cus-row-col-12 v-a-m">
           <div class="fs-16-fc-000000-m">服务时间</div>
-          <div class="fs-14-fc-7e7e7e-r m-t-16">{{order.service_start_time}}</div>
+          <div class="fs-14-fc-7e7e7e-r m-t-16">{{order.service_start_time}}    {{beginTime}}</div>
         </div>
 
 
@@ -386,8 +386,8 @@
         onShow(){
             this.pageInit();
         },
-        mounted() {
-            // this.src = globalStore.state.host + 'user/my-services?&openid=' +wx.getStorageSync('openid');
+        mounted() {。；m
+            globalStore.commit('setPaySuccessBack',1);
             this.id = param.getParamValue('id');
             this.pageInit();
         },
@@ -396,6 +396,17 @@
             countDays:function()
             {
                 return this.days.length;
+            },
+            beginTime()
+            {
+                // return this.order.begin_time
+                if( this.order.begin_time )
+                {
+                    return this.order.begin_time.substring(0,5);
+                }else
+                {
+                    return '';
+                }
             }
         }
     }

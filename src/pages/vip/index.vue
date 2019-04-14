@@ -90,13 +90,13 @@
             <div class="fs-18-fc-000000-m m-t-24">会员特权</div>
 
             <div class="cus-row m-t-16">
-                <div class="cus-row-col-6" style="padding-right: 9px;box-sizing: border-box;"  v-on:click="goServer">
+                <div class="cus-row-col-6" style="padding-right: 9px;box-sizing: border-box;"  v-on:click="goFood">
                     <div class="common-panel p-16-16-24-16">
                         <div class="fs-16-fc-000000-m"><span class="short-line" style="border-right-color: #C50081;"></span>订餐服务</div>
                         <div class="m-t-20"><span class="fs-14-fc-000000-m">剩余</span><span class="fs-16-fc-000000-m">{{foodActive}}</span><span class="fs-14-fc-7e7e7e-r">/{{foodTotal}}天</span></div>
                     </div>
                 </div>
-                <div class="cus-row-col-6" style="padding-left: 9px;box-sizing: border-box;"  v-on:click="goServer">
+                <div class="cus-row-col-6" style="padding-left: 9px;box-sizing: border-box;"  v-on:click="goClean">
                     <div class="common-panel p-16-16-24-16">
                         <div class="fs-16-fc-000000-m"><span class="short-line" style="border-right-color: #FFB11B;"></span>家庭清洁</div>
                         <div class="m-t-20"><span class="fs-14-fc-000000-m">剩余</span><span class="fs-16-fc-000000-m">{{cleanActive}}</span><span class="fs-14-fc-7e7e7e-r">/{{cleanTotal}}次</span></div>
@@ -121,7 +121,7 @@
 
 
 
-            <div class="common-panel fs-18-fc-000000-m m-t-24" style="padding:20px 16px;line-height: 22px;">
+            <div class="common-panel fs-18-fc-000000-m m-t-24" style="padding:20px 16px;line-height: 22px;" v-on:click="makeCall">
                 <div class="cus-row">
                     <div class="cus-row-col-6 v-a-m fs-16-fc-000000-m"><span class="short-line" style="border-right-color: #966FEE;"></span>24小时 小花帮忙</div>
                     <div class="cus-row-col-6 v-a-m fs-14-fc-7e7e7e-r t-al-r">点击拨打</div>
@@ -195,6 +195,13 @@
                     this.banners = res.data.data.banners;
                 }).catch(err=>{console.log(3)})
             },
+            goFood() {
+                wx.navigateTo(
+                    {
+                        url:'/pages/clean/main?type=2'
+                    }
+                );
+            },
             goClean() {
                 wx.navigateTo(
                     {
@@ -219,6 +226,11 @@
                         url:'/pages/commonweb/main?url=' + url,
                     }
                 );
+            },
+            makeCall(){
+                wx.makePhoneCall({
+                    phoneNumber: '4000892888'
+            })
             },
             goCommunity() {
                 wx.navigateTo(

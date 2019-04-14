@@ -11,7 +11,8 @@ export default new Vuex.Store({
         addressShare:'',
         webViewUrl:'',
         habbitRemarkShare:'',
-        chosenCoupon:[]
+        chosenCoupon:[],
+        paySuccessBack:''
     },
     mutations: {
         increment: (state) => {
@@ -34,9 +35,10 @@ export default new Vuex.Store({
             state.habbitRemarkShare = data
         },
         setChosenCoupon: (state,data) =>{
-            console.log('mark:');
-            console.log(data);
             state.chosenCoupon = data
-        }
+        },
+        setPaySuccessBack:(state,data) =>{
+            state.paySuccessBack = data
+        },
     }
 });

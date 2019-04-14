@@ -119,7 +119,7 @@
         <div class="fix-bottom3" style="background-color: #ffffff;padding: 14px;border-top:1px solid #EBE9E9 ;">
             <div class="cus-row cus-row-v-m">
                 <div class="cus-row-col-8 t-al-r v-a-m" id="total_price">
-                    <span class="fs-18-fc-000000-m" style="margin-right: 26px;">￥ {{price}}元</span>
+                    <span class="fs-18-fc-000000-m" style="margin-right: 26px;">￥ {{price - product.price * activeCouponCount}}元</span>
                 </div>
                 <div class="cus-row-col-4 v-a-m">
                     <a class="yl_btn1 m-t-20"  v-on:click="nextStep()" style="margin-top: 0;">微信支付</a>
@@ -459,6 +459,7 @@
 
                         if( res.data.data == '333' )
                         {
+                            globalStore.commit('setPaySuccessBack','');
                             let url = Base64.encode('/passport/pay-success?openid=' + param.getOpenid());
                             wx.redirectTo(
                                 {
@@ -479,6 +480,7 @@
                             'signType': jsonData.signType,
                             'paySign': jsonData.paySign,
                             'success':function(res){
+                                globalStore.commit('setPaySuccessBack','');
                                 let url = Base64.encode('/passport/pay-success?openid=' + param.getOpenid());
                                 wx.redirectTo(
                                     {
@@ -487,7 +489,7 @@
                                 )
                             },
                             'fail':function(res){
-                                a.$mptoast('支付成功');
+                                a.$mptoast('支付失败');
                             }
                         });
                     }

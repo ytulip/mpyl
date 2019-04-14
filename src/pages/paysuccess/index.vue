@@ -5,7 +5,6 @@
 <script>
     import globalStore from '../../stores/global-store'
     import param from '../../utils/param'
-    import { Base64 } from 'js-base64'
     export default {
         data () {
             return {
@@ -18,21 +17,12 @@
         {
 
         },
-        methods: {
-        },
         onShow(){
-            if( globalStore.state.paySuccessBack )
-            {
-                globalStore.commit('setPaySuccessBack','');
-                wx.switchTab({
-                    url: '/pages/book/main'
-                })
-                return;
-            }
+        },
+        methods: {
+
         },
         mounted() {
-            let url = param.getParamValue('url');
-            this.src = globalStore.state.host + Base64.decode(url);
         }
     }
 </script>

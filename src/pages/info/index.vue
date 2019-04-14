@@ -4,13 +4,13 @@
 
 
     <div class="p16 mine-list">
-      <navigator class="cus-row" open-type="navigate" url="/pages/info/main"  hover-class="none">
+      <div class="cus-row" v-on:click="uploadPhoto">
         <div class="cus-row-col-6 fs-16-fc-000000-m f-f-m v-a-m" style="">头像</div>
         <div class="cus-row-col-6 v-a-m t-al-r">
-          <image class="v-a-m in-bl" src="/static/images/user_pic_nor@3x.png" mode="widthFix" style="width:50px;height: 50px"></image>
+          <image class="v-a-m in-bl" :src="headImg" style="width:60px;height: 60px;border-radius: 60px;"></image>
           <image class="v-a-m in-bl" src="/static/images/icon_bnext_nor@3x.png" mode="widthFix" style="width:8px;height: 13px;margin-left: 8px;"></image>
         </div>
-      </navigator>
+      </div>
     </div>
 
 
@@ -26,14 +26,14 @@
         </view>
       </navigator>
 
-      <navigator open-type="navigate" url="/pages/address/main" hover-class="none"   style="padding: 19px 16px;">
+      <div   style="padding: 19px 16px;">
         <view class="cus-row">
           <view class="cus-row-col-4 fs-16-fc-000000-m v-a-m">年龄</view>
           <view class="cus-row-col-8 t-al-r v-a-m">
             <span class="in-bl v-a-m fs-16-fc-7E7E7E-r m-r-22">{{age}}</span>
           </view>
         </view>
-      </navigator>
+      </div>
 
       <navigator open-type="navigate" url="/pages/bind2/main"  hover-class="none"  style="padding: 19px 16px;">
         <view class="cus-row">
@@ -86,26 +86,52 @@
 
         },
         methods: {
-            nextStep()
-            {
-              wx.setStorageSync('openid', '');
-              wx.redirectTo(
-                  {
-                    url:'/pages/login/main',
-                  }
-              );
+            nextStep() {
+                wx.setStorageSync('openid', '');
+                wx.reLaunch({
+                    url: '/pages/login/main'
+                })
             },
-            initPage()
-            {
-              let url = globalStore.state.host + 'user/user-center';
-              let requestData = {}
-              Object.assign(requestData,{openid:param.getOpenid()});
-              this.$http.get(url,requestData).then((res)=>{
-                console.log(res);
-                this.user = res.data.data.user;
+            initPage() {
+                let url = globalStore.state.host + 'user/user-center';
+                let requestData = {}
+                Object.assign(requestData, {openid: param.getOpenid()});
+                this.$http.get(url, requestData).then((res) => {
+                    console.log(res);
+                    this.user = res.data.data.user;
 
-              }).catch(err=>{console.log(3)})
-            }
+                }).catch(err => {
+                    console.log(3)
+                })
+            },
+            uploadPhoto: function () {
+                let _self = this;
+                wx.chooseImage({
+                    count: 1, // 默认9
+                    sizeType: ['compressed'], // 可以指定是原图还是压缩图，默认二者都有
+                    sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+                    success: function (res) {
+                        let url = res.tempFilePaths[0];
+                        console.log(url);
+
+                        //文件要上传
+                        wx.uploadFile({
+                            url: globalStore.state.host + '/user/header-img?openid=' + param.getOpenid(),
+                            filePath: url,
+                            name: 'images[]',
+                            success: function (res) {
+                                let jsonData = JSON.parse(res.data);
+                                if(jsonData.status)
+                                {
+                                    //设置头像请求
+                                    _self.initPage();
+                                }
+                            }
+                        })
+                    }
+                });
+
+            },
         },
         onShow()
         {
@@ -141,27 +167,16 @@
                 return  (Y-r[1]);
               }
               return '';
-
-              // let identity = new Identity(this.user.id_card);
-              // if(!identity.legal())
-              // {
-              //   return '';
-              // } else
-              // {
-              //   let birth = identity.birthday();
-              //
-              //   let   r   =   birth.match(/^(\d{1,4})(-|\/)(\d{1,2})\2(\d{1,2})$/);
-              //   if(r==null)return   '';
-              //   let   d=   new   Date(r[1],   r[3]-1,   r[4]);
-              //   if   (d.getFullYear()==r[1]&&(d.getMonth()+1)==r[3]&&d.getDate()==r[4])
-              //   {
-              //     let   Y   =   new   Date().getFullYear();
-              //     return  (Y-r[1]);
-              //   }
-              //   return '';
-              //
-              //
-              // }
+          },
+          headImg:function()
+          {
+              if( this.user.header_img )
+              {
+                  return globalStore.state.host + this.user.header_img;
+              }else
+              {
+                  return '/static/images/user_pic_nor@3x.png';
+              }
           }
         }
     }

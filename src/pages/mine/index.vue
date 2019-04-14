@@ -10,7 +10,7 @@
           <div class="fs-14-fc-7E7E7E-r m-t-10">{{age}}岁</div>
         </div>
         <div class="cus-row-col-6 v-a-m t-al-r">
-          <image class="v-a-m in-bl" src="/static/images/user_pic_nor@3x.png" mode="widthFix" style="width:60px;height: 60px"></image>
+          <image class="v-a-m in-bl" :src="headImg"  style="width:60px;height: 60px;border-radius: 60px;"></image>
           <image class="v-a-m in-bl" src="/static/images/icon_bnext_nor@3x.png" mode="widthFix" style="width:8px;height: 13px;margin-left: 8px;"></image>
         </div>
       </navigator>
@@ -136,6 +136,16 @@
               return  (Y-r[1]);
             }
             return '?';
+          },
+          headImg:function()
+          {
+              if( this.user.header_img )
+              {
+                  return globalStore.state.host + this.user.header_img;
+              }else
+              {
+                  return '/static/images/user_pic_nor@3x.png';
+              }
           }
         }
     }

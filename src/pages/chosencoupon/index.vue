@@ -40,13 +40,14 @@
               </div>
           </div>
       </div>
-
+      <mptoast />
   </div>
 </template>
 
 <script>
     import globalStore from '../../stores/global-store'
     import param from '../../utils/param'
+    import mptoast from 'mptoast'
 
     export default {
         data () {
@@ -56,11 +57,15 @@
                 list:[],
                 layerFlag:0,
                 couponId:'',
-                couponType:''
+                couponType:'',
+                max:''
             }
         },
         created:function()
         {
+        },
+        components: {
+            mptoast
         },
         methods: {
             initPage:function()
@@ -97,6 +102,22 @@
             },
             chosenCoupon(id)
             {
+
+                let count = 0;
+                for( let i = 0; i < this.currentList.length; i++ )
+                {
+                    if( this.currentList[i].chosen )
+                    {
+                        count++;
+                    }
+                }
+
+                if( (!this.currentList[id].chosen) && (this.max == count))
+                {
+                    this.$mptoast('该订单代金券已达到数目');
+                    return;
+                }
+
                 this.currentList[id].chosen = this.currentList[id].chosen?0:1;
                 this.$forceUpdate();
                 // globalStore.commit("setAddressShare",data);
@@ -111,6 +132,7 @@
         mounted:function()
         {
             this.couponId = param.getParamValue('ids');
+            this.max = param.getParamValue('max');
             this.couponType = param.getParamValue('product_id');
             this.initPage();
         },
@@ -135,6 +157,9 @@
                     }
                 }
                 return tmpList;
+            },
+            activeCouponCount()
+            {
             }
         }
     }

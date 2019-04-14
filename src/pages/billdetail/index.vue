@@ -94,11 +94,11 @@
 
       <div class="m-t-24 p24-block" v-for="(item,index) in res">
         <div class="fs-14-fc-2e3133-m">{{index}}</div>
-        <div class="m-t-24">
-          <div class="in-bl v-a-b" style="font-size: 0;">
+        <div class="m-t-24" style="padding-left: 80px;box-sizing: border-box;position: relative;">
+          <div style="font-size: 0;position: absolute;top:0;left: 0;">
             <img :src="host + item['lunch']['cover_img']" style="width: 80px;height: 80px;border-radius: 4px;"/>
           </div>
-          <div class="in-bl v-a-b" style="margin-left: 24px; ">
+          <div class="" style="margin-left: 24px; ">
             <div class="fs-16-fc-000000-m">
               午餐
             </div>
@@ -109,9 +109,9 @@
         </div>
 
 
-        <div class="m-t-24">
-          <div class="in-bl v-a-b" style="font-size: 0;">
-            <img :src="host + item['lunch']['cover_img']" style="width: 80px;height: 80px;border-radius: 4px;"/>
+        <div class="m-t-24" style="padding-left: 80px;box-sizing: border-box;position: relative;">
+          <div style="font-size: 0;position: absolute;top:0;left: 0;">
+            <img :src="host + item['dinner']['cover_img']" style="width: 80px;height: 80px;border-radius: 4px;"/>
           </div>
           <div class="in-bl v-a-b" style="margin-left: 24px; ">
             <div class="fs-16-fc-000000-m">
@@ -123,9 +123,11 @@
           </div>
 
           <!--如果是在第二天那么显示延后，或者显示已延后-->
-          <div class="cus-row m-t-24" v-if="'2019-03-04' == index">
-            <div class="cus-row-col-8 fs-14-fc-212229 f-f-r v-a-m">当日不在家，顺延到下次</div>
-            <div class="cus-row-col-4 v-a-m t-al-r"> <div class="l-btn-red2" v-on:click="notThisDay">我要延后</div> </div>
+          <div class="cus-row m-t-24" v-if="tomorrowStr == index">
+            <div class="cus-row-col-8 fs-14-fc-212229 f-f-r v-a-m" v-if="item.status !== 100">当日不在家，顺延到下次</div>
+            <div class="cus-row-col-4 v-a-m t-al-r"> <div class="l-btn-red2" v-on:click="notThisDay"  v-if="item.status !== 100">我要延后</div> </div>
+
+            <div class="cus-row-col-12 t-al-r"><div class="fs-14-fc-484848 f-f-r" style="border: 1px solid #E1E1E1;border-radius: 16px;padding: 0 12px;line-height:32px;display: inline-block;" v-if="item.status == 100">已延后</div></div>
           </div>
 
         </div>
@@ -162,6 +164,7 @@
     import globalStore from '../../stores/global-store'
     import param from '../../utils/param'
     import mptoast from 'mptoast'
+    import moment from "moment"
     import _ from 'underscore'
 
     export default {
@@ -195,7 +198,7 @@
               let days = _.pluck(this.pastDays,'date');
               days = days.join(',');
               let url = Base64.encode('/passport/history?dates=' + days + '&product_id=' + this.order.product_id);
-              wx.redirectTo(
+              wx.navigateTo(
                       {
                         url:'/pages/commonweb/main?url=' + url,
                       }
@@ -228,7 +231,7 @@
               let requestData = {order_id:this.order.id};
               param.commonRequest(
                       {
-                        url:globalStore.state.host + '/user/yanhou',
+                        url:globalStore.state.host + '/user/yan-hou',
                         page:this,
                         data:requestData,
                         success:function(res)
@@ -263,15 +266,32 @@
                     this.pastDays = res.data.data.pastDays;
                     this.days = res.data.data.days;
 
+                    let dateArr = _.pluck(this.days,'date');
+                    let activeDays = {};
+                    let _self = this;
+                    Object.keys(res.data.data.res).forEach(function(index) {
+                        // console.log(index);
+                        let dateArrIndex = dateArr.indexOf(index);
+                           if( dateArrIndex !== -1 )
+                        {
+                            // activeDays[k] = res.data.data.res[k];
+                            activeDays[index] = res.data.data.res[index];
+                            activeDays[index].status = _self.days[dateArrIndex].status;
+                        }
+                    });
 
-                    this.res = res.data.data.res;
-                    for( let i = 0; i < res.data.data.res.length;i++ )
-                    {
 
-                    }
+                    // for(k in res.data.data.res)
+                    // {
+                    //     console.log(k);
+                    //     console.log(dateArr.indexOf(k));
+                    //    if( dateArr.indexOf(k) !== -1 )
+                    //    {
+                    //        activeDays[k] = res.data.data.res[k];
+                    //    }
+                    // }
 
-
-                    //
+                    this.res = activeDays;
 
                 }).catch(err=>{
                     console.log(3)
@@ -301,6 +321,13 @@
                 }
 
                 return remark;
+            },
+            tomorrowStr()
+            {
+                let dateFormat = moment().add(1, 'd');
+                let tomorrowStr = dateFormat.format('YYYY-MM-DD');
+                console.log('明日' + tomorrowStr);
+                return tomorrowStr;
             }
         }
     }

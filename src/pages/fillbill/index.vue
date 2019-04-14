@@ -490,6 +490,7 @@
                     if(res.data.status) {
                         if( res.data.data == '333' )
                         {
+                            globalStore.commit('setPaySuccessBack','');
                             let url = Base64.encode('/passport/pay-success?openid=' + param.getOpenid());
                             wx.redirectTo(
                                 {
@@ -509,6 +510,7 @@
                             'signType': jsonData.signType,
                             'paySign': jsonData.paySign,
                             'success':function(res){
+                                globalStore.commit('setPaySuccessBack','');
                                 let url = Base64.encode('/passport/pay-success?openid=' + param.getOpenid());
                                 wx.redirectTo(
                                     {

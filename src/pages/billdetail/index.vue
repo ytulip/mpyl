@@ -123,13 +123,13 @@
           </div>
 
           <!--如果是在第二天那么显示延后，或者显示已延后-->
-          <div class="cus-row m-t-24" v-if="tomorrowStr == index">
-            <div class="cus-row-col-8 fs-14-fc-212229 f-f-r v-a-m" v-if="item.status !== 100">当日不在家，顺延到下次</div>
-            <div class="cus-row-col-4 v-a-m t-al-r"> <div class="l-btn-red2" v-on:click="notThisDay"  v-if="item.status !== 100">我要延后</div> </div>
+        </div>
 
-            <div class="cus-row-col-12 t-al-r"><div class="fs-14-fc-484848 f-f-r" style="border: 1px solid #E1E1E1;border-radius: 16px;padding: 0 12px;line-height:32px;display: inline-block;" v-if="item.status == 100">已延后</div></div>
-          </div>
+        <div class="cus-row m-t-24" v-if="tomorrowStr == index">
+          <div class="cus-row-col-8 fs-14-fc-212229 f-f-r v-a-m" v-if="item.status !== 100">当日不在家，顺延到下次</div>
+          <div class="cus-row-col-4 v-a-m t-al-r"> <div class="l-btn-red2" v-on:click="notThisDay"  v-if="item.status !== 100">我要延后</div> </div>
 
+          <div class="cus-row-col-12 t-al-r"><div class="fs-14-fc-484848 f-f-r" style="border: 1px solid #E1E1E1;border-radius: 16px;padding: 0 12px;line-height:32px;display: inline-block;" v-if="item.status == 100">已延后</div></div>
         </div>
 
 

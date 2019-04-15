@@ -386,7 +386,7 @@
         onShow(){
             this.pageInit();
         },
-        mounted() {。；m
+        mounted() {
             globalStore.commit('setPaySuccessBack',1);
             this.id = param.getParamValue('id');
             this.pageInit();

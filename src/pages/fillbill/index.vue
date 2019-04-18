@@ -24,7 +24,8 @@
             <div class="cus-row">
                 <div class="cus-row-col-6 v-a-m">
                     <div class="fs-18-fc-000000-m">服务时间</div>
-                    <div class="fs-14-fc-7e7e7e-r m-t-10">{{selectedValueText}}</div>
+                    <div class="fs-16-fc-000000-m m-t-10" v-if="selectedValueText != ''">{{selectedValueText}}</div>
+                    <div class= "m-t-10" v-else><span class="fs-16-fc-7E7E7E-r">选择上门时间</span></div>
                 </div>
                 <div class="cus-row-col-6 v-a-m t-al-r" v-on:click="pctSwitch">
                     <img src="/static/images/icon_next_nor@3x.png" style="width: 13px;" mode="widthFix"/>
@@ -117,11 +118,11 @@
 
         <div class="fix-bottom3" style="background-color: #ffffff;padding: 14px;border-top:1px solid #EBE9E9 ;">
             <div class="cus-row cus-row-v-m">
-                <div class="cus-row-col-8 t-al-r v-a-m" id="total_price">
-                    <span class="fs-18-fc-000000-m" style="margin-right: 26px;">￥ {{price}}元</span>
+                <div class="cus-row-col-8 t-al-l v-a-m" id="total_price">
+                    <span class="fs-18-fc-000000-m" style="margin-right: 26px;">{{activeCouponCount?'代金券抵扣':('总计 '+price+'元')}}</span>
                 </div>
                 <div class="cus-row-col-4 v-a-m">
-                    <a class="yl_btn1 m-t-20"  v-on:click="nextStep()" style="margin-top: 0;">微信支付</a>
+                    <a class="yl_btn1 m-t-20"  v-on:click="nextStep()" style="margin-top: 0;">{{activeCouponCount?'提 交':'微信支付'}}</a>
                 </div>
             </div>
         </div>
@@ -673,7 +674,7 @@
             {
                 if( this.selectedValue.length )
                 {
-                    return this.years[this.selectedValue[0]] + this.months[this.selectedValue[1]] + this.days[this.selectedValue[2]];
+                    return this.years[this.selectedValue[0]] + ' ' + this.months[this.selectedValue[1]] + ':'+ this.days[this.selectedValue[2]];
                 } else
                 {
                     return '';

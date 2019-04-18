@@ -28,7 +28,7 @@
 
 
                     <div style="padding-left: 16px;margin-bottom: 16px;">
-                        <img src="/static/images/icon_unsuess_nor@3x.png" style="width: 24px;height: 24px;" v-on:click="closeCalderSwitch">
+                        <img src="/static/images/icon_close_nor@3x.png" style="width: 24px;height: 24px;" v-on:click="closeCalderSwitch">
                     </div>
 
 

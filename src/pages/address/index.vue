@@ -6,7 +6,7 @@
             <div class="fs-16-fc-000000-m">
                <span class="l-btn-red2 in-bl" v-if="item.is_default">
                    默认
-               </span> <span class="in-bl" style="margin-left: 8px;">{{item.pct_code_name}} {{item.address}}</span>
+               </span> {{item.pct_code_name}} {{item.address}}
             </div>
 
             <div class="fs-14-fc-7E7E7E-r m-t-10">

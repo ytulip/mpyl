@@ -42,7 +42,7 @@
     </div>
 
     <div class="address-panel m-t-16 p16">
-      <div class="cus-row">
+      <div class="cus-row" style="margin: 16px 0;">
         <div class="cus-row-col-6 fs-16-fc-c50081-m v-a-m" v-on:click="deleteAddress">删除地址</div>
       </div>
     </div>

@@ -2,7 +2,7 @@
   <div class="p16 bg-f9f9fb">
     <swiper class="swiper" autoplay="true" interval="5000" duration="1000">
       <block v-for="(item, index) in banners" :index="index" :key="key">
-        <swiper-item v-on:click="goBannerDetail(item.id)">
+        <swiper-item v-on:click="goBannerDetail(item.id)" style="border-radius: 4px;">
           <image :src="item.url" class="slide-image" mode="aspectFill"/>
         </swiper-item>
       </block>

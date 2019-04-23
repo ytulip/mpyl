@@ -4,6 +4,8 @@
 
 <script>
     import globalStore from '../../stores/global-store'
+    import param from '../../utils/param'
+
     export default {
         data () {
             return {
@@ -25,7 +27,7 @@
             }
         },
         mounted() {
-            this.src = globalStore.state.host + 'passport/habbit-remark?&openid=' +wx.getStorageSync('openid');
+            this.src = globalStore.state.host + 'passport/habbit-remark?product_id='+ param.getParamValue('id') +'&user_id=' +wx.getStorageSync('openid') + '&remark=' + param.getParamValue('remark');
         }
     }
 </script>

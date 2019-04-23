@@ -103,12 +103,9 @@
 
         <div class="white-panel m-t-16" v-on:click="doRemark" style="margin-bottom: 80px;">
             <div class="cus-row">
-                <div class="cus-row-col-6 v-a-m">
+                <div class="cus-row-col-11 v-a-m">
                     <div class="fs-18-fc-000000-m">忌口备注</div>
                     <div class="fs-14-fc-7e7e7e-r m-t-10">{{remarkAndPlaceholder}}</div>
-                </div>
-                <div class="cus-row-col-5 v-a-m">
-
                 </div>
                 <div class="cus-row-col-1 v-a-m t-al-r">
                     <img src="/static/images/icon_next_nor@3x.png" style="width: 13px;" mode="widthFix"/>
@@ -428,7 +425,7 @@
                 console.log('doRemark');
                 wx.navigateTo(
                 {
-                    url: "/pages/remark/main"
+                    url: "/pages/remark/main?id=" + param.getParamValue('product_id') + '&remark=' + encodeURIComponent(this.remark)
                 });
             },
             nextStep: function()

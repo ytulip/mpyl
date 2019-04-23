@@ -14,7 +14,7 @@
             </div>
 
             <div class="m-t-16 t-al-r">
-                <div class="in-bl edit-btn" v-on:click="editAddress(item.address_id)">编 辑</div>
+                <div class="in-bl edit-btn" @click.stop="editAddress(item.address_id)">编 辑</div>
             </div>
         </div>
 

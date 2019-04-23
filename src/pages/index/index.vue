@@ -39,10 +39,10 @@
         <div class="cus-row">
             <div class="cus-row-col-8 v-a-m">
                 <div class="fs-18-fc-000000-m" style="line-height: 25px;">
-                    {{(!isVip)?'花甲会员· ¥60/月':'花甲会员 已开通'}}
+                    {{(!isVip)?'花甲会员•超值优惠':'花甲会员 已开通'}}
                 </div>
                 <div class="fs-12-fc-7E7E7E-r m-t-6" style="line-height: 17px">
-                    {{(!isVip)?'更多优惠，服务更多！': (expire + ' 到期')}}
+                    {{(!isVip)?'服务更多，为你所想！': (expire + ' 到期')}}
                 </div>
             </div>
             <div class="cus-row-col-4 v-a-m t-al-r">

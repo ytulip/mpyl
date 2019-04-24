@@ -6,7 +6,7 @@
     <div class="" style="background-color: #ffffff;padding: 25px 24px;border-bottom: 1px solid #F3F3F3;">
       <navigator  class="cus-row" open-type="navigate" url="/pages/info/main"  hover-class="none">
         <div class="cus-row-col-6 fs-18-fc-2E3133 f-f-m v-a-m" style="">
-          <div> <span class="v-a-m in-bl">{{user.real_name}}</span> <span class="l-btn-red2 v-a-m in-bl" style="margin-left: 12px;">花甲会员</span></div>
+          <div> <span class="v-a-m in-bl">{{user.real_name}}</span> <span class="l-btn-red2 v-a-m in-bl" style="margin-left: 12px;" v-if="isVip">花甲会员</span></div>
           <div class="fs-14-fc-7E7E7E-r m-t-10">{{age}}岁</div>
         </div>
         <div class="cus-row-col-6 v-a-m t-al-r">
@@ -82,7 +82,8 @@
                 msg: 'Hello',
                 banners:{},
                 src:'',
-                user:{}
+                user:{},
+                isVip:false
             }
         },
         created:function()
@@ -98,6 +99,7 @@
               this.$http.get(url,requestData).then((res)=>{
                 console.log(res);
                 this.user = res.data.data.user;
+                this.isVip = res.data.data.isVip;
 
               }).catch(err=>{console.log(3)})
             }

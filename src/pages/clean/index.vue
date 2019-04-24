@@ -8,11 +8,11 @@
             </div>
 
 
-            <div class="info-panel">
+            <div class="info-panel" style="height: 156px;">
                 <div class="fs-18-fc-000000-m" style="line-height: 25px;">{{item.product_name}}</div>
                 <div class="fs-14-fc-7E7E7E-r" style="margin-top: 10px;line-height: 16px;">{{item.sub_desc}}</div>
 
-                <div style="position: absolute;bottom: 18px;left: 52px;"><span class="fs-14-fc-000033-m">￥</span><span class="fs-18-fc-000033-m">18.5</span></div>
+                <div style="position: absolute;bottom: 18px;left: 52px;"><span class="fs-14-fc-000033-m">￥</span><span class="fs-18-fc-000033-m">{{item.price}}</span></div>
 
             </div>
             <!--<div style="position: absolute;top:0;left: 0;right: 0;z-index: 99;" class="fs-24-fc-ffffff-b">{{item.product_name}}</div>-->
@@ -80,7 +80,6 @@
         background: #FFFFFF;
         box-shadow: 0 2px 6px 0 #E7E9F0;
         border-radius: 5px;
-        height: 156px;
         padding: 18px 18px 18px 52px;
         box-sizing: border-box;
         position: relative;

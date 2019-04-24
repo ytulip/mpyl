@@ -1,9 +1,9 @@
 <template>
   <div class="p16 bg-f9f9fb">
-    <swiper class="swiper" autoplay="true" interval="5000" duration="1000">
+    <swiper class="swiper" autoplay="true" interval="5000" duration="1000" :style="swiperImgH">
       <block v-for="(item, index) in banners" :index="index" :key="key">
         <swiper-item v-on:click="goBannerDetail(item.id)" style="border-radius: 4px;">
-          <image :src="item.url" class="slide-image" mode="aspectFill"/>
+          <img   :src="item.url" class="slide-image" style="width: 100%;" mode="widthFix" @load="calcImgH"/>
         </swiper-item>
       </block>
     </swiper>
@@ -39,7 +39,7 @@
         <div class="cus-row">
             <div class="cus-row-col-8 v-a-m">
                 <div class="fs-18-fc-000000-m" style="line-height: 25px;">
-                    {{(!isVip)?'花甲会员•超值优惠':'花甲会员 已开通'}}
+                    {{(!isVip)?'花甲会员 超值优惠':'花甲会员 已开通'}}
                 </div>
                 <div class="fs-12-fc-7E7E7E-r m-t-6" style="line-height: 17px">
                     {{(!isVip)?'服务更多，为你所想！': (expire + ' 到期')}}
@@ -67,7 +67,8 @@
                 msg: 'Hello',
                 banners:{},
                 isVip:false,
-                expire:''
+                expire:'',
+                swiperImgH:0
             }
         },
         created:function()
@@ -130,6 +131,12 @@
                     {
                         url: "/pages/"+url+"/main"
                     });
+            },
+            calcImgH: async function (e) {
+                let winWidth = wx.getSystemInfoSync().windowWidth - 32; // 获取当前屏幕的宽度
+                let imgH = e.mp.detail.height; // 图片高度
+                let imgW = e.mp.detail.width;
+                this.swiperImgH = 'height:' + ( winWidth * (imgH/imgW) ) + 'px';
             }
         },
         onShow()
@@ -139,6 +146,8 @@
         mounted:function()
         {
             this.userInit();
+        },
+        computed:{
         }
     }
 </script>
@@ -212,4 +221,9 @@
       letter-spacing: -0.27px;
       display: inline-block;
   }
+
+ .l-btn-red:hover{
+     background-color: #c50081;
+     color:#ffffff;
+ }
 </style>

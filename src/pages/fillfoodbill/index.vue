@@ -8,14 +8,19 @@
                     <span class="fs-18-fc-000000-m in-bl" style="line-height: 25px;">配送地址</span>
                 </div>
                 <div class="cus-row-col-6 v-a-m t-al-r">
-                    <span class="fs-16-fc-c50081-m" v-on:click="goAddressList()">修改</span>
+                    <span class="fs-16-fc-c50081-m" v-on:click="goAddressList()" v-if="name">修改</span>
+                    <span class="fs-16-fc-c50081-m" v-on:click="goAddressList()" v-else>添加</span>
                 </div>
             </div>
 
-            <div class="m-t-16">
+            <div class="m-t-16" v-if="name">
                 <div class="fs-16-fc-000000-m in-bl" style="line-height: 22px;">{{name}}  {{phone}}</div>
 
                 <div class="fs-14-fc-7e7e7e-r" style="margin-top: 8px;">{{pct_code_name}} {{address}}</div>
+            </div>
+
+            <div class="m-t-16" v-else>
+                <div class="fs-14-fc-7e7e7e-r" style="margin-top: 8px;">暂无地址</div>
             </div>
         </div>
 
@@ -585,10 +590,17 @@
                         }
                     }
                 });
+            },
+            clean(){
+                this.remark = '';
             }
 
         },
         mounted() {
+
+            this.clean();
+
+
             let id = param.getParamValue('product_id');
             let startDayStr = param.getParamValue('startDay');
             let startDayStrArr = startDayStr.split('-');
@@ -825,7 +837,7 @@
 
   .barr-line{
       background: #FFFFFF;
-      border: 1px solid #E1E1E1;
+      border: 0.5px solid #E1E1E1;
   }
 
   .active-type{

@@ -41,7 +41,7 @@
       </div>
     </div>
 
-    <div class="address-panel m-t-16 p16">
+    <div class="address-panel m-t-16 p16" v-if="id">
       <div class="cus-row" style="margin: 16px 0;">
         <div class="cus-row-col-6 fs-16-fc-c50081-m v-a-m" v-on:click="deleteAddress">删除地址</div>
       </div>
@@ -75,7 +75,8 @@
                 real_name:'',
                 phone:'',
                 address:'',
-                addressDefault:0
+                addressDefault:0,
+                id:''
             }
         },
         created:function()
@@ -134,7 +135,7 @@
                 //   mask:true
                 // })
 
-              let requestData =  {real_name:this.real_name, phone:this.phone,address:this.address,neighborhood:this.neighborhoodId(),is_default:this.addressDefault};
+              let requestData =  {real_name:this.real_name, phone:this.phone,address:this.address,neighborhood:this.neighborhoodId(),is_default:this.addressDefault,address_id:this.id};
 
               param.commonRequest(
                       {
@@ -163,9 +164,41 @@
             setDefault()
             {
                this.addressDefault = this.addressDefault?0:1;
+            },
+            deleteAddress()
+            {
+              let requestData =  {address_id:this.id};
+
+              param.commonRequest(
+                      {
+                        url:globalStore.state.host + '/user/delete-address',
+                        page:this,
+                        data:requestData,
+                        success:function(res)
+                        {
+                          if(res.status)
+                          {
+                            wx.navigateBack({
+                              delta: 1
+                            })
+                          }
+                        },
+                        error:function () {
+
+                        }
+                      }
+              );
             }
         },
         mounted() {
+
+          this.real_name = '';
+          this.phone = '';
+          this.address = '';
+          this.addressDefault = '';
+          this.neighborhoodIndex = -1;
+
+
           this.id = param.getParamValue('id');
           this.pageInit();
             // this.src = globalStore.state.host + 'user/add-mod-address?&openid=' +wx.getStorageSync('openid');

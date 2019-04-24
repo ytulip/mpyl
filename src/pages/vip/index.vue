@@ -43,7 +43,7 @@
                             <div class="in-bl" style="background: #F9F9FB;border: 1px solid #E1E1E1;border-radius: 0px 17px 17px 0px;" v-bind:class="{ 'active-type': (tabIndex == 2) }" v-on:click="setTab(2)"><span class="fs-16-fc-080808-r" style="line-height: 36px;padding: 0 24px;">会员B</span></div>
                         </div>
 
-                        <div style="background: #FFFFFF;border: 1px solid #E1E1E1;border-radius: 4px;padding: 24px;margin-top: 24px;position: relative;" v-for="(item,index) in vip[tabIndex - 1]" v-on:click="changeSubTabIndex(index)">
+                        <div style="background: #FFFFFF;border: 1px solid #E1E1E1;border-radius: 4px;padding: 24px;margin-top: 24px;position: relative;" v-for="(item,index) in vip[tabIndex - 1]" v-on:click="changeSubTabIndex(index)" v-bind:class="{'chosen-item':(subTabIndex == index)}">
                             <div class="cus-row">
                                 <div class="cus-row-col-6 v-a-m fs-18-fc-000000-m">
                                     {{item.title}}个月
@@ -81,9 +81,9 @@
             <div style="position: relative">
                 <img src="/static/images/home_banner_nor@3x.png" mode="widthFix" style="width: 100%;"/>
 
-                <div class="all-center" style="width: 100%;">
-                    <div class="fs-21-fc-ffffff-m t-al-c">已开通花甲会员</div>
-                    <div class="m-t-24 t-al-c"><a class="txt-tag-f">{{expireDay}}到期（到期后可续费）</a></div>
+                <div class="all-center" style="padding-left: 32px;width: 100%;box-sizing: border-box;">
+                    <div class="fs-21-fc-ffffff-m t-al-l"><span class="vip-user v-a-m"></span><span class="v-a-m" style="margin-left: 8px;">已开通花甲会员({{vipTypeText}})</span></div>
+                    <div class="m-t-24 t-al-l"><a class="fs-14-fc-ffffff f-f-r">{{expireDay}}到期（到期后可续费）</a></div>
                 </div>
             </div>
 
@@ -163,7 +163,8 @@
                 cleanActive:'',
                 subTabIndex:0,
                 healthTotal:0,
-                healthActive:0
+                healthActive:0,
+                vipTypeText:''
             }
         },
         created:function()
@@ -273,7 +274,13 @@
                             'paySign': jsonData.paySign,
                             'success':function(res){
                                 // a.$mptoast('支付成功');
-                                a.init();
+                                // a.init();
+                                let url = Base64.encode('/passport/pay-success-vip');
+                                wx.redirectTo(
+                                    {
+                                        url:'/pages/commonweb/main?url=' + url,
+                                    }
+                                )
                             },
                             'fail':function(res){
                                 a.$mptoast('支付失败');
@@ -311,6 +318,7 @@
                     a.cleanActive = res.data.data.cleanActive;
                     a.healthTotal = res.data.data.healthTotal;
                     a.healthActive = res.data.data.healthActive;
+                    a.vipTypeText = res.data.data.vip_type_text;
 
                 }).catch(err=>{console.log('网络异常')})
             },
@@ -400,6 +408,16 @@
     }
 
 
+    .vip-user
+    {
+        display: inline-block;
+        width: 19px;
+        height: 19px;
+        background:url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADkAAAA5CAYAAACMGIOFAAAAAXNSR0IArs4c6QAAA/5JREFUaAXlm79PFEEUxzmUhEQrY0GgoTPEWEAhxkRJoDZUJlhZoZXRRhPvT7ATQ9RObI5EKezFBGzEQipD7Ejk0AJpRGMEf3w/587KLtwdezvzDo6XfG9238y+9747u7Mzb/cKfyRtjcmmDlsXysKC8Ep4USgU0OcShdQhA6PCsDAo9AgnBPTZBZIeZUW2igIBZRaOE+4K2PEmbd4sJQ190u5QFpa0FzjOu7RnCSRD2y61nVW0d4RCreOopx3tBY7zL3IQWiZqRS3nE6ED4Cw2OvDUij1dd0UD0nRaKddj0pXSet/7ViQ3FPhZEV1yBESwT9tvheNOF6oMdU+m44XIw5TykfaDE8SnVU86fgPqzUX1Yr8U75wydGnVk47HrWjDlU4ftLTuyW9ic1JYE44FZbbNuHVPQuyqJUG4WpPE52V+LKUZJE9ZEsQX9ySrhqOGjpl81JzqeY5lk5784tloPXOWBIllHZKr9aI64PVlSL454CTqhb8ASZY41vJDDoGFzDLwMOgsC6QYrMTdIt2BHZKa6W3XXHJLG5OBnaXNsxqJVyTpSo/7k/DjckUeC58rWzY/r+UGhBT4wOv/80qX7UXtk3E7QkVA4bncG9lfVtlYBi4yUKX4Jf2wenGeeteTbZGiWOUgn+qSfK0CGQ2VFSg6gjsCV28yEIXMuWzIfjytY1tA51OIv/6EQ43GhK8+PcvWd+FS+syii+pU5BLiJWe0d9EBfcJcLrf/Dl5T8Vw4U807dVEb2jYixEnOaFeJ78l0ra7pJYEE8YDwVGDBu5+EeIiLlMoQ8eYOTmeqU7gmvBQ+Cr+FLJL3csUffvFPHJ25STkDMtYvPBF8DBA+Bx5sTRGfizVzqYN93ZMylZApF4y0BOlDat6Tzl+ilNcQo6sj81Mb3RHY9iVVR9dERkDeeL7cF24kWPvdYYYzHpn0OdshUV0Sh/Mqb2ogil9/JEiq8rYQkqDMV+SC2whQEv+KcM/ZjmcGOgNWc1d8h15qJeauFZIiyJvh90IXERiIWzD7ewzsDJpVyGldtpUcD9XXBSuC+INcSIL4gA+8KinJZmQG8G0hZTnpZVrHVxaWqQ8Lcs4HvEYhOeI0LVqOQPJci5JztAYhGTpj5pw1q+wp6PFBti50Xmc7waa8C7EkCFlGPEvp4HK1lg/WDptB8pk1Se7JeLZu4JyURct/MzCjuSTz1hmDExq7sO7Jlv+OZ069uMjpjcr5+FQH3rDqyUPxbd24ei+RF432XRokaF9aPEImRGh6NxaR/sFudV51PEICyZbs7vnLZbWlfRA5FN+g+ya5L/9NkGd05Y3x9v+F8BUJ/wthVZNLdM2SkiFjwYJ+UGCFT7KtoTztX2epki1hh5tBAAAAAElFTkSuQmCC');
+        background-size: 19px 19px;
+    }
+
+
     .barr-line{
         background: #FFFFFF;
         border: 1px solid #E1E1E1;
@@ -431,5 +449,11 @@
         letter-spacing: -0.39px;
         text-align: center;
         line-height: 16px;
+    }
+
+
+    .chosen-item{
+        border: 1px solid #C50081 !important;
+        background-color: #F9F9FB !important;
     }
 </style>

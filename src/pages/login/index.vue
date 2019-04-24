@@ -68,7 +68,8 @@
                 n1:'',
                 n2:'',
                 n3:'',
-                n4:''
+                n4:'',
+                sessionKey:''
             }
         },
         components: {
@@ -243,49 +244,70 @@
             getPhone:function(iv,encryptedData)
             {
                 let a = this;
-                wx.login({
-                    success: function (res) {
-                        if (res.code) {
-                            //发起网络请求
-                            console.log(res.code);
-                            wx.request({
-                                url: globalStore.state.host + 'activity/common-info2',
-                                data: {
-                                    code: res.code
-                                },
-                                success: function (requestRes) {
-                                    console.log(requestRes);
-                                    if (requestRes.data.status) {
-                                        let sessionKey = requestRes.data.data.session_key;
-                                        a.$http.post(globalStore.state.host + '/passport/decode-info',{
-                                            iv:iv,
-                                            encryptedData:encryptedData,
-                                            sessionKey:sessionKey
-                                        }).then((res)=>{
-                                            if(res.data.status)
-                                            {
-                                                let jsonData = JSON.parse(res.data.data);
-                                                let phone = jsonData.phoneNumber;
-                                                wx.navigateTo(
-                                                    {
-                                                        url: '/pages/sms/main?phone=' + phone
-                                                    }
-                                                );
+                a.$http.post(globalStore.state.host + '/passport/decode-info',{
+                    iv:iv,
+                    encryptedData:encryptedData,
+                    sessionKey:this.sessionKey
+                }).then((res)=>{
+                    if(res.data.status)
+                    {
+                        let jsonData = JSON.parse(res.data.data);
+                        let phone = jsonData.phoneNumber;
+                        wx.navigateTo(
+                            {
+                                url: '/pages/sms/main?phone=' + phone
+                            }
+                        );
 //                                                a.$mptoast('发送成功')
-                                            } else {
-                                                console.log(res.data.desc);
-                                                a.$mptoast(res.data.desc)
-                                            }
-                                        }).catch(err=>{console.log(4)})
-                                    }
-
-                                }
-                            })
-                        } else {
-                            console.log('登录失败！' + res.errMsg)
-                        }
+                    } else {
+                        console.log(res.data.desc);
+                        a.$mptoast(res.data.desc)
                     }
-                });
+                }).catch(err=>{console.log(4)})
+//                 wx.login({
+//                     success: function (res) {
+//                         if (res.code) {
+//                             //发起网络请求
+//                             console.log(res.code);
+//                             wx.request({
+//                                 url: globalStore.state.host + 'activity/common-info2',
+//                                 data: {
+//                                     code: res.code
+//                                 },
+//                                 success: function (requestRes) {
+//                                     console.log(requestRes);
+//                                     if (requestRes.data.status) {
+//                                         let sessionKey = requestRes.data.data.session_key;
+//                                         console.log('iv:' + iv);
+//                                         a.$http.post(globalStore.state.host + '/passport/decode-info',{
+//                                             iv:iv,
+//                                             encryptedData:encryptedData,
+//                                             sessionKey:sessionKey
+//                                         }).then((res)=>{
+//                                             if(res.data.status)
+//                                             {
+//                                                 let jsonData = JSON.parse(res.data.data);
+//                                                 let phone = jsonData.phoneNumber;
+//                                                 wx.navigateTo(
+//                                                     {
+//                                                         url: '/pages/sms/main?phone=' + phone
+//                                                     }
+//                                                 );
+// //                                                a.$mptoast('发送成功')
+//                                             } else {
+//                                                 console.log(res.data.desc);
+//                                                 a.$mptoast(res.data.desc)
+//                                             }
+//                                         }).catch(err=>{console.log(4)})
+//                                     }
+//
+//                                 }
+//                             })
+//                         } else {
+//                             console.log('登录失败！' + res.errMsg)
+//                         }
+//                     }
+//                 });
             },
         },
         mounted() {
@@ -299,6 +321,32 @@
                     url:'/pages/index/main'
                 })
             }
+
+
+            let a = this;
+
+            //获得用户的sessionKey
+            wx.login({
+                success: function (res) {
+                    if (res.code) {
+                        wx.request({
+                            url: globalStore.state.host + 'activity/common-info2',
+                            data: {
+                                code: res.code
+                            },
+                            success: function (requestRes) {
+                                console.log(requestRes);
+                                if (requestRes.data.status) {
+                                    a.sessionKey = requestRes.data.data.session_key;
+                                }
+
+                            }
+                        })
+                    } else {
+                        console.log('登录失败！' + res.errMsg)
+                    }
+                }
+            });
         },
         computed:{
             btnGray:function()

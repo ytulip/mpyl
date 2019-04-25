@@ -230,7 +230,7 @@
             },
             makeCall(){
                 wx.makePhoneCall({
-                    phoneNumber: '4000892888'
+                    phoneNumber: '02861526472'
             })
             },
             goCommunity() {

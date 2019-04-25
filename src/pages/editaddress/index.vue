@@ -26,7 +26,7 @@
       </div>
 
       <div class="input-line" style="border-bottom: none;">
-        <input placeholder="详细地址：如街道、门牌号" class="fs-16-fc-000000-m" v-model="address">
+        <input placeholder="详细地址：如门牌号" class="fs-16-fc-000000-m" v-model="address">
       </div>
 
     </div>

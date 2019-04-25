@@ -18,7 +18,7 @@
 
 
     <div style="padding: 0 16px;">
-    <div class="flower-bg m-t-10">
+    <navigator class="flower-bg m-t-10" open-type="" hover-class="none" ulr="/pages/vip/main" >
         <div class="cus-row">
           <div class="cus-row-col-6 fs-16-fc-ffffff f-f-m v-a-m" style="line-height: 24px;">花甲会员· ¥60/月</div>
           <div class="cus-row-col-6 v-a-m t-al-r">
@@ -26,7 +26,7 @@
             <image class="v-a-m in-bl" src="/static/images/user_icon_next_nor@3x.png" mode="widthFix" style="width:8px;height: 13px;margin-left: 8px;"></image>
           </div>
         </div>
-    </div>
+    </navigator>
 
     <view  class="mine-list m-t-16">
       <navigator open-type="navigate" url="/pages/bill2/main"  hover-class="none" style="padding: 19px 16px;">

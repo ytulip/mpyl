@@ -89,7 +89,7 @@
             nextStep() {
                 wx.setStorageSync('openid', '');
                 wx.reLaunch({
-                    url: '/pages/login/main'
+                    url: '/pages/mine/main'
                 })
             },
             initPage() {

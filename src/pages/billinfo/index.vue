@@ -80,8 +80,8 @@
     <div class="common-panel m-t-16 p-16-24">
 
       <div class="cus-row">
-        <div class="cus-row-col-6 fs-16-fc-7E7E7E-r">代金券</div>
-        <div class="cus-row-col-6 fs-16-fc-000000-m t-al-r">{{product.product_name}}代金券{{order.coupons?1:0}}张</div>
+        <div class="cus-row-col-6 fs-16-fc-000000-m">代金券</div>
+        <div class="cus-row-col-6 fs-14-fc-7E7E7E-r t-al-r">{{product.product_name}}代金券{{order.coupons?1:0}}张</div>
       </div>
 
       <div class="barr-line"></div>
@@ -210,21 +210,21 @@
       <div class="common-panel m-t-16 p-16-24">
 
         <div class="cus-row">
-          <div class="cus-row-col-6 fs-16-fc-7E7E7E-r">代金券</div>
-          <div class="cus-row-col-6 fs-16-fc-000000-m t-al-r">{{order.id}}</div>
+          <div class="cus-row-col-6 fs-16-fc-000000-m">代金券</div>
+          <div class="cus-row-col-6 fs-14-fc-7E7E7E-r t-al-r">{{product.product_name}}代金券{{order.coupons?1:0}}张</div>
         </div>
 
         <div class="barr-line"></div>
 
         <div class="cus-row">
-          <div class="cus-row-col-6 fs-16-fc-7E7E7E-r">花甲会员优惠</div>
-          <div class="cus-row-col-6 fs-16-fc-000000-m t-al-r">{{order.created_at}}</div>
+          <div class="cus-row-col-6 fs-16-fc-000000-m">花甲会员优惠</div>
+          <div class="cus-row-col-6 fs-14-fc-7E7E7E-r t-al-r">8折优惠</div>
         </div>
 
         <div class="barr-line"></div>
 
         <div class="cus-row">
-          <div class="cus-row-col-12 fs-16-fc-000000-m t-al-r">合计￥165元</div>
+          <div class="cus-row-col-12 fs-16-fc-000000-m t-al-r">合计￥{{order.coupons?order.origin_pay:0}}元</div>
         </div>
 
       </div>

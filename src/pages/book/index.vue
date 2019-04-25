@@ -63,6 +63,13 @@
             this.pageInit();
         },
         mounted() {
+            if( !param.getOpenid() )
+            {
+                wx.navigateTo({
+                    url:"/pages/login/main"
+                })
+                return;
+            }
             // this.src = globalStore.state.host + 'user/my-services?&openid=' +wx.getStorageSync('openid');
             this.pageInit();
         }

@@ -91,6 +91,15 @@
                 }).catch(err=>{console.log(3)})
             },
             goFood() {
+
+                if( !param.getOpenid() )
+                {
+                    wx.navigateTo({
+                        url:"/pages/login/main"
+                    })
+                    return;
+                }
+
                 wx.navigateTo(
                     {
                         url:'/pages/clean/main?type=2'
@@ -98,6 +107,15 @@
                 );
             },
             goClean() {
+
+                if( !param.getOpenid() )
+                {
+                    wx.navigateTo({
+                        url:"/pages/login/main"
+                    })
+                    return;
+                }
+
                 wx.navigateTo(
                     {
                         url:'/pages/clean/main'
@@ -120,6 +138,14 @@
                 );
             },
             goVip(){
+                if( !param.getOpenid() )
+                {
+                    wx.navigateTo({
+                        url:"/pages/login/main"
+                    })
+                    return;
+                }
+
                 wx.navigateTo(
                     {
                         url:'/pages/vip/main'
@@ -127,6 +153,14 @@
                 );
             },
             cusNavigate(url){
+                if( !param.getOpenid() )
+                {
+                    wx.navigateTo({
+                        url:"/pages/login/main"
+                    })
+                    return;
+                }
+
                 wx.navigateTo(
                     {
                         url: "/pages/"+url+"/main"

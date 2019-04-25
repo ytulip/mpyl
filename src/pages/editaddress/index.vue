@@ -16,7 +16,7 @@
 
       <div class="input-line">
         <picker @change="bindAttend2Change" :value="neighborhoodIndex" :range="neighborhoodArr">
-          <view class="picker fs-16-fc-000000-m" style="padding-right: 14px;position: relative;" v-bind:class="{'fs-16-fc-7E7E7E-r':neighborhoodIndex === -1}">
+          <view class="picker fs-16-fc-000000-r" style="padding-right: 14px;position: relative;" v-bind:class="{'fs-16-fc-7E7E7E-r':neighborhoodIndex === -1}">
             {{neighborhoodVal}}
             <div style="position:absolute;right: 0;top:0;">
               <image src="/static/images/icon_bnext_nor@3x.png" mode="widthFix" style="width:8px;height: 13px;"></image>
@@ -135,7 +135,7 @@
                 //   mask:true
                 // })
 
-              let requestData =  {real_name:this.real_name, phone:this.phone,address:this.address,neighborhood:this.neighborhoodId(),is_default:this.addressDefault,address_id:this.id};
+              let requestData =  {real_name:this.real_name, phone:this.phone,address:this.address,neighborhood:this.neighborhoodId(),is_default:this.addressDefault?1:0,address_id:this.id};
 
               param.commonRequest(
                       {
@@ -191,7 +191,6 @@
             }
         },
         mounted() {
-
           this.real_name = '';
           this.phone = '';
           this.address = '';
@@ -200,6 +199,24 @@
 
 
           this.id = param.getParamValue('id');
+
+
+          let title = '新增地址';
+
+          if( this.id )
+          {
+              title = '修改地址';
+          }
+
+            //更改标题
+          wx.setNavigationBarTitle({
+              title: title,
+              success: function(res) {
+                  // success
+              }
+          })
+
+
           this.pageInit();
             // this.src = globalStore.state.host + 'user/add-mod-address?&openid=' +wx.getStorageSync('openid');
         },

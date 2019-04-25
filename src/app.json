@@ -1,9 +1,9 @@
 {
   "pages": [
     "pages/login/main",
+    "pages/mine/main",
     "pages/bind/main",
     "pages/index/main",
-    "pages/mine/main",
     "pages/book/main",
     "pages/clean/main",
     "pages/cleandetail/main",

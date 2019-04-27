@@ -119,6 +119,9 @@
             case '2':
               title = '修改身份证号';
               break;
+            case '3':
+              title = '年龄';
+              break;
             default:
               title = '';
           }

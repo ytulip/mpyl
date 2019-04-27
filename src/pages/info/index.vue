@@ -16,6 +16,7 @@
 
     <div style="">
     <view  class="mine-list m-t-16">
+
       <navigator open-type="navigate" v-bind:url="'/pages/edit/main?type=1&val=' + user.real_name"  hover-class="none" style="padding: 19px 16px;">
         <view class="cus-row">
           <view class="cus-row-col-4 fs-16-fc-000000-m v-a-m">姓名</view>
@@ -26,14 +27,15 @@
         </view>
       </navigator>
 
-      <div   style="padding: 19px 16px;">
+      <navigator open-type="navigate" v-bind:url="'/pages/edit/main?type=3&val=' + user.id_card"  hover-class="none"  style="padding: 19px 16px;">
         <view class="cus-row">
           <view class="cus-row-col-4 fs-16-fc-000000-m v-a-m">年龄</view>
           <view class="cus-row-col-8 t-al-r v-a-m">
-            <span class="in-bl v-a-m fs-16-fc-7E7E7E-r m-r-22">{{age}}</span>
+            <span class="in-bl v-a-m fs-16-fc-7E7E7E-r m-r-14">{{user.phone}}</span>
+            <image class="in-bl v-a-m" src="/static/images/icon_bnext_nor@3x.png" mode="widthFix" style="width:8px;height: 13px;"></image>
           </view>
         </view>
-      </div>
+      </navigator>
 
       <navigator open-type="navigate" url="/pages/bind2/main"  hover-class="none"  style="padding: 19px 16px;">
         <view class="cus-row">

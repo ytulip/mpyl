@@ -13,7 +13,7 @@
       </div>
 
       <div class="fix-bottom3" style="background-color: #ffffff;padding: 14px;border-top:1px solid #EBE9E9 ;">
-          <a class="yl_btn1"  v-on:click="nextStep()" style="margin-top: 0;">兑换优惠券</a>
+          <a class="yl_btn1"  v-on:click="nextStep()" style="margin-top: 0;">兑换代金券</a>
       </div>
 
 

@@ -12,7 +12,7 @@
           </div>
       </div>
 
-      <div class="fix-bottom3" style="background-color: #ffffff;padding: 14px;border-top:1px solid #EBE9E9 ;">
+      <div class="fix-bottom3" v-bind:class="{isIpx:isIpx}" style="background-color: #ffffff;padding: 14px;border-top:1px solid #EBE9E9 ;">
           <a class="yl_btn1"  v-on:click="nextStep()" style="margin-top: 0;">兑换代金券</a>
       </div>
 
@@ -49,7 +49,8 @@
                 msg: 'Hello',
                 banners:{},
                 list:[],
-                layerFlag:0
+                layerFlag:0,
+                isIpx:''
             }
         },
         created:function()
@@ -58,6 +59,9 @@
         methods: {
             initPage:function()
             {
+
+                this.isIpx = globalStore.state.isIpx;
+
                 let url = globalStore.state.host + 'user/coupon-list';
                 let requestData = {}
                 Object.assign(requestData,{openid:param.getOpenid()});

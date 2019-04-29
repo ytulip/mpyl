@@ -31,7 +31,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 43,
+			"current": 45,
 			"list": [
 				{
 					"id": 0,
@@ -327,6 +327,20 @@
 					"name": "保洁订单详情",
 					"pathName": "pages/billinfo/main",
 					"query": "id=8821",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "订单7日",
+					"pathName": "pages/fillfoodbill/main",
+					"query": "product_id=5&openid=8807&tabIndex=2&quantity=1&startDay=2019-04-30",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "nameage",
+					"pathName": "pages/nameage/main",
+					"query": "",
 					"scene": null
 				}
 			]

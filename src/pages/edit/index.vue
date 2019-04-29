@@ -53,7 +53,16 @@
                 }
 
 
-              } else
+              } else if( this.type == 4)
+              {
+                  requestData.age = this.tval;
+
+                  if( !parseInt(requestData.age) )
+                  {
+                    this.$mptoast('年龄格式有误');
+                    return;
+                  }
+              }else
               {
                 requestData.id_card = this.tval;
                 if( !requestData.id_card )
@@ -119,7 +128,7 @@
             case '2':
               title = '修改身份证号';
               break;
-            case '3':
+            case '4':
               title = '年龄';
               break;
             default:
@@ -138,46 +147,7 @@
         },
         compute:
         {
-          age:function()
-          {
-             if( !IdCard.checkIdCard(this.user.id_card) )
-             {
-               return '';
-             }
 
-             let birthDay = IdCard.birthDay(this.user.id_card)
-             birth = birthDay.date;
-             let   r   =   birth.match(/^(\d{1,4})(-|\/)(\d{1,2})\2(\d{1,2})$/);
-              if(r==null)return   '';
-              let   d=   new   Date(r[1],   r[3]-1,   r[4]);
-              if   (d.getFullYear()==r[1]&&(d.getMonth()+1)==r[3]&&d.getDate()==r[4])
-              {
-                let   Y   =   new   Date().getFullYear();
-                return  (Y-r[1]);
-              }
-              return '';
-
-              // let identity = new Identity(this.user.id_card);
-              // if(!identity.legal())
-              // {
-              //   return '';
-              // } else
-              // {
-              //   let birth = identity.birthday();
-              //
-              //   let   r   =   birth.match(/^(\d{1,4})(-|\/)(\d{1,2})\2(\d{1,2})$/);
-              //   if(r==null)return   '';
-              //   let   d=   new   Date(r[1],   r[3]-1,   r[4]);
-              //   if   (d.getFullYear()==r[1]&&(d.getMonth()+1)==r[3]&&d.getDate()==r[4])
-              //   {
-              //     let   Y   =   new   Date().getFullYear();
-              //     return  (Y-r[1]);
-              //   }
-              //   return '';
-              //
-              //
-              // }
-          }
         }
     }
 </script>

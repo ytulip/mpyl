@@ -29,7 +29,8 @@
     "pages/bill2/main",
     "pages/billinfo/main",
     "pages/chosencoupon/main",
-    "pages/paysuccess/main"
+    "pages/paysuccess/main",
+    "pages/nameage/main"
   ],
   "window": {
     "backgroundTextStyle": "light",

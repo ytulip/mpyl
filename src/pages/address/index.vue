@@ -2,7 +2,7 @@
     <div class="p16">
 
 
-        <div v-for="(item,index) in list" style="margin-bottom: 16px;" class="address-panel p16" v-on:click="chosen(index)">
+        <div v-for="(item,index) in list" style="margin-bottom: 16px;" class="address-panel p16" v-on:click="chosen(index)" v-if="list.length">
             <div class="fs-16-fc-000000-m">
                <span class="l-btn-red2 in-bl" v-if="item.is_default">
                    默认
@@ -17,6 +17,15 @@
                 <div class="in-bl edit-btn" @click.stop="editAddress(item.address_id)">编 辑</div>
             </div>
         </div>
+
+        <div v-if="!list.length" style="margin-top: 56px;">
+            <div class="t-al-c">
+                <image src="/static/images/home_icon_home_nor@3x.png" style="width: 52px;height: 52px;opacity: 0.33;"/>
+                <div class="fs-14-fc-7e7e7e-r m-t-24">点击下方，新增地址哦！</div>
+            </div>
+        </div>
+
+
 
         <div class="fix-bottom3" style="background-color: #ffffff;padding: 14px;border-top:1px solid #EBE9E9 ;">
             <a class="yl_btn1"  v-on:click="nextStep()" style="margin-top: 0;">新增地址</a>

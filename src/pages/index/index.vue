@@ -179,6 +179,37 @@
         },
         mounted:function()
         {
+
+
+            let isIpx = '';
+
+            wx.getSystemInfo({
+                success: function(res) {
+//model中包含着设备信息
+                    console.log(res.model)
+                    var model = res.model
+                    if (model.search('iPhone X') != -1){
+                        globalStore.commit('setIsIpx',1)
+                        console.log('是否是iphone x:' + globalStore.state.isIpx);
+                    }else{
+                        // isIpx = false;
+                    }
+                }
+            });
+
+
+            // console.log('是否是iphone x:');
+
+            /**
+             * 强制用户填写姓名和年龄
+             */
+            // wx.redirectTo(
+            //     {
+            //         url:'/pages/nameage/main',
+            //     }
+            // );
+
+
             this.userInit();
         },
         computed:{

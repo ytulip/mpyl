@@ -121,7 +121,7 @@
         <div class="fix-bottom3" style="background-color: #ffffff;padding: 14px;border-top:1px solid #EBE9E9 ;">
             <div class="cus-row cus-row-v-m">
                 <div class="cus-row-col-8 t-al-r v-a-m" id="total_price">
-                    <span class="fs-18-fc-000000-m" style="margin-right: 26px;">￥ {{price - product.price * activeCouponCount}}元</span>
+                    <span class="fs-18-fc-000000-m" style="margin-right: 26px;">￥ {{(price - product.price * activeCouponCount) * saleOff}}元</span>
                 </div>
                 <div class="cus-row-col-4 v-a-m">
                     <a class="yl_btn1 m-t-20"  v-on:click="nextStep()" style="margin-top: 0;">微信支付</a>
@@ -202,7 +202,7 @@
             </div>
         </div>
 
-
+        <mptoast />
 
     </div>
 
@@ -213,6 +213,7 @@
     import param from '../../utils/param'
     import _ from 'underscore'
     import { Base64 } from 'js-base64'
+    import mptoast from 'mptoast'
 
     export default {
         data () {
@@ -264,10 +265,14 @@
                 chosenType:'',
                 openid:'',
                 couponId:'',
-                chosenCoupon:[]
+                chosenCoupon:[],
+                saleOff:''
             }
         },
         watch: {
+        },
+        components: {
+            mptoast
         },
         onShow:function(){
             if( globalStore.state.habbitRemarkShare )
@@ -455,9 +460,22 @@
 
                 let requestData = {pct_code:this.pct,pct_code_name:this.pct_code_name,phone:this.phone,name:this.name,address:this.address,clean_service_time:this.timeService[this.timeServiceIndex],product_id:id,remark:this.remark,openid:wx.getStorageSync('openid'),size:this.signTypeArray[this.signTypeIndex],lunch_service:this.lunchService[this.lunchIndex],dinner_service:this.dinnerService[this.dinnerIndex],people:2,service_start_time:this.deliverStartList[this.deliverStartIndex],user_openid:this.openid,quantity:this.quantity,tabIndex:this.chosenType,couponIds:this.activeIdArr.join(',')};
                 let url = globalStore.state.host + 'user/report-bill';
+
+                //加遮罩层
+                wx.showLoading({
+                    title: '正在处理',
+                    mask:true
+                })
+
+
                 this.$http.post(url,requestData).then((res)=>{
+
+                    wx.hideLoading();
+
+
                     //下单成功跳转呀
                     if(res.data.status) {
+
 
                         if( res.data.data == '333' )
                         {
@@ -496,7 +514,10 @@
                         });
                     }
 
-                }).catch(err=>{console.log('网络异常')})
+                }).catch(err=>{
+                    wx.hideLoading();
+                    console.log('网络异常')
+                })
             },
             setBegin:function(day)
             {
@@ -620,9 +641,10 @@
             this.month = this.startDay.getMonth() + 1;
             this.tabIndex = param.getParamValue('tabIndex');
             this.chosenType = this.tabIndex;
+            this.saleOff = (this.tabIndex == 1)?1:0.8;
 
 
-            this.updateCalder();
+            // this.updateCalder();
 
 
             this.$http.get(url,{id:id,openid:wx.getStorageSync('openid')}).then((res)=>{

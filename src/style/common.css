@@ -652,3 +652,8 @@ letter-spacing: -0.31px;
 .p-16-16-24-16{padding:16px 16px 24px 16px; }
 
 .short-line{display: inline-block;border-right: 4px solid;height: 16px;vertical-align:bottom;margin-right: 8px;}
+
+.isIpx
+{
+    padding-bottom: 96rpx !important;;
+}

@@ -12,7 +12,8 @@ export default new Vuex.Store({
         webViewUrl:'',
         habbitRemarkShare:'',
         chosenCoupon:[],
-        paySuccessBack:''
+        paySuccessBack:'',
+        isIpx:''
     },
     mutations: {
         increment: (state) => {
@@ -39,6 +40,9 @@ export default new Vuex.Store({
         },
         setPaySuccessBack:(state,data) =>{
             state.paySuccessBack = data
+        },
+        setIsIpx:(state,data) =>{
+            state.isIpx = data
         },
     }
 });

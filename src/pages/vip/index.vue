@@ -18,8 +18,8 @@
             </div>
 
 
-            <div class="fix-bottom3" style="background-color: #ffffff;padding: 14px;border-top:1px solid #EBE9E9 ;">
-                <a class="yl_btn1"  v-on:click="buyNow" style="margin-top: 0;">¥60 立即开通</a>
+            <div class="fix-bottom3"  v-bind:class="{isIpx:isIpx}" style="background-color: #ffffff;padding: 14px;border-top:1px solid #EBE9E9 ;">
+                <a class="yl_btn1"  v-on:click="buyNow" style="margin-top: 0;">立即开通</a>
             </div>
 
 
@@ -32,7 +32,7 @@
                     </div>
 
 
-                    <div style="padding: 26px 16px 6px; background-color: #ffffff">
+                    <div style="padding: 26px 16px 6px; background-color: #ffffff" v-bind:class="{isIpx:isIpx}">
 
                         <div style="">
                             <span class="fs-18-fc-212229-m">选择会员方案</span>
@@ -49,7 +49,7 @@
                                     {{item.title}}个月
                                 </div>
                                 <div class="cus-row-col-6 v-a-m fs-20-fc-000033-m t-al-r">
-                                    ￥{{item.price}}
+                                    <span class="fs-14-fc-7E7E7E-r in-bl" style="margin-right: 14px;">￥<span class="in-bl" style="text-decoration:line-through;">{{item.price2}}</span></span><span class="in-bl v-a-m">￥{{item.price}}</span>
                                 </div>
                             </div>
 
@@ -68,7 +68,7 @@
                         <!--</div>-->
 
                         <div style="margin-top: 26px;">
-                            <a class="yl_btn1 m-t-20" style="margin-top: 0;display: block;" @click="doBuy">￥60 微信支付</a>
+                            <a class="yl_btn1 m-t-20" style="margin-top: 0;display: block;" @click="doBuy">￥{{currentPrice}} 微信支付</a>
                         </div>
                     </div>
                 </div>
@@ -153,8 +153,8 @@
                     {title:'特权4 社区管家24小时',desc:'这里是一段套餐介绍的，午餐晚餐，每餐标准为2荤2素搭配堂主食为米饭，进了比这里是描述，目前还没有文况来定，之后文字补充上'}],
                 calderSwitch:false,
                 vip: [
-                        [{price:'110',title:'3',desc:'三个月(90次 )B餐；每月二次的日常保洁和每月一次的深度保洁(共18次)；1次日常体检；参加花甲全部会员活动'},{price:'300',title:'6',desc:'三个月(90次 )B餐；每月二次的日常保洁和每月一次的深度保洁(共18次)；1次日常体检；参加花甲全部会员活动'}],
-                        [{price:'500',title:'3',desc:'三个月(90次 )B餐；每月二次的日常保洁和每月一次的深度保洁(共18次)；1次日常体检；参加花甲全部会员活动'},{price:'900',title:'6',desc:'三个月(90次 )B餐；每月二次的日常保洁和每月一次的深度保洁(共18次)；1次日常体检；参加花甲全部会员活动'}]
+                        [{price:'2920',price2:'3920',title:'3',desc:'三个月(90次 )A餐；每月三次的日常保洁(共9次)；1次日常体检；参加花甲全部会员活动'},{price:'5440',price2:'6440',title:'6',desc:'六个月(180次 )A餐；每月二次的日常保洁和每月一次的深度保洁(共18次)；1次全面体检；参加花甲全部会员活动'}],
+                        [{price:'5440',title:'3',desc:'三个月(90次 )B餐；每月二次的日常保洁和每月一次的深度保洁(共18次)；1次日常体检；参加花甲全部会员活动'},{price:'900',title:'6',desc:'三个月(90次 )B餐；每月二次的日常保洁和每月一次的深度保洁(共18次)；1次日常体检；参加花甲全部会员活动'}]
                     ],
                 openid:'',
                 foodTotal:'',
@@ -164,7 +164,8 @@
                 subTabIndex:0,
                 healthTotal:0,
                 healthActive:0,
-                vipTypeText:''
+                vipTypeText:'',
+                isIpx:''
             }
         },
         created:function()
@@ -350,11 +351,19 @@
             }
         },
         mounted(){
+            this.isIpx = globalStore.state.isIpx;
             this.userOpenid();
             this.init();
         },
         onShow(){
             this.init();
+        },
+        computed:
+        {
+            currentPrice:function()
+            {
+                return this.vip[this.tabIndex - 1][this.subTabIndex].price;
+            }
         }
     }
 </script>

@@ -118,7 +118,7 @@
             </div>
         </div>
 
-        <div class="fix-bottom3" style="background-color: #ffffff;padding: 14px;border-top:1px solid #EBE9E9 ;">
+        <div class="fix-bottom3"  v-bind:class="{isIpx:isIpx}" style="background-color: #ffffff;padding: 14px;border-top:1px solid #EBE9E9 ;">
             <div class="cus-row cus-row-v-m">
                 <div class="cus-row-col-8 t-al-r v-a-m" id="total_price">
                     <span class="fs-18-fc-000000-m" style="margin-right: 26px;">￥ {{(price - product.price * activeCouponCount) * saleOff}}元</span>
@@ -266,7 +266,8 @@
                 openid:'',
                 couponId:'',
                 chosenCoupon:[],
-                saleOff:''
+                saleOff:'',
+                isIpx:''
             }
         },
         watch: {
@@ -618,6 +619,8 @@
 
         },
         mounted() {
+
+            this.isIpx = globalStore.state.isIpx;
 
             this.clean();
 

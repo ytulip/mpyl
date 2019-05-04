@@ -1,6 +1,6 @@
 <template>
   <div class="p16 bg-f9f9fb">
-    <div class="bill-panel m-b-16" v-for="(item,index) in list" v-on:click="goDetail(item.id)">
+    <div class="bill-panel m-b-16" v-for="(item,index) in list" v-on:click="goDetail(item.id)" v-if="list.length">
       <div class="row">
         <div class="cus-row-col-6">
           <img src="/static/images/food_icon@3x.png" class="in-bl v-a-m" style="width: 24px;height: 24px" v-if="item.type != 1"/>
@@ -21,6 +21,14 @@
       <div class="fs-14-fc-7E7E7E-r m-t-10" v-else>服务时间：{{item.service_start_time_format}}</div>
 
     </div>
+
+    <div v-if="!list.length" style="margin-top: 56px;">
+      <div class="t-al-c">
+        <image src="/static/images/home_icon_home_nor@3x.png" style="width: 52px;height: 52px;opacity: 0.33;"/>
+        <div class="fs-14-fc-7e7e7e-r m-t-24">暂无订单，赶紧下单吧！</div>
+      </div>
+    </div>
+
   </div>
 </template>
 

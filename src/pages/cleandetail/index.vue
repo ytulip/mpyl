@@ -26,13 +26,15 @@
 
         mounted() {
             console.log(param.getParamValue('id'));
-            this.src = globalStore.state.host + 'user/good-detail-xcx?product_id=' + param.getParamValue('id') + '&openid=' + wx.getStorageSync('openid');
-//            this.getData();
-//            let pages = getCurrentPages()    //获取加载的页面
-//            let currentPage = pages[pages.length-1]
-//            console.log(currentPage.options);
 
-        },
+            if ( globalStore.state.isIpx )
+            {
+                this.src = globalStore.state.host + 'user/good-detail-xcx?isIpx=1&product_id=' + param.getParamValue('id') + '&openid=' + wx.getStorageSync('openid');
+            } else
+            {
+                this.src = globalStore.state.host + 'user/good-detail-xcx?product_id=' + param.getParamValue('id') + '&openid=' + wx.getStorageSync('openid');
+            }
+        }
     }
 </script>
 

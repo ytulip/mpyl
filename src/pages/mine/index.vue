@@ -31,14 +31,19 @@
 
 
     <div style="padding: 0 16px;">
-    <div class="flower-bg m-t-10" open-type="" hover-class="none" ulr="/pages/vip/main" @click="authThenGo('/pages/vip/main')">
-        <div class="cus-row">
-          <div class="cus-row-col-6 fs-16-fc-ffffff f-f-m v-a-m" style="line-height: 24px;">花甲会员· ¥60/月</div>
+    <div class="m-t-10" style="position: relative;"  @click="authThenGo('/pages/vip/main')">
+
+       <img src="https://huajialife.com/images/icon_bg_nor@3x.png" style="width: 100%;" mode="widthFix" />
+
+      <div style="position: absolute;top:50%;left: 0;right: 0;transform: translateY(-50%)">
+        <div class="cus-row" style="padding: 0 4%;">
+          <div class="cus-row-col-6 fs-16-fc-ffffff f-f-m v-a-m" style="line-height: 24px;">{{isVip?'会员福利':'花甲会员· ¥60/月'}} </div>
           <div class="cus-row-col-6 v-a-m t-al-r">
-            <span class="fs-12-fc-ffffff f-f-r in-bl v-a-m">更多优惠，服务更多！</span>
+            <span class="fs-12-fc-ffffff f-f-r in-bl v-a-m">{{isVip?(user.expire_time + '到期'):'更多优惠，服务更多！'}}</span>
             <image class="v-a-m in-bl" src="/static/images/user_icon_next_nor@3x.png" mode="widthFix" style="width:8px;height: 13px;margin-left: 8px;"></image>
           </div>
         </div>
+      </div>
     </div>
 
     <view  class="mine-list m-t-16">
@@ -97,7 +102,8 @@
                 src:'',
                 user:{},
                 isVip:false,
-                isAuth:false
+                isAuth:false,
+                age:''
             }
         },
         created:function()
@@ -137,6 +143,7 @@
                 console.log(res);
                 this.user = res.data.data.user;
                 this.isVip = res.data.data.isVip;
+                this.age = res.data.data.user.age;
 
               }).catch(err=>{console.log(3)})
             }
@@ -147,35 +154,13 @@
         },
         mounted() {
           // this.src = globalStore.state.host + 'user/my-services?&openid=' +wx.getStorageSync('openid');
+            this.age = '';
+            this.isVip = false;
+            this.isAuth = false;
           this.initPage();
         },
         computed:
         {
-          age:function()
-          {
-
-            if(!this.user.id_card)
-            {
-              return '?';
-            }
-
-            if( !IdCard.checkIdCard(this.user.id_card) )
-            {
-              return '?';
-            }
-
-            let birthDay = IdCard.birthDay(this.user.id_card)
-            let birth = birthDay.date;
-            let   r   =   birth.match(/^(\d{1,4})(-|\/)(\d{1,2})\2(\d{1,2})$/);
-            if(r==null)return   '';
-            let   d=   new   Date(r[1],   r[3]-1,   r[4]);
-            if   (d.getFullYear()==r[1]&&(d.getMonth()+1)==r[3]&&d.getDate()==r[4])
-            {
-              let   Y   =   new   Date().getFullYear();
-              return  (Y-r[1]);
-            }
-            return '?';
-          },
           headImg:function()
           {
               if( this.user.header_img )
@@ -215,4 +200,6 @@
     color: #C50081;
     display: inline-block;
   }
+
+
 </style>

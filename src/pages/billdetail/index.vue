@@ -109,7 +109,7 @@
         </div>
 
 
-        <div class="m-t-24" style="padding-left: 80px;box-sizing: border-box;position: relative;">
+        <div class="m-t-24" style="padding-left: 80px;box-sizing: border-box;position: relative;" v-if="product.id != 6">
           <div style="font-size: 0;position: absolute;top:0;left: 0;">
             <img :src="host + item['dinner']['cover_img']" style="width: 80px;height: 80px;border-radius: 4px;"/>
           </div>

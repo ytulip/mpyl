@@ -50,10 +50,29 @@
             </div>
         </div>
 
-        <div style="width: 0;height: 0;border-style: solid;border-width: 24px 24px 0 0;border-color: #CE388E transparent transparent transparent;position: absolute;top:0;left: 0;"></div>
+       <div style="width: 0;height: 0;border-style: solid;border-width: 24px 24px 0 0;border-color: #CE388E transparent transparent transparent;position: absolute;top:0;left: 0;"></div>
 
 
     </div>
+
+      <div class="layer-shadow" v-if="layerFlag">
+          <div class="layer-center" style="padding: 24px;">
+              <div class="f-f-m t-al-c" style="margin-top: 34px;">
+                  <span class="fs-18-fc-2E3133" style="padding: 20px 0;" >6月1号正式上线，敬请期待</span>
+              </div>
+
+              <div class="cus-row" style="margin-top: 34px;">
+                  <div class="cus-row-col-3">
+                  </div>
+                  <div class="cus-row-col-6">
+                      <span class="yl_btn1" @click="cancelLayer">确定</span>
+                  </div>
+                  <div class="cus-row-col-3">
+                  </div>
+              </div>
+          </div>
+      </div>
+
   </div>
 </template>
 
@@ -68,7 +87,8 @@
                 banners:{},
                 isVip:false,
                 expire:'',
-                swiperImgH:0
+                swiperImgH:0,
+                layerFlag:0
             }
         },
         created:function()
@@ -85,6 +105,16 @@
                     this.isVip = res.data.data.vip.isVip;
                     this.expire = res.data.data.vip.expire;
                     //判断用户是不是花甲会员
+
+
+                    if ( !res.data.data.user.age )
+                    {
+                        wx.redirectTo(
+                            {
+                                url:'/pages/nameage/main'
+                            }
+                        );
+                    }
 
 
 
@@ -107,6 +137,11 @@
                 );
             },
             goClean() {
+
+                //暂时关闭了
+                this.layerFlag = 1;
+                return;
+
 
                 if( !param.getOpenid() )
                 {
@@ -171,6 +206,10 @@
                 let imgH = e.mp.detail.height; // 图片高度
                 let imgW = e.mp.detail.width;
                 this.swiperImgH = 'height:' + ( winWidth * (imgH/imgW) ) + 'px';
+            },
+            cancelLayer()
+            {
+                this.layerFlag = 0;
             }
         },
         onShow()

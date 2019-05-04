@@ -61,7 +61,7 @@
     </view>
     </div>
 
-    <div class="fix-bottom3" style="background-color: #ffffff;padding: 14px;border-top:1px solid #EBE9E9 ;">
+    <div class="fix-bottom3" v-bind:class="{isIpx:isIpx}" style="background-color: #ffffff;padding: 14px;border-top:1px solid #EBE9E9 ;">
       <a class="yl_btn1 btn-gray"  v-on:click="nextStep()" style="margin-top: 0;">退出账号</a>
     </div>
 
@@ -80,7 +80,8 @@
                 msg: 'Hello',
                 banners:{},
                 src:'',
-                user:{}
+                user:{},
+                isIpx:''
             }
         },
         created:function()
@@ -95,6 +96,8 @@
                 })
             },
             initPage() {
+                this.isIpx = globalStore.state.isIpx;
+
                 let url = globalStore.state.host + 'user/user-center';
                 let requestData = {}
                 Object.assign(requestData, {openid: param.getOpenid()});
@@ -140,6 +143,7 @@
           this.initPage();
         },
         mounted() {
+            this.isIpx = globalStore.state.isIpx;
             // this.src = globalStore.state.host + 'user/my-services?&openid=' +wx.getStorageSync('openid');
           this.initPage();
         },
@@ -177,7 +181,7 @@
                   return globalStore.state.host + this.user.header_img;
               }else
               {
-                  return '/static/images/user_pic_nor@3x.png';
+                  return globalStore + '/images/user_pic_nor@3x.png';
               }
           }
         }

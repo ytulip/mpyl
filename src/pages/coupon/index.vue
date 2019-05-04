@@ -1,6 +1,6 @@
 <template>
   <div class="p16 bg-f9f9fb">
-      <div class="address-panel p16" v-for="(item,index) in list" style="margin-bottom: 16px;">
+      <div class="address-panel p16" v-for="(item,index) in list" style="margin-bottom: 16px;" v-if="list.length">
           <div class="cus-row">
               <div class="cus-row-col-6 fs-16-fc-000000-m">
                   {{item.type_text}}
@@ -12,6 +12,14 @@
           </div>
       </div>
 
+
+      <div v-if="!list.length" style="margin-top: 56px;">
+          <div class="t-al-c">
+              <image src="/static/images/home_icon_home_nor@3x.png" style="width: 52px;height: 52px;opacity: 0.33;"/>
+              <div class="fs-14-fc-7e7e7e-r m-t-24">暂无代金券</div>
+          </div>
+      </div>
+
       <div class="fix-bottom3" v-bind:class="{isIpx:isIpx}" style="background-color: #ffffff;padding: 14px;border-top:1px solid #EBE9E9 ;">
           <a class="yl_btn1"  v-on:click="nextStep()" style="margin-top: 0;">兑换代金券</a>
       </div>
@@ -20,7 +28,7 @@
       <div class="layer-shadow" v-if="layerFlag">
           <div class="layer-center" style="padding: 24px;">
               <div class="f-f-m t-al-c" style="border-bottom:  1px solid #E1E1E1;">
-                    <input class="fs-18-fc-2E3133" style="padding: 20px 0;" />
+                    <input class="fs-18-fc-2E3133" style="padding: 20px 0;" v-model="invited"/>
               </div>
 
               <div class="cus-row" style="margin-top: 34px;">
@@ -28,7 +36,7 @@
                       <a class="yl_btn1 btn-none" v-on:click="cancelLayer">取消</a>
                   </div>
                   <div class="cus-row-col-6">
-                      <a class="yl_btn1">确定</a>
+                      <a class="yl_btn1" @click="changeCoupon">确定</a>
                   </div>
               </div>
           </div>
@@ -36,12 +44,15 @@
 
       <div style="margin-bottom: 100px;"></div>
 
+      <mptoast />
+
   </div>
 </template>
 
 <script>
     import globalStore from '../../stores/global-store'
     import param from '../../utils/param'
+    import mptoast from 'mptoast'
 
     export default {
         data () {
@@ -50,8 +61,12 @@
                 banners:{},
                 list:[],
                 layerFlag:0,
-                isIpx:''
+                isIpx:'',
+                invited:''
             }
+        },
+        components: {
+            mptoast
         },
         created:function()
         {
@@ -71,11 +86,43 @@
             },
             nextStep()
             {
+                this.invited = '';
                 this.layerFlag = 1;
             },
             cancelLayer()
             {
                 this.layerFlag = 0;
+            },
+            changeCoupon()
+            {
+                //兑换代金券
+                if( !this.invited )
+                {
+                    this.$mptoast('请填写兑换码');
+                    return;
+                }
+
+
+                //加遮罩层
+                wx.showLoading({
+                    title: '正在处理',
+                    mask:true
+                })
+
+                this.$http.post(globalStore.state.host + '/user/change-invited',{openid:param.getOpenid(),invited_code:this.invited}).then((res)=>{
+                    wx.hideLoading();
+                    if(res.data.status)
+                    {
+                        this.layerFlag = false;
+                        this.$mptoast('兑换成功');
+                        this.initPage();
+                        return;
+                    } else
+                    {
+                        this.$mptoast(res.data.desc);
+                    }
+                });
+
             }
         },
         mounted:function()

@@ -5,14 +5,25 @@
     <div style="margin-top: 45px;">
       <div class="cus-row-col-12 divi-4-p">
         <div class="single-input-wrap">
-          <input  class="cus-input fs-18-fc-2E3133" style="line-height: 32px !important;height: 32px;" v-model="real_name" type="number" maxlength="4"/>
+          <input  class="cus-input fs-18-fc-2E3133" style="line-height: 32px !important;height: 32px;" v-model="real_name"/>
         </div>
       </div>
     </div>
 
+    <div class="input-line">
+      <picker @change="bindAttend2Change" :value="neighborhoodIndex" :range="neighborhoodArr">
+        <view class="picker fs-18-fc-2E3133" style="padding-right: 14px;position: relative;" v-bind:class="{'fs-18-fc-2E3133':neighborhoodIndex === -1}">
+          {{neighborhoodVal}}
+          <div style="position:absolute;right: 0;top:0;">
+            <image src="/static/images/icon_bnext_nor@3x.png" mode="widthFix" style="width:8px;height: 13px;"></image>
+          </div>
+        </view>
+      </picker>
+    </div>
 
 
-    <div class="m-t-40"><a class="yl_btn1">完成</a></div>
+
+    <div class="m-t-40"><a class="yl_btn1" v-bind:class="{ 'btn-gray': (btnGray) }" v-on:click="nextStep()">完成</a></div>
   </div>
 </template>
 
@@ -30,7 +41,11 @@
                 user:{},
                 isVip:false,
                 isAuth:false,
-                real_name:''
+                real_name:'',
+                neighborhood:[],
+                neighborhoodArr:[],
+                neighborhoodIndex:-1,
+                indexInit:false
             }
         },
         created:function()
@@ -53,6 +68,11 @@
                     url:url
                 })
             },
+            bindAttend2Change(e)
+            {
+                this.indexInit = true;
+                this.neighborhoodIndex = e.mp.detail.value;
+            },
             initPage()
             {
 
@@ -72,6 +92,37 @@
                 this.isVip = res.data.data.isVip;
 
               }).catch(err=>{console.log(3)})
+
+            },
+            nextStep()
+            {
+                if( this.btnGray )
+                {
+                    this.$mptoast('还有资料未填写');
+                    return;
+                }
+
+                let requestData = {name:this.real_name,age:this.neighborhoodArr[this.neighborhoodIndex]}
+
+                param.commonRequest(
+                    {
+                        url:globalStore.state.host + 'user/nameage',
+                        page:this,
+                        data:requestData,
+                        success:function(res)
+                        {
+                            if(res.status)
+                            {
+                                wx.switchTab({
+                                    url: '/pages/index/main'
+                                });
+                            }
+                        },
+                        error:function () {
+
+                        }
+                    }
+                );
             }
         },
         onShow()
@@ -80,10 +131,48 @@
         },
         mounted() {
           // this.src = globalStore.state.host + 'user/my-services?&openid=' +wx.getStorageSync('openid');
+          this.indexInit = false;
+          this.neighborhoodIndex = 42;
+          this.neighborhoodArr =  [];
+          for(let i=18; i <= 100;i++)
+          {
+              this.neighborhoodArr.push(i);
+          }
+
           this.initPage();
         },
         computed:
         {
+
+            btnGray:function()
+            {
+                if ( !this.real_name )
+                {
+                    return true;
+                }
+
+                if ( !this.indexInit )
+                {
+                    return true;
+                }
+
+                return false;
+            },
+            neighborhoodVal:function()
+            {
+
+                if( !this.indexInit )
+                {
+                    return '选择年龄';
+                }
+
+                if( this.neighborhoodArr.length ) {
+                    return this.neighborhoodArr[this.neighborhoodIndex] + '岁';
+                } else
+                {
+                    return '';
+                }
+            },
           age:function()
           {
 
@@ -108,16 +197,6 @@
               return  (Y-r[1]);
             }
             return '?';
-          },
-          headImg:function()
-          {
-              if( this.user.header_img )
-              {
-                  return globalStore.state.host + this.user.header_img;
-              }else
-              {
-                  return '/static/images/user_pic_nor@3x.png';
-              }
           }
         }
     }
@@ -149,10 +228,15 @@
     display: inline-block;
   }
 
-  .divi-4-p{padding: 0 6px;box-sizing:border-box;}
+  .divi-4-p{box-sizing:border-box;}
 
   .single-input-wrap
   {
     border-bottom: 1px solid #BFBFBF;padding-bottom: 8px;
+  }
+
+  .input-line{
+    padding: 20px 0;
+    border-bottom: 1px solid #bfbfbf;
   }
 </style>

@@ -256,6 +256,15 @@ line-height: 20px;}
     letter-spacing: -0.31px;
 }
 
+
+.fs-18-fc-c50081-m
+{
+    font-family: PingFangSC-Medium;
+    font-size: 18px;
+    color: #C50081;
+    letter-spacing: -0.31px;
+}
+
 .fs-12-fc-4a4a4a{font-size: 12px;
 color: #4A4A4A;
 letter-spacing: 0.19px;line-height: 12px;}
@@ -596,6 +605,19 @@ letter-spacing: -0.31px;
     padding: 0 8px;
     font-family: PingFangSC-Medium;
     font-size: 14px;
+    color: #C50081;
+    letter-spacing: -0.27px;
+    display: inline-block;
+}
+
+.l-btn-red3{
+    border: 1px solid #C50081;
+    border-radius: 9px;
+    line-height: 18px;
+    box-sizing: border-box;
+    padding: 0 7px;
+    font-family: PingFangSC-Medium;
+    font-size: 12px;
     color: #C50081;
     letter-spacing: -0.27px;
     display: inline-block;

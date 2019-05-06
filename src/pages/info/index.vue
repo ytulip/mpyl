@@ -61,8 +61,32 @@
     </view>
     </div>
 
+
+
+
     <div class="fix-bottom3" v-bind:class="{isIpx:isIpx}" style="background-color: #ffffff;padding: 14px;border-top:1px solid #EBE9E9 ;">
       <a class="yl_btn1 btn-gray"  v-on:click="nextStep()" style="margin-top: 0;">退出账号</a>
+    </div>
+
+    <div class="layer-shadow" v-if="layerFlag">
+      <div class="layer-center" style="padding: 24px;">
+
+        <div class="t-al-c fs-16-fc-000000-m">确定退出账号？</div>
+
+        <div class="f-f-m t-al-c" style="margin-top: 14px;">
+          <div class="fs-14-fc-7e7e7e-r" style="padding: 20px 0;" >退出登录后将无法查看订单，重新登录后即可查看</div>
+        </div>
+
+
+        <div class="cus-row" style="margin-top: 34px;">
+          <div class="cus-row-col-6">
+            <a class="yl_btn1 btn-none" v-on:click="cancelLayer">取消</a>
+          </div>
+          <div class="cus-row-col-6">
+            <a class="yl_btn1" @click="changeCoupon">确定</a>
+          </div>
+        </div>
+      </div>
     </div>
 
   </div>
@@ -81,7 +105,8 @@
                 banners:{},
                 src:'',
                 user:{},
-                isIpx:''
+                isIpx:'',
+                layerFlag:''
             }
         },
         created:function()
@@ -89,14 +114,31 @@
 
         },
         methods: {
+          cancelLayer()
+          {
+              this.layerFlag = 0;
+          },
+            changeCoupon() {
+              wx.setStorageSync('openid', '');
+              wx.reLaunch({
+                  url: '/pages/mine/main'
+              })
+          },
+
             nextStep() {
-                wx.setStorageSync('openid', '');
-                wx.reLaunch({
-                    url: '/pages/mine/main'
-                })
+
+              //弹出层
+              this.layerFlag = 1;
+
+
+                // wx.setStorageSync('openid', '');
+                // wx.reLaunch({
+                //     url: '/pages/mine/main'
+                // })
             },
             initPage() {
                 this.isIpx = globalStore.state.isIpx;
+                this.layerFlag = false;
 
                 let url = globalStore.state.host + 'user/user-center';
                 let requestData = {}

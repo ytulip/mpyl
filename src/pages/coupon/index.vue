@@ -1,14 +1,37 @@
 <template>
   <div class="p16 bg-f9f9fb">
       <div class="address-panel p16" v-for="(item,index) in list" style="margin-bottom: 16px;" v-if="list.length">
-          <div class="cus-row">
-              <div class="cus-row-col-6 fs-16-fc-000000-m">
-                  {{item.type_text}}
+
+          <div v-if="!item.refer_code">
+              <div class="cus-row">
+                  <div class="cus-row-col-6 fs-16-fc-000000-m">
+                      {{item.type_text}}
+                  </div>
+                  <div class="cus-row-col-6 t-al-r"><div class="l-btn-red3">花甲会员</div></div>
               </div>
-              <div class="cus-row-col-6 t-al-r "></div>
+              <div class="cus-row" style="margin-top: 10px;">
+                  <div class="cus-row-col-6 fs-14-fc-7E7E7E-r">有效期至：{{item.expire_at}}</div>
+              </div>
           </div>
-          <div class="cus-row" style="margin-top: 10px;">
-              <div class="cus-row-col-6 fs-14-fc-7E7E7E-r">有效期至：{{item.expire_at}}</div>
+
+          <div v-else>
+              <div class="cus-row">
+                  <div class="cus-row-col-8 v-a-m">
+                      <div class="cus-row">
+                          <div class="cus-row-col-6 fs-16-fc-000000-m">
+                              {{item.type_text}}
+                          </div>
+                          <div class="cus-row-col-6 t-al-r "></div>
+                      </div>
+                      <div class="cus-row" style="margin-top: 10px;">
+                          <div class="cus-row-col-12 fs-14-fc-7E7E7E-r">有效期至：{{item.expire_at}}</div>
+                      </div>
+                  </div>
+
+                  <div class="cus-row-col-4 t-al-r v-a-m">
+                      <span class="fs-16-fc-c50081-m" style="font-size: 12px !important;;">￥</span><span class="fs-16-fc-c50081-m">{{item.price}}</span>
+                  </div>
+              </div>
           </div>
       </div>
 
@@ -28,7 +51,7 @@
       <div class="layer-shadow" v-if="layerFlag">
           <div class="layer-center" style="padding: 24px;">
               <div class="f-f-m t-al-c" style="border-bottom:  1px solid #E1E1E1;">
-                    <input class="fs-18-fc-2E3133" style="padding: 20px 0;" v-model="invited"/>
+                    <input class="fs-18-fc-2E3133" style="padding: 20px 0;" v-model="invited" placeholder="输入优惠码"/>
               </div>
 
               <div class="cus-row" style="margin-top: 34px;">
@@ -76,6 +99,7 @@
             {
 
                 this.isIpx = globalStore.state.isIpx;
+                this.layerFlag = false;
 
                 let url = globalStore.state.host + 'user/coupon-list';
                 let requestData = {}

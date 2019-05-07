@@ -15,7 +15,7 @@
           </div>
 
           <div class="t-al-c" style="position: absolute;left: 0;right: 0;top:-60px;">
-              <img src="/static/images/icon_hua@3x.png" style="width: 120px;height: 120px;border-radius: 120px;"/>
+              <img src="https://huajialife.com/images/icon_hua@3x.png" style="width: 120px;height: 120px;border-radius: 120px;"/>
           </div>
       </div>
   </div>

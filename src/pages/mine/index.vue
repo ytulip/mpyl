@@ -17,7 +17,7 @@
 
 
         <div class="cus-row-col-6 v-a-m t-al-r" v-if="isAuth">
-          <image class="v-a-m in-bl" :src="headImg"  style="width:60px;height: 60px;border-radius: 60px;"></image>
+          <div class="v-a-m in-bl"  :style="headStyle"></div>
           <image class="v-a-m in-bl" src="/static/images/icon_bnext_nor@3x.png" mode="widthFix" style="width:8px;height: 13px;margin-left: 8px;"></image>
         </div>
 
@@ -31,12 +31,12 @@
 
 
     <div style="padding: 0 16px;">
-    <div class="m-t-10" style="position: relative;"  @click="authThenGo('/pages/vip/main')">
+    <div class="m-t-10" style="position: relative;font-size: 0;box-shadow: 0 2px 8px 0 rgba(191,25,132,0.34);"  @click="authThenGo('/pages/vip/main')">
 
-       <img src="https://huajialife.com/images/icon_bg_nor@3x.png" style="width: 100%;" mode="widthFix" />
+       <img src="https://huajialife.com/images/bg@3x.png" style="width: 100%;" mode="widthFix" />
 
-      <div style="position: absolute;top:50%;left: 0;right: 0;transform: translateY(-50%)">
-        <div class="cus-row" style="padding: 0 4%;">
+      <div style="position: absolute;top:50%;left: 0;right: 0;transform: translateY(-50%);padding: 0 16px;" >
+        <div class="cus-row">
           <div class="cus-row-col-6 fs-16-fc-ffffff f-f-m v-a-m" style="line-height: 24px;">{{isVip?'会员福利':'花甲会员· ¥60/月'}} </div>
           <div class="cus-row-col-6 v-a-m t-al-r">
             <span class="fs-12-fc-ffffff f-f-r in-bl v-a-m">{{isVip?(user.expire_time + '到期'):'更多优惠，服务更多！'}}</span>
@@ -77,9 +77,10 @@
 
       <div open-type="navigate" url="/pages/coupon/main" hover-class="none" style="padding: 19px 16px;" @click="authThenGo('/pages/coupon/main')">
         <view class="cus-row">
-          <view class="cus-row-col-10 fs-16-fc-000000-m v-a-m">代金券</view>
-          <view class="cus-row-col-2 t-al-r v-a-m">
-            <image src="/static/images/icon_bnext_nor@3x.png" mode="widthFix" style="width:8px;height: 13px;"></image>
+          <view class="cus-row-col-6 fs-16-fc-000000-m v-a-m">代金券</view>
+          <view class="cus-row-col-6 t-al-r v-a-m">
+            <div class="in-bl v-a-m"><span class="fs-18-fc-c50081-m">{{count}}</span><span class="fs-14-fc-000000-m" style="margin-left: 8px;">张</span></div>
+            <image src="/static/images/icon_bnext_nor@3x.png" mode="widthFix" style="width:8px;height: 13px;display: inline-block;margin-left: 8px;" class="v-a-m"></image>
           </view>
         </view>
       </div>
@@ -103,7 +104,8 @@
                 user:{},
                 isVip:false,
                 isAuth:false,
-                age:''
+                age:'',
+                count:0
             }
         },
         created:function()
@@ -144,6 +146,7 @@
                 this.user = res.data.data.user;
                 this.isVip = res.data.data.isVip;
                 this.age = res.data.data.user.age;
+                this.count = res.data.data.couponCount;
 
               }).catch(err=>{console.log(3)})
             }
@@ -155,6 +158,7 @@
         mounted() {
           // this.src = globalStore.state.host + 'user/my-services?&openid=' +wx.getStorageSync('openid');
             this.age = '';
+            this.count = 0;
             this.isVip = false;
             this.isAuth = false;
           this.initPage();
@@ -170,6 +174,10 @@
               {
                   return '/static/images/user_pic_nor@3x.png';
               }
+          },
+          headStyle:function()
+          {
+            return 'width:60px;height: 60px;border-radius: 60px;background-image: url(' + this.headImg + ');background-size: cover;background-position: center center;background-repeat: no-repeat;'
           }
         }
     }

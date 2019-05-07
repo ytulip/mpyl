@@ -198,7 +198,7 @@
           this.address = '';
           this.addressDefault = '';
           this.neighborhoodIndex = -1;
-
+          this.isIpx = globalStore.state.isIpx;
 
           this.id = param.getParamValue('id');
 

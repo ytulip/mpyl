@@ -235,6 +235,7 @@
             }
         },
         mounted() {
+            this.n1 = '';
             this.phone = param.getParamValue('phone');
             this.sendSms();
         },

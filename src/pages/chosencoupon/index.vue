@@ -5,14 +5,36 @@
 
           <div style="width: 0;height: 0;border-style: solid;border-width: 24px 24px 0 0;border-color: #CE388E transparent transparent transparent;position: absolute;top:0;left: 0;" v-if="item.chosen"></div>
 
-          <div class="cus-row">
-              <div class="cus-row-col-6 fs-16-fc-000000-m">
-                    {{item.type_text}}
+          <div v-if="!item.refer_code">
+              <div class="cus-row">
+                  <div class="cus-row-col-6 fs-16-fc-000000-m">
+                      {{item.type_text}}
+                  </div>
+                  <div class="cus-row-col-6 t-al-r"><div class="l-btn-red3">花甲会员</div></div>
               </div>
-              <div class="cus-row-col-6 t-al-r "></div>
+              <div class="cus-row" style="margin-top: 10px;">
+                  <div class="cus-row-col-6 fs-14-fc-7E7E7E-r">有效期至：{{item.expire_at}}</div>
+              </div>
           </div>
-          <div class="cus-row" style="margin-top: 10px;">
-              <div class="cus-row-col-6 fs-14-fc-7E7E7E-r">有效期至：{{item.expire_at}}</div>
+
+          <div v-else>
+              <div class="cus-row">
+                  <div class="cus-row-col-8 v-a-m">
+                      <div class="cus-row">
+                          <div class="cus-row-col-6 fs-16-fc-000000-m">
+                              {{item.type_text}}
+                          </div>
+                          <div class="cus-row-col-6 t-al-r "></div>
+                      </div>
+                      <div class="cus-row" style="margin-top: 10px;">
+                          <div class="cus-row-col-12 fs-14-fc-7E7E7E-r">有效期至：{{item.expire_at}}</div>
+                      </div>
+                  </div>
+
+                  <div class="cus-row-col-4 t-al-r v-a-m">
+                      <span class="fs-16-fc-c50081-m" style="font-size: 12px !important;;">￥</span><span class="fs-16-fc-c50081-m">{{item.price}}</span>
+                  </div>
+              </div>
           </div>
       </div>
 

@@ -6,7 +6,7 @@
     </textarea>
 
 
-    <div class="fix-bottom3" style="background-color: #ffffff;padding: 14px;border-top:1px solid #EBE9E9 ;">
+    <div class="fix-bottom3" v-bind:class="{isIpx:isIpx}" style="background-color: #ffffff;padding: 14px;border-top:1px solid #EBE9E9 ;">
       <a class="yl_btn1"  v-on:click="nextStep()" style="margin-top: 0;">保存</a>
     </div>
     <mptoast />
@@ -28,7 +28,8 @@
                 src:'',
                 user:{},
                 type:0,
-                tval:''
+                tval:'',
+                isIpx:''
             }
         },
         created:function()
@@ -115,7 +116,7 @@
         },
         mounted() {
             // this.src = globalStore.state.host + 'user/my-services?&openid=' +wx.getStorageSync('openid');
-
+          this.isIpx = globalStore.state.isIpx;
 
           let type = param.getParamValue('type');
           this.type = type;

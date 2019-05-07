@@ -131,6 +131,24 @@
 
         </div>
 
+        <div class="layer-shadow" v-if="layerFlag">
+            <div class="layer-center" style="padding: 24px;">
+                <div class="f-f-m t-al-c" style="margin-top: 34px;">
+                    <span class="fs-18-fc-2E3133" style="padding: 20px 0;" >6月1号正式上线，敬请期待</span>
+                </div>
+
+                <div class="cus-row" style="margin-top: 34px;">
+                    <div class="cus-row-col-3">
+                    </div>
+                    <div class="cus-row-col-6">
+                        <span class="yl_btn1" @click="cancelLayer">确定</span>
+                    </div>
+                    <div class="cus-row-col-3">
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
     </div>
 </template>
@@ -165,7 +183,8 @@
                 healthTotal:0,
                 healthActive:0,
                 vipTypeText:'',
-                isIpx:''
+                isIpx:'',
+                layerFlag:false
             }
         },
         created:function()
@@ -205,6 +224,9 @@
                 );
             },
             goClean() {
+                //暂时关闭了
+                this.layerFlag = 1;
+                return;
                 wx.navigateTo(
                     {
                         url:'/pages/clean/main'
@@ -264,6 +286,7 @@
                 this.$http.post(url,requestData).then((res)=>{
 
                     //下单成功跳转呀
+                    let status = res.data.status;
                     if(res.data.status) {
                         var jsonData = JSON.parse(res.data.data);
                         console.log(jsonData);
@@ -276,7 +299,7 @@
                             'success':function(res){
                                 // a.$mptoast('支付成功');
                                 // a.init();
-                                let url = Base64.encode('/passport/pay-success-vip?id=' + res.data.status);
+                                let url = Base64.encode('/passport/pay-success-vip?id=' + status);
                                 wx.redirectTo(
                                     {
                                         url:'/pages/commonweb/main?url=' + url,
@@ -348,6 +371,10 @@
                         }
                     }
                 });
+            },
+            cancelLayer()
+            {
+                this.layerFlag = 0;
             }
         },
         mounted(){

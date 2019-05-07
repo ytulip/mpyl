@@ -47,7 +47,7 @@
             <div class="cus-row">
                 <div class="cus-row-col-6 v-a-m">
                     <div class="fs-16-fc-000000-m">订餐份数</div>
-                    <div class="fs-14-fc-7e7e7e-r m-t-6">1份餐仅供一人</div>
+                    <div class="fs-14-fc-7e7e7e-r m-t-10">1份餐仅供一人</div>
                 </div>
                 <div class="cus-row-col-6 v-a-m t-al-r">
                     <!--<div class="in-bl v-a-m quantity-plus-icon dp-n" v-on:click="deQuantity"><image src="/static/images/tarbar/icon_out_nor@3x.png" class="quantity-plus-icon"/></div>-->
@@ -79,7 +79,7 @@
                 <div class="cus-row-col-6 v-a-m">
                     <div class="fs-16-fc-000000-m">代金券</div>
                     <div class="fs-14-fc-7e7e7e-r m-t-10" v-if="!activeCouponCount">暂无代金券</div>
-                    <div class="fs-14-fc-c50081-m m-t-10" v-else>{{product.product_name}}代金券 {{activeCouponCount}}张</div>
+                    <div class="fs-14-fc-c50081-m m-t-10" v-if="activeCouponCount">{{product.product_name}}代金券 {{activeCouponCount}}张</div>
                 </div>
                 <div class="cus-row-col-5 v-a-m">
 

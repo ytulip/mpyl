@@ -51,14 +51,14 @@
       {
         "pagePath": "pages/book/main",
         "text": "服务",
-        "iconPath":"/static/images/tarbar/home_icon2_nor@3x.png",
-        "selectedIconPath":"/static/images/tarbar/home_icon2_sel@3x.png"
+        "iconPath":"/static/images/tarbar/severs_icon_nor@3x.png",
+        "selectedIconPath":"/static/images/tarbar/severs_icon_sel@3x.png"
       },
       {
         "pagePath":"pages/mine/main",
         "text":"我的",
-        "iconPath":"/static/images/tarbar/home_icon3_nor@3x.png",
-        "selectedIconPath":"/static/images/tarbar/home_icon3_sel@3x.png"
+        "iconPath":"/static/images/tarbar/person_icon_nor@3x.png",
+        "selectedIconPath":"/static/images/tarbar/person_icon_sel@3x.png"
       }]
   }
 }

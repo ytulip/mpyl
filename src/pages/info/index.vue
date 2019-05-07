@@ -7,7 +7,8 @@
       <div class="cus-row" v-on:click="uploadPhoto">
         <div class="cus-row-col-6 fs-16-fc-000000-m f-f-m v-a-m" style="">头像</div>
         <div class="cus-row-col-6 v-a-m t-al-r">
-          <image class="v-a-m in-bl" :src="headImg" style="width:60px;height: 60px;border-radius: 60px;"></image>
+          <!--<image class="v-a-m in-bl" :src="headImg" style="width:60px;height: 60px;border-radius: 60px;"></image>-->
+          <div class="v-a-m in-bl"  :style="headStyle"></div>
           <image class="v-a-m in-bl" src="/static/images/icon_bnext_nor@3x.png" mode="widthFix" style="width:8px;height: 13px;margin-left: 8px;"></image>
         </div>
       </div>
@@ -225,6 +226,10 @@
               {
                   return globalStore + '/images/user_pic_nor@3x.png';
               }
+          },
+          headStyle:function()
+          {
+            return 'width:60px;height: 60px;border-radius: 60px;background-image: url(' + this.headImg + ');background-size: cover;background-position: center center;background-repeat: no-repeat;'
           }
         }
     }

@@ -131,6 +131,7 @@
         },
         mounted() {
           // this.src = globalStore.state.host + 'user/my-services?&openid=' +wx.getStorageSync('openid');
+          this.real_name = '';
           this.indexInit = false;
           this.neighborhoodIndex = 42;
           this.neighborhoodArr =  [];

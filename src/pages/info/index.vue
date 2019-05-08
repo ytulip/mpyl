@@ -75,11 +75,11 @@
         <div class="t-al-c fs-16-fc-000000-m">确定退出账号？</div>
 
         <div class="f-f-m t-al-c" style="margin-top: 14px;">
-          <div class="fs-14-fc-7e7e7e-r" style="padding: 20px 0;" >退出登录后将无法查看订单，重新登录后即可查看</div>
+          <div class="fs-14-fc-7e7e7e-r" style="line-height: 21px;">退出登录后将无法查看订单，重新登录后即可查看</div>
         </div>
 
 
-        <div class="cus-row" style="margin-top: 34px;">
+        <div class="cus-row" style="margin-top: 24px;">
           <div class="cus-row-col-6">
             <a class="yl_btn1 btn-none" v-on:click="cancelLayer">取消</a>
           </div>

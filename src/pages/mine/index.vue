@@ -31,7 +31,7 @@
 
 
     <div style="padding: 0 16px;">
-    <div class="m-t-10" style="position: relative;font-size: 0;box-shadow: 0 2px 8px 0 rgba(191,25,132,0.34);"  @click="authThenGo('/pages/vip/main')">
+    <div class="m-t-10" style="position: relative;font-size: 0;box-shadow: 0 2px 8px 0 rgba(191,25,132,0.34);border-radius:5px;"  @click="authThenGo('/pages/vip/main')">
 
        <img src="https://huajialife.com/images/bg@3x.png" style="width: 100%;" mode="widthFix" />
 

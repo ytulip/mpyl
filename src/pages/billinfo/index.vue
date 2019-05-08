@@ -231,9 +231,18 @@
 
 
 
-      <div class="fs-18-fc-000000-m m-t-16">订单信息</div>
+      <!--<div class="fs-18-fc-000000-m m-t-16">订单信息</div>-->
 
       <div class="common-panel m-t-16 p-16-24">
+
+        <div class="cus-row">
+          <div class="cus-row-col-6 v-a-m">
+            <span class="fs-18-fc-000000-m in-bl" style="line-height: 25px;">订单信息</span>
+          </div>
+          <div class="cus-row-col-6 v-a-m t-al-r">
+          </div>
+        </div>
+
 
         <div class="cus-row">
           <div class="cus-row-col-6 fs-16-fc-7E7E7E-r">订单号码</div>
@@ -251,7 +260,7 @@
 
         <div class="cus-row">
           <div class="cus-row-col-6 fs-16-fc-7E7E7E-r">支付方式</div>
-          <div class="cus-row-col-6 fs-16-fc-000000-m t-al-r">微信支付</div>
+          <div class="cus-row-col-6 fs-16-fc-000000-m t-al-r">{{!order.need_pay?'代金券全额抵扣':'微信支付'}}</div>
         </div>
 
       </div>

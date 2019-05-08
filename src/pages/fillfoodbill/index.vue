@@ -119,14 +119,25 @@
         </div>
 
         <div class="fix-bottom3"  v-bind:class="{isIpx:isIpx}" style="background-color: #ffffff;padding: 14px;border-top:1px solid #EBE9E9 ;">
+            <!--<div class="cus-row cus-row-v-m">-->
+                <!--<div class="cus-row-col-8 t-al-r v-a-m" id="total_price">-->
+                    <!--<span class="fs-18-fc-000000-m" style="margin-right: 26px;">￥ {{(price - product.price * activeCouponCount) * saleOff}}元</span>-->
+                <!--</div>-->
+                <!--<div class="cus-row-col-4 v-a-m">-->
+                    <!--<a class="yl_btn1 m-t-20"  v-on:click="nextStep()" style="margin-top: 0;">微信支付</a>-->
+                <!--</div>-->
+            <!--</div>-->
+
             <div class="cus-row cus-row-v-m">
-                <div class="cus-row-col-8 t-al-r v-a-m" id="total_price">
-                    <span class="fs-18-fc-000000-m" style="margin-right: 26px;">￥ {{(price - product.price * activeCouponCount) * saleOff}}元</span>
+                <div class="cus-row-col-8 t-al-l v-a-m" id="total_price">
+                    <span class="fs-18-fc-000000-m" style="margin-right: 26px;">{{activeCouponCountAll?'代金券全额抵扣':('总计 '+price+'元')}}</span>
                 </div>
                 <div class="cus-row-col-4 v-a-m">
-                    <a class="yl_btn1 m-t-20"  v-on:click="nextStep()" style="margin-top: 0;">微信支付</a>
+                    <a class="yl_btn1 m-t-20"  v-on:click="nextStep()" style="margin-top: 0;">{{activeCouponCountAll?'提 交':'微信支付'}}</a>
                 </div>
             </div>
+
+
         </div>
 
 
@@ -807,6 +818,10 @@
             {
                 let ids = this.chosenCoupon.slice(0,this.quantity * this.days);
                 return ids;
+            },
+            activeCouponCountAll()
+            {
+                return (this.activeCouponCount == this.quantity * this.days)?true:false;
             }
         }
     }

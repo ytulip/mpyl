@@ -9,7 +9,7 @@
                 </div>
 
 
-              <div class="common-panel t-al-c fs-18-fc-000000-m m-t-24" style="padding: 18px 0;line-height: 22px;">
+              <div class="common-panel t-al-c fs-18-fc-000000-m m-t-24" style="padding: 18px 0;line-height: 22px;" @click="makeCall">
                   028-61526472
               </div>
           </div>
@@ -35,6 +35,11 @@
 
         },
         methods: {
+            makeCall(){
+                wx.makePhoneCall({
+                    phoneNumber: '02861526472'
+                })
+            },
         }
     }
 </script>

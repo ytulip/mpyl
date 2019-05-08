@@ -495,7 +495,7 @@
                         {
                             globalStore.commit('setPaySuccessBack','');
                             let url = Base64.encode('/passport/pay-success?openid=' + param.getOpenid());
-                            wx.redirectTo(
+                            wx.reLaunch(
                                 {
                                     url:'/pages/commonweb/main?url=' + url,
                                 }
@@ -515,7 +515,7 @@
                             'success':function(res){
                                 globalStore.commit('setPaySuccessBack','');
                                 let url = Base64.encode('/passport/pay-success?openid=' + param.getOpenid());
-                                wx.redirectTo(
+                                wx.reLaunch(
                                     {
                                         url:'/pages/commonweb/main?url=' + url,
                                     }

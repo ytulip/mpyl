@@ -143,7 +143,7 @@
       <div class="layer-center" style="padding: 24px;">
         <div class="t-al-c fs-16-fc-000000-m">延后说明</div>
         <div class="m-t-16 fs-14-fc-7E7E7E-r" style="line-height: 22px;">
-          这里是延后的说明，这里是延后的说明。这里是延后的说明这里是延后的说明。
+          本次服务将以代金券返还至您的账户，您可以在30天内使用代金券免费兑换套餐。
         </div>
 
         <div class="cus-row" style="margin-top: 34px;">

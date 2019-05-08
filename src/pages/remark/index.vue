@@ -27,7 +27,8 @@
             }
         },
         mounted() {
-            this.src = globalStore.state.host + 'passport/habbit-remark?product_id='+ param.getParamValue('id') +'&user_id=' +wx.getStorageSync('openid') + '&remark=' + param.getParamValue('remark');
+            let isIpx = globalStore.state.isIpx;
+            this.src = globalStore.state.host + 'passport/habbit-remark?product_id='+ param.getParamValue('id') +'&user_id=' +wx.getStorageSync('openid') + '&remark=' + param.getParamValue('remark') + (isIpx?'&isIpx=1':'');
         }
     }
 </script>

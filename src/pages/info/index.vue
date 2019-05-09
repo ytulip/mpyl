@@ -74,7 +74,7 @@
 
         <div class="t-al-c fs-16-fc-000000-m">确定退出账号？</div>
 
-        <div class="f-f-m t-al-c" style="margin-top: 14px;">
+        <div class="f-f-m t-al-l" style="margin-top: 14px;">
           <div class="fs-14-fc-7e7e7e-r" style="line-height: 21px;">退出登录后将无法查看订单，重新登录后即可查看</div>
         </div>
 

@@ -10,7 +10,7 @@
 
             <div class="info-panel" style="height: 156px;">
                 <div class="fs-18-fc-000000-m" style="line-height: 25px;">{{item.product_name}}</div>
-                <div class="fs-14-fc-7E7E7E-r" style="margin-top: 10px;line-height: 16px;">{{item.sub_desc}}</div>
+                <div class="fs-14-fc-7E7E7E-r" style="margin-top: 10px;line-height: 21px;">{{item.sub_desc}}</div>
 
                 <div style="position: absolute;bottom: 18px;left: 52px;"><span class="fs-14-fc-000033-m">￥</span><span class="fs-18-fc-000033-m">{{item.price}}</span></div>
 

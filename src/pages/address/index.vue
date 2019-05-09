@@ -20,7 +20,7 @@
 
         <div v-if="!list.length" style="margin-top: 56px;">
             <div class="t-al-c">
-                <image src="/static/images/home_icon_home_nor@3x.png" style="width: 52px;height: 52px;opacity: 0.33;"/>
+                <image src="/static/images/home_icon_home_nor@3x.png" style="width: 52px;height: 52px;"/>
                 <div class="fs-14-fc-7e7e7e-r m-t-24">点击下方，新增地址哦！</div>
             </div>
         </div>

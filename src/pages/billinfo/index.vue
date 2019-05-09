@@ -244,7 +244,7 @@
         </div>
 
 
-        <div class="cus-row">
+        <div class="cus-row m-t-24">
           <div class="cus-row-col-6 fs-16-fc-7E7E7E-r">订单号码</div>
           <div class="cus-row-col-6 fs-16-fc-000000-m t-al-r">{{order.id}}</div>
         </div>

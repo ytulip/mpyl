@@ -8,7 +8,7 @@
           <div class="cus-row-col-6 fs-14-fc-484848 f-f-r v-a-m" style="margin-left:8px; " ><span v-if="item.type != 1">订餐服务</span><span v-else>家庭清洁</span></div>
         </div>
         <div class="cus-row-col-6 t-al-r v-a-m">
-          <div class="l-btn-red2" v-if="item.is_vip">花甲会员</div>
+          <div class="l-btn-red3" v-if="item.is_vip">花甲会员</div>
         </div>
       </div>
 
@@ -24,7 +24,7 @@
 
     <div v-if="!list.length" style="margin-top: 56px;">
       <div class="t-al-c">
-        <image src="/static/images/home_icon_home_nor@3x.png" style="width: 52px;height: 52px;opacity: 0.33;"/>
+        <image src="/static/images/home_icon_home_nor@3x.png" style="width: 52px;height: 52px;"/>
         <div class="fs-14-fc-7e7e7e-r m-t-24">暂无订单，赶紧下单吧！</div>
       </div>
     </div>

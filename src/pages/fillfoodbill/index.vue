@@ -128,6 +128,8 @@
                 <!--</div>-->
             <!--</div>-->
 
+            <div style="margin-bottom: 150px;"></div>
+
             <div class="cus-row cus-row-v-m">
                 <div class="cus-row-col-8 t-al-l v-a-m" id="total_price">
                     <span class="fs-18-fc-000000-m" style="margin-right: 26px;">{{activeCouponCountAll?'代金券全额抵扣':('总计 '+price+'元')}}</span>
@@ -760,7 +762,7 @@
                     arr.push(tmpStr);
                 });
 
-                let arrStr = arr.join(',');
+                let arrStr = arr.join(' ');
                 console.log(arrStr);
                 return arrStr;
             },

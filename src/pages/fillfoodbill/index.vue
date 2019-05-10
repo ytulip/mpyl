@@ -118,6 +118,9 @@
             </div>
         </div>
 
+
+
+        <div style="margin-bottom: 150px;"></div>
         <div class="fix-bottom3"  v-bind:class="{isIpx:isIpx}" style="background-color: #ffffff;padding: 14px;border-top:1px solid #EBE9E9 ;">
             <!--<div class="cus-row cus-row-v-m">-->
                 <!--<div class="cus-row-col-8 t-al-r v-a-m" id="total_price">-->
@@ -127,8 +130,6 @@
                     <!--<a class="yl_btn1 m-t-20"  v-on:click="nextStep()" style="margin-top: 0;">微信支付</a>-->
                 <!--</div>-->
             <!--</div>-->
-
-            <div style="margin-bottom: 150px;"></div>
 
             <div class="cus-row cus-row-v-m">
                 <div class="cus-row-col-8 t-al-l v-a-m" id="total_price">

@@ -327,7 +327,7 @@
 
                            //日期转换
 
-                           dayLines.push(dayLinesArr);
+                           dayLines.push(dayLineArr);
                            dayLineArr = [];
                            dayLinesFlag = 0;
                        }
@@ -345,7 +345,7 @@
                    {
                        if( dayLinesFlag == 4)
                        {
-                           dayLines.push(dayLinesArr);
+                           dayLines.push(dayLineArr);
                            dayLineArr = [];
                            dayLinesFlag = 0;
                        }

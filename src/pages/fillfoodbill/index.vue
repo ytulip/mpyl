@@ -133,7 +133,7 @@
 
             <div class="cus-row cus-row-v-m">
                 <div class="cus-row-col-8 t-al-l v-a-m" id="total_price">
-                    <span class="fs-18-fc-000000-m" style="margin-right: 26px;">{{activeCouponCountAll?'代金券全额抵扣':('总计 '+price+'元')}}</span>
+                    <span class="fs-18-fc-000000-m" style="margin-right: 26px;">{{activeCouponCountAll?'代金券全额抵扣':('总计 '+payPrice+'元')}}</span>
                 </div>
                 <div class="cus-row-col-4 v-a-m">
                     <a class="yl_btn1 m-t-20"  v-on:click="nextStep()" style="margin-top: 0;">{{activeCouponCountAll?'提 交':'微信支付'}}</a>
@@ -587,10 +587,10 @@
                 {
                     //
                     beginDay = new Date(beginDay.getFullYear(),beginDay.getMonth(),beginDay.getDate() + 1);
-                    if( _.indexOf([0,6],beginDay.getDay()) !== -1 )
-                    {
-                        continue;
-                    }
+                    // if( _.indexOf([0,6],beginDay.getDay()) !== -1 )
+                    // {
+                    //     continue;
+                    // }
 
                     arr.push(beginDay.toString());
 
@@ -703,6 +703,13 @@
                 let totalPrice = this.quantity * this.product.price * this.days;
                 return totalPrice.toFixed(2);
             },
+            payPrice:function()
+            {
+                // this.price - this.cou  activeCouponCount
+
+                let totalPrice = (this.quantity * this.days - this.activeCouponCount) * this.product.price * ((this.days == 1)?1:0.8);
+                return totalPrice.toFixed(2);
+            },
             periodService:function()
             {
                 console.log(this.periodPrice);
@@ -760,6 +767,10 @@
                     //执行某些操作
                     let tmpDate = new Date(value);
                     let tmpStr = (tmpDate.getMonth() +1) + '月' + (tmpDate.getDate()) + '日';
+                    // let dateFormat = moment(this.days[i].date);
+                    // this.days[i].date_formate = dateFormat.format('MM月DD日');
+
+
                     arr.push(tmpStr);
                 });
 

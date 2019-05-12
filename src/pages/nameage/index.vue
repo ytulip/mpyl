@@ -11,7 +11,7 @@
     </div>
 
     <div class="input-line">
-      <picker @change="bindAttend2Change" :value="neighborhoodIndex" :range="neighborhoodArr">
+      <picker @mode="date" value="{{date}}" start="{{date}}" end="2020-01-01" @change="bindDateChange">
         <view class="picker fs-18-fc-2E3133" style="padding-right: 14px;position: relative;" v-bind:class="{'fs-18-fc-2E3133':neighborhoodIndex === -1}">
           {{neighborhoodVal}}
           <div style="position:absolute;right: 0;top:0;">
@@ -45,7 +45,10 @@
                 neighborhood:[],
                 neighborhoodArr:[],
                 neighborhoodIndex:-1,
-                indexInit:false
+                indexInit:false,
+                startDate:'2018-05-9',
+                endDate:'2018-02-21',
+                pickerStart:'2018-05-6'
             }
         },
         created:function()
@@ -54,6 +57,15 @@
         },
         methods: {
             /*判断是否登录然后跳转*/
+            bindDateChange(e)
+            {
+                // function (e) {
+                //     this.setData({
+                //         date: e.detail.value
+                //     })
+                // },
+                console.log(e.mp.detail.value);
+            },
             authThenGo(url)
             {
                 if( !param.getOpenid() )
@@ -161,10 +173,9 @@
             },
             neighborhoodVal:function()
             {
-
                 if( !this.indexInit )
                 {
-                    return '选择年龄';
+                    return '生日';
                 }
 
                 if( this.neighborhoodArr.length ) {

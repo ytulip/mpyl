@@ -121,10 +121,10 @@
         <div class="fix-bottom3" style="background-color: #ffffff;padding: 14px;border-top:1px solid #EBE9E9 ;">
             <div class="cus-row cus-row-v-m">
                 <div class="cus-row-col-8 t-al-l v-a-m" id="total_price">
-                    <span class="fs-18-fc-000000-m" style="margin-right: 26px;">{{activeCouponCount?'代金券抵扣':('总计 '+price+'元')}}</span>
+                    <span class="fs-18-fc-000000-m" style="margin-right: 26px;">{{(activeCouponCount && selectedTabIndex==1)?'代金券全额抵扣':('总计 '+price+'元')}}</span>
                 </div>
                 <div class="cus-row-col-4 v-a-m">
-                    <a class="yl_btn1 m-t-20"  v-on:click="nextStep()" style="margin-top: 0;">{{activeCouponCount?'提 交':'微信支付'}}</a>
+                    <a class="yl_btn1 m-t-20"  v-on:click="nextStep()" style="margin-top: 0;">{{(activeCouponCount &&  selectedTabIndex==1)?'提 交':'微信支付'}}</a>
                 </div>
             </div>
         </div>
@@ -465,6 +465,7 @@
                 if( !this.selectedTabIndex )
                 {
                     this.$mptoast('请选择服务时长');
+                    //触发点击事件
                     return;
                 }
 
@@ -478,6 +479,7 @@
                 if( !this.selectedValue.length )
                 {
                     this.$mptoast('请选择服务时间');
+                    //触发点击事件
                     return;
                 }
 
@@ -714,10 +716,10 @@
                 console.log(this.activeIdArr);
                 console.log(this.selectedTabIndex);
 
-                if( this.activeIdArr.length )
-                {
-                    return '0.00';
-                }
+                // if( this.activeIdArr.length && this.selectedTabIndex())
+                // {
+                //     return '0.00';
+                // }
 
                 if(this.selectedTabIndex)
                 {
@@ -725,7 +727,14 @@
                     console.log(this.product.price);
                     console.log(this.product.price * (1.5 + this.selectedTabIndex * 0.5));
                     console.log(parseFloat(this.product.price) * (1.5 + this.selectedTabIndex * 0.5));
-                    return (this.product.price * (1.5 + this.selectedTabIndex * 0.5)).toFixed(2);
+                    var total_pay =  (this.product.price * (1.5 + this.selectedTabIndex * 0.5)).toFixed(2);
+
+                    if ( this.activeIdArr.length )
+                    {
+                        total_pay = total_pay - (2 * this.product.price);
+                    }
+
+                    return total_pay;
                 }
 
                 return '0.00';

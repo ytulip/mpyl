@@ -9,33 +9,8 @@
     </swiper>
 
 
-    <div class="cus-row m-t-16">
-      <div class="cus-row-col-6 v-a-t" style="padding-right: 7.5px;box-sizing: border-box;">
-          <div class="food-panel" v-on:click="goFood">
-              <div class="item-fc">订餐服务</div>
-              <div style="position: absolute;right: 24px;bottom: 24px;">
-                  <image style="width:54px;" src="/static/images/home_icon_food@3x.png" mode="widthFix"/>
-              </div>
-          </div>
-      </div>
-      <div class="cus-row-col-6" style="padding-left: 7.5px;box-sizing: border-box;">
-          <div class="clean-panel" v-on:click="goClean">
-             <div class="item-fc">家庭清洁</div>
-              <div style="position: absolute;right: 21px;bottom: 21px;">
-                  <image style="width:29px;" src="/static/images/hone_clean_nor@3x.png" mode="widthFix"/>
-              </div>
-          </div>
-          <div class="hood-panel m-t-16" v-on:click="goCommunity">
-             <div class="item-fc">社区管家</div>
-              <div style="position: absolute;right: 21px;bottom: 21px;">
-                  <image style="width:29px;" src="/static/images/home_master_nor@3x.png" mode="widthFix"/>
-              </div>
-          </div>
-      </div>
-    </div>
 
-
-    <div class="vip-panel m-t-16" v-on:click="cusNavigate('vip')" style="position: relative;overflow: hidden;">
+    <div class="vip-panel m-t-16" v-on:click="cusNavigate('vip')" style="position: relative;overflow: hidden;box-shadow:0 2px 6px 0 #e7e9f0;">
         <div class="cus-row">
             <div class="cus-row-col-8 v-a-m">
                 <div class="fs-18-fc-000000-m" style="line-height: 25px;">
@@ -54,6 +29,32 @@
 
 
     </div>
+
+
+    <div class="cus-row m-t-16">
+          <div class="cus-row-col-6 v-a-t" style="padding-right: 7.5px;box-sizing: border-box;">
+              <div class="food-panel" v-on:click="goFood">
+                  <div class="item-fc">订餐服务</div>
+                  <div style="position: absolute;right: 24px;bottom: 24px;">
+                      <image style="width:54px;" src="/static/images/home_icon_food@3x.png" mode="widthFix"/>
+                  </div>
+              </div>
+          </div>
+          <div class="cus-row-col-6" style="padding-left: 7.5px;box-sizing: border-box;">
+              <div class="clean-panel" v-on:click="goClean">
+                  <div class="item-fc">家庭清洁</div>
+                  <div style="position: absolute;right: 21px;bottom: 21px;">
+                      <image style="width:29px;" src="/static/images/hone_clean_nor@3x.png" mode="widthFix"/>
+                  </div>
+              </div>
+              <div class="hood-panel m-t-16" v-on:click="goCommunity">
+                  <div class="item-fc">社区管家</div>
+                  <div style="position: absolute;right: 21px;bottom: 21px;">
+                      <image style="width:29px;" src="/static/images/home_master_nor@3x.png" mode="widthFix"/>
+                  </div>
+              </div>
+          </div>
+      </div>
 
       <div class="layer-shadow" v-if="layerFlag">
           <div class="layer-center" style="padding: 24px;">
@@ -139,8 +140,8 @@
             goClean() {
 
                 //暂时关闭了
-                this.layerFlag = 1;
-                return;
+                // this.layerFlag = 1;
+                // return;
 
 
                 if( !param.getOpenid() )

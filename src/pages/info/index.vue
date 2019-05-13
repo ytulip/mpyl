@@ -28,11 +28,11 @@
         </view>
       </navigator>
 
-      <navigator open-type="navigate" v-bind:url="'/pages/edit/main?type=4&val=' + ((user.age != null && user.age)?user.age:'')"  hover-class="none"  style="padding: 19px 16px;">
+      <navigator open-type="navigate" v-bind:url="'/pages/editselect/main?val=' + ((user.age_origin != null && user.age_origin)?user.age_origin:'')"  hover-class="none"  style="padding: 19px 16px;">
         <view class="cus-row">
-          <view class="cus-row-col-4 fs-16-fc-000000-m v-a-m">年龄</view>
+          <view class="cus-row-col-4 fs-16-fc-000000-m v-a-m">生日</view>
           <view class="cus-row-col-8 t-al-r v-a-m">
-            <span class="in-bl v-a-m fs-16-fc-7E7E7E-r m-r-14">{{(user.age != null && user.age)?user.age:''}}</span>
+            <span class="in-bl v-a-m fs-16-fc-7E7E7E-r m-r-14">{{(user.age_origin != null && user.age_origin)?user.age_origin:''}}</span>
             <image class="in-bl v-a-m" src="/static/images/icon_bnext_nor@3x.png" mode="widthFix" style="width:8px;height: 13px;"></image>
           </view>
         </view>

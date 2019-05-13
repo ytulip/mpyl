@@ -11,7 +11,7 @@
     </div>
 
     <div class="input-line">
-      <picker @mode="date" value="{{date}}" start="{{date}}" end="2020-01-01" @change="bindDateChange">
+      <picker mode="date" :value="startDate" :start="pickerStart" end="2018-12-31" @change="bindDateChange($event)">
         <view class="picker fs-18-fc-2E3133" style="padding-right: 14px;position: relative;" v-bind:class="{'fs-18-fc-2E3133':neighborhoodIndex === -1}">
           {{neighborhoodVal}}
           <div style="position:absolute;right: 0;top:0;">
@@ -48,7 +48,7 @@
                 indexInit:false,
                 startDate:'2018-05-9',
                 endDate:'2018-02-21',
-                pickerStart:'2018-05-6'
+                pickerStart:'1900-12-31'
             }
         },
         created:function()
@@ -64,7 +64,9 @@
                 //         date: e.detail.value
                 //     })
                 // },
-                console.log(e.mp.detail.value);
+              this.indexInit = 1;
+              this.startDate = e.mp.detail.value;
+                // console.log(e.mp.detail.value);
             },
             authThenGo(url)
             {
@@ -114,7 +116,7 @@
                     return;
                 }
 
-                let requestData = {name:this.real_name,age:this.neighborhoodArr[this.neighborhoodIndex]}
+                let requestData = {name:this.real_name,age:this.startDate}
 
                 param.commonRequest(
                     {
@@ -147,6 +149,7 @@
           this.indexInit = false;
           this.neighborhoodIndex = 42;
           this.neighborhoodArr =  [];
+          this.startDate = '1999-12-31';
           for(let i=18; i <= 100;i++)
           {
               this.neighborhoodArr.push(i);
@@ -178,12 +181,13 @@
                     return '生日';
                 }
 
-                if( this.neighborhoodArr.length ) {
-                    return this.neighborhoodArr[this.neighborhoodIndex] + '岁';
-                } else
-                {
-                    return '';
-                }
+                return this.startDate;
+                // if( this.neighborhoodArr.length ) {
+                //     return this.neighborhoodArr[this.neighborhoodIndex] + '岁';
+                // } else
+                // {
+                //     return '';
+                // }
             },
           age:function()
           {

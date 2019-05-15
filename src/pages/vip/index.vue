@@ -226,6 +226,11 @@
             },
             goClean() {
                 //暂时关闭了
+                if( globalStore.state.cleanClose )
+                {
+                    this.layerFlag = 1;
+                    return;
+                }
                 // this.layerFlag = 1;
                 // return;
                 wx.navigateTo(

@@ -13,7 +13,8 @@ export default new Vuex.Store({
         habbitRemarkShare:'',
         chosenCoupon:[],
         paySuccessBack:'',
-        isIpx:''
+        isIpx:'',
+        cleanClose:true
     },
     mutations: {
         increment: (state) => {

@@ -144,6 +144,13 @@
                 // return;
 
 
+                if( globalStore.state.cleanClose )
+                {
+                    this.layerFlag = 1;
+                    return;
+                }
+
+
                 if( !param.getOpenid() )
                 {
                     wx.navigateTo({

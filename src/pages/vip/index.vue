@@ -108,7 +108,7 @@
                 <div class="cus-row-col-6" style="padding-right: 9px;box-sizing: border-box;" v-on:click="goFinance">
                     <div class="common-panel p-16-16-24-16">
                         <div class="fs-16-fc-000000-m"><span class="short-line" style="border-right-color: #2E82FF;"></span>理财咨询</div>
-                        <div class="m-t-20"><span class="fs-14-fc-000000-m">下次预约:08月23日</span></div>
+                        <div class="m-t-20"><span class="fs-14-fc-000000-m">下次预约:{{nextFinance}}</span></div>
                     </div>
                 </div>
                 <div class="cus-row-col-6" style="padding-left: 9px;box-sizing: border-box;" v-on:click="goHealth">
@@ -171,8 +171,8 @@
                     {title:'健康体检 贴心陪伴',desc:'联合大型体检机构提供专业的体检服务，实时掌控健康数据，充分了解自身健康情况。专人陪伴体检，为您的健康保驾护航。'}],
                 calderSwitch:false,
                 vip: [
-                        [{price:'3212',price2:'4015',title:'3',desc:'三个月(90次 )A餐；每月三次的日常保洁(共9次)；1次日常体检；参加花甲全部会员活动'},{price:'6424',price2:'8030',title:'6',desc:'六个月(180次 )A餐；每月二次的日常保洁和每月一次的深度保洁(共18次)；1次全面体检；参加花甲全部会员活动'}],
-                        [{price:'3768',price2:'4710',title:'3',desc:'三个月(90次 )B餐；每月二次的日常保洁和每月一次的深度保洁(共18次)；1次日常体检；参加花甲全部会员活动'},{price:'7536',price2:'9420',title:'6',desc:'三个月(90次 )B餐；每月二次的日常保洁和每月一次的深度保洁(共18次)；1次日常体检；参加花甲全部会员活动'}]
+                        [{price:'3212',price2:'4015',title:'3',desc:'三个月(90次 )A餐；每月二次的日常保洁(共6次)；1次体检；参加花甲全部会员活动'},{price:'6424',price2:'8030',title:'6',desc:'六个月(180次 )A餐；每月二次的日常保洁(共12次)；1次体检；参加花甲全部会员活动'}],
+                        [{price:'3768',price2:'4710',title:'3',desc:'三个月(90次 )B餐；每月二次的日常保洁(共6次)；1次体检；参加花甲全部会员活动'},{price:'7536',price2:'9420',title:'6',desc:'三个月(180次 )B餐；每月二次的日常保洁(共12次)；1次体检；参加花甲全部会员活动'}]
                     ],
                 openid:'',
                 foodTotal:'',
@@ -182,6 +182,7 @@
                 subTabIndex:0,
                 healthTotal:0,
                 healthActive:0,
+                nextFinance:'',
                 vipTypeText:'',
                 isIpx:'',
                 layerFlag:false
@@ -343,6 +344,7 @@
                     a.healthTotal = res.data.data.healthTotal;
                     a.healthActive = res.data.data.healthActive;
                     a.vipTypeText = res.data.data.vip_type_text;
+                    a.nextFinance = res.data.data.nextFinance;
 
                 }).catch(err=>{console.log('网络异常')})
             },

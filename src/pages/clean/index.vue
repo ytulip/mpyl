@@ -9,10 +9,13 @@
 
 
             <div class="info-panel" style="height: 156px;">
-                <div class="fs-18-fc-000000-m" style="line-height: 25px;">{{item.product_name}}</div>
+                <div class="cus-row">
+                    <div class="cus-row-col-6 v-a-m"><div class="fs-18-fc-000000-m" style="line-height: 25px;">{{item.product_name}}</div></div>
+                    <div class="cus-row-col-6 t-al-r v-a-m"><span class="fs-14-fc-000033-m">￥</span><span class="fs-18-fc-000033-m">{{item.price}}</span></div>
+                </div>
                 <div class="fs-14-fc-7E7E7E-r" style="margin-top: 10px;line-height: 21px;">{{item.sub_desc}}</div>
 
-                <div style="position: absolute;bottom: 18px;left: 52px;"><span class="fs-14-fc-000033-m">￥</span><span class="fs-18-fc-000033-m">{{item.price}}</span></div>
+                <!--<div style="position: absolute;bottom: 18px;left: 52px;"><span class="fs-14-fc-000033-m">￥</span><span class="fs-18-fc-000033-m">{{item.price}}</span></div>-->
 
             </div>
             <!--<div style="position: absolute;top:0;left: 0;right: 0;z-index: 99;" class="fs-24-fc-ffffff-b">{{item.product_name}}</div>-->

@@ -91,18 +91,18 @@
 
 
 
+            <!--<div class="barr-line"></div>-->
+
+            <!--<div class="cus-row">-->
+                <!--<div class="cus-row-col-6 v-a-m">-->
+                    <!--<div class="fs-16-fc-000000-m">花甲会员优惠</div>-->
+                    <!--<div class="fs-14-fc-7e7e7e-r m-t-10">暂未开通会员</div>-->
+                <!--</div>-->
+            <!--</div>-->
+
             <div class="barr-line"></div>
 
-            <div class="cus-row">
-                <div class="cus-row-col-6 v-a-m">
-                    <div class="fs-16-fc-000000-m">花甲会员优惠</div>
-                    <div class="fs-14-fc-7e7e7e-r m-t-10">暂未开通会员</div>
-                </div>
-            </div>
-
-            <div class="barr-line"></div>
-
-            <div class="t-al-r fs-18-fc-000000-m">小计 ￥{{product.price * activeCouponCount}}</div>
+            <div class="t-al-r fs-18-fc-000000-m">小计 ￥{{product.price * activeCouponCount * saleOff}}</div>
 
         </div>
 

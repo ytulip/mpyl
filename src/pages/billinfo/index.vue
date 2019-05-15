@@ -86,12 +86,12 @@
 
       <div class="barr-line"></div>
 
-      <div class="cus-row">
-        <div class="cus-row-col-6 fs-16-fc-7E7E7E-r">花甲会员优惠</div>
-        <div class="cus-row-col-6 fs-16-fc-000000-m t-al-r">8折优惠</div>
-      </div>
+      <!--<div class="cus-row">-->
+        <!--<div class="cus-row-col-6 fs-16-fc-7E7E7E-r">花甲会员优惠</div>-->
+        <!--<div class="cus-row-col-6 fs-16-fc-000000-m t-al-r">8折优惠</div>-->
+      <!--</div>-->
 
-      <div class="barr-line"></div>
+      <!--<div class="barr-line"></div>-->
 
       <div class="cus-row">
         <div class="cus-row-col-12 fs-16-fc-000000-m t-al-r">合计￥{{order.coupons?order.origin_pay:0}}元</div>
@@ -363,8 +363,7 @@
                        dayLines.push(dayLineArr);
                    }
 
-                   console.log('逐行打印');
-                   console.log(JSON.stringify(dayLines));
+
                    this.list = dayLines;
                }).catch(err=>{console.log(err)});
            },

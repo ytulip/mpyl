@@ -39,7 +39,7 @@
                 </div>
                 <div class="v-a-t in-bl m-l-24">
                     <div class="fs-16-fc-000000-m">{{product.product_name}}</div>
-                    <div class="m-t-10"><span class="fs-14-fc-c50081-m">￥{{product.price}}</span><span class="fs-14-fc-7e7e7e-r"> ×{{quantity}}份 ×{{days}}天</span></div>
+                    <div class="m-t-10"><span class="fs-14-fc-c50081-m">￥{{product.price}}</span><span class="fs-14-fc-7e7e7e-r"> ×{{quantity}}份 ×{{days}}天</span><span class="fs-14-fc-7e7e7e-r">{{(saleOff < 1)?' x8折':''}}</span></div>
                 </div>
             </div>
 

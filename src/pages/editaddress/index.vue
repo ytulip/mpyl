@@ -229,7 +229,7 @@
 
              if( this.neighborhoodIndex === -1)
              {
-               return '选择所属社区';
+               return '选择所属小区';
              }
 
              if( this.neighborhood.length ) {

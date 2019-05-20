@@ -332,9 +332,9 @@
                            dayLinesFlag = 0;
                        }
 
-                       let dateFormat = moment(this.days[i].date);
-                       this.days[i].date_formate = dateFormat.format('MM月DD日');
-                       this.days[i].through_line = 1;
+                       let dateFormat = moment(this.pastDays[i].date);
+                       this.pastDays[i].date_formate = dateFormat.format('MM月DD日');
+                       this.pastDays[i].through_line = 1;
 
                        dayLineArr.push(this.pastDays[i]);
                        dayLinesFlag +=  1;
@@ -395,7 +395,6 @@
             this.pageInit();
         },
         mounted() {
-            globalStore.commit('setPaySuccessBack',1);
             this.id = param.getParamValue('id');
             this.pageInit();
         },
@@ -435,8 +434,8 @@
   .day-item{
     font-family: PingFangSC-Regular;
     font-size: 12px;
-    color: #7E7E7E;
-    text-decoration:line-through;
+    color: #7E7E7E !important;
+    text-decoration:line-through !important;
   }
 
   .day-item-active

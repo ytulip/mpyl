@@ -241,6 +241,11 @@
             },
             goFinance()
             {
+                if( globalStore.state.cleanClose )
+                {
+                    this.layerFlag = 1;
+                    return;
+                }
                 let url = Base64.encode('/index/attend-finance?user_id=' + param.getOpenid());
                 wx.navigateTo(
                     {
@@ -250,6 +255,11 @@
             },
             goHealth()
             {
+                if( globalStore.state.cleanClose )
+                {
+                    this.layerFlag = 1;
+                    return;
+                }
                 let url = Base64.encode('/index/health?user_id=' + param.getOpenid());
                 wx.navigateTo(
                     {

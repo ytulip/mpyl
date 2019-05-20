@@ -173,6 +173,12 @@
                 );
             },
             goBannerDetail(id) {
+
+                if( globalStore.state.cleanClose )
+                {
+                    return;
+                }
+
                 console.log('go banner detail' + id);
                 wx.navigateTo(
                     {

@@ -37,7 +37,7 @@
 
       <div style="position: absolute;top:50%;left: 0;right: 0;transform: translateY(-50%);padding: 0 16px;" >
         <div class="cus-row">
-          <div class="cus-row-col-6 fs-16-fc-ffffff f-f-m v-a-m" style="line-height: 24px;">{{isVip?'会员福利':'花甲会员· ¥60/月'}} </div>
+          <div class="cus-row-col-6 fs-16-fc-ffffff f-f-m v-a-m" style="line-height: 24px;">{{isVip?'会员福利':'花甲会员'}} </div>
           <div class="cus-row-col-6 v-a-m t-al-r">
             <span class="fs-12-fc-ffffff f-f-r in-bl v-a-m">{{isVip?(user.expire_time + '到期'):'更多优惠，服务更多！'}}</span>
             <image class="v-a-m in-bl" src="/static/images/user_icon_next_nor@3x.png" mode="widthFix" style="width:8px;height: 13px;margin-left: 8px;"></image>
@@ -144,7 +144,7 @@
               this.$http.get(url,requestData).then((res)=>{
                 console.log(res);
                 this.user = res.data.data.user;
-                this.isVip = res.data.data.isVip;
+                this.isVip = res.data.data.is_vip;
                 this.age = res.data.data.user.age;
                 this.count = res.data.data.couponCount;
 
